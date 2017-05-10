@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-
+#REFERENCE: https://betatim.github.io/posts/sklearn-for-TMVA-users/
 ####################################################################################
 # This script needs scikit-learn and root_numpy modules and requieres the	   #
 # following versions: Python >=2.6 or >=3.3, Numpy >=1.6.1, Scipy >=0.9 and	   #
@@ -11,7 +11,7 @@
 
 import numpy as np
 
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier, export_graphviz
 from sklearn.ensemble import AdaBoostClassifier
 from sklearn.metrics import classification_report, roc_auc_score, roc_curve, auc
 from sklearn.cross_validation import train_test_split
@@ -38,57 +38,62 @@ def scikit_classification(args_from_script=None):
 
 	parser.add_argument("-s", "--signal", nargs="+", required=True, default=None,
 	                    help="Signal file. Format same as for TChain.Add: path/to/file.root.")
+	parser.add_argument("--signal-weight", default="", help="Signal weight expression. [Default: %(default)s]")
 	parser.add_argument("-b", "--background", nargs="+", required=True, default=None,
 	                    help="Background file. Format same as for TChain.Add: path/to/file.root.")
+	parser.add_argument("--background-weight", default="", help="Background weight expression. [Default: %(default)s]")
 	parser.add_argument("-f", "--folder", default=None, required=False,
 	                    help="Tree in signal & background file. [Default: %(default)s]")
 	parser.add_argument("-v", "--variables", nargs="+", required=True, default=None,
 	                    help="Training variables.")
 	parser.add_argument("--splitting", nargs="+", default="0.3 0.1 0.6",
 	                    help="Set relative size of training, test and evaluation subsample (sum has to be 1). [Default: %(default)s]")
-	parser.add_argument("-m", "--methods", nargs="+", required=False, default=None,
-	                    help="MVA methods.")
 	parser.add_argument("-o", "--output-file", default="sklearnClassification/output.root",
 	                    help="Output file. [Default: %(default)s]")
 	parser.add_argument("--optimize-parameter", default=False, action='store_true',
 	                    help="Optimize the model for a fixed hyperparameter space. [Default: %(default)s]")
-
 	args = parser.parse_args()
 
+	from root_numpy import root2array, rec2array, array2root
 	
 	#training variables
 	for variable in args.variables:
 		variable.split(";")
 	list_of_variables = [variable for variable in args.variables]
 
-	#train,text,evaluation split
-	splitting = args.splitting.split()
-	for i,split in zip(range(len(splitting)),splitting):
-		splitting[i]=float(split)
-
-	from root_numpy import root2array, rec2array, array2root
+	#prepare signal and background
 	signal = root2array(args.signal,
 			    args.folder,
-			    list_of_variables)
+			    list_of_variables,
+			    include_weight=True if args.signal_weight else False,
+			    weight_name=args.signal_weight)
 	signal = rec2array(signal)
 
 	backgr = root2array(args.background,
 			    args.folder,
-			    list_of_variables)
+			    list_of_variables,
+			    include_weight=True if args.background_weight else False,
+			    weight_name=args.background_weight)
 	backgr = rec2array(backgr)
 
+		
 	#sklearn needs 2D dataformat
 	X = np.concatenate((signal, backgr))
 	y = np.concatenate((np.ones(signal.shape[0]),
 		            np.zeros(backgr.shape[0])))
 
 	#sample splitting
+	splitting = args.splitting.split()
+	for i,split in zip(range(len(splitting)),splitting):
+		splitting[i]=float(split)
+	
 	X_train, X_eval, y_train, y_eval = train_test_split(X, y, test_size=splitting[2], random_state=42)
 	X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=splitting[1], random_state=42)
 
 
 	#model and training
-	bdt = AdaBoostClassifier(DecisionTreeClassifier(max_depth=1),algorithm='SAMME',n_estimators=100)
+	dt = DecisionTreeClassifier(max_depth=3)
+	bdt = AdaBoostClassifier(dt, algorithm='SAMME', n_estimators= 200, learning_rate=1.0)
 	bdt.fit(X_train,y_train)
 
 	#optimization of hyper parameter
@@ -109,7 +114,7 @@ def scikit_classification(args_from_script=None):
 				               n_jobs=8)
 		clf.fit(X_train, y_train)
 
-		print "Best parameter set found on development set:"
+		print "Best parameter set found on test dataset:"
 		print clf.best_estimator_
 
 	
@@ -118,9 +123,8 @@ def scikit_classification(args_from_script=None):
 	y_predicted.dtype = [('score', np.float64)]
 	array2root(y_predicted, args.output_file, "BDTtest", mode="recreate")
 
-	#TODO:
-	#print classification_report(y_test, y_predicted, target_names=["background", "signal"])
-	#print "Area under ROC curve: %.4f"%(roc_auc_score(y_test, bdt.decision_function(X_test)))
+	#classification score (roc auc score):
+	print "Area under ROC curve: %.4f"%(roc_auc_score(y_test, bdt.decision_function(X_test)))
 
 	#roc-curve
 	decisions = bdt.decision_function(X_test)
@@ -137,7 +141,54 @@ def scikit_classification(args_from_script=None):
 	plt.ylabel('True Positive Rate or (Sensitivity)')
 	plt.title('Receiver Operating Characteristic')
 	plt.legend(loc="lower right")
-	plt.show()
+	plt.savefig("ROC.png")
+	plt.clf()
+
+
+	#BDT output plot
+	def compare_train_test(clf, X_train, y_train, X_test, y_test, bins=30):
+		decisions = []
+		for X,y in ((X_train, y_train), (X_test, y_test)):
+			d1 = clf.decision_function(X[y>0.5]).ravel()
+			d2 = clf.decision_function(X[y<0.5]).ravel()
+			decisions += [d1, d2]
+
+		low = min(np.min(d) for d in decisions)
+		high = max(np.max(d) for d in decisions)
+		low_high = (low,high)
+
+		plt.hist(decisions[0],
+		     color='r', alpha=0.5, range=low_high, bins=bins,
+		     histtype='stepfilled', normed=True,
+		     label='S (train)')
+		plt.hist(decisions[1],
+		     color='b', alpha=0.5, range=low_high, bins=bins,
+		     histtype='stepfilled', normed=True,
+		     label='B (train)')
+
+		hist, bins = np.histogram(decisions[2],
+				      bins=bins, range=low_high, normed=True)
+		scale = len(decisions[2]) / sum(hist)
+		err = np.sqrt(hist * scale) / scale
+
+		width = (bins[1] - bins[0])
+		center = (bins[:-1] + bins[1:]) / 2
+		plt.errorbar(center, hist, yerr=err, fmt='o', c='r', label='S (test)')
+
+		hist, bins = np.histogram(decisions[3],
+				      bins=bins, range=low_high, normed=True)
+		scale = len(decisions[2]) / sum(hist)
+		err = np.sqrt(hist * scale) / scale
+
+		plt.errorbar(center, hist, yerr=err, fmt='o', c='b', label='B (test)')
+
+		plt.xlabel("BDT output")
+		plt.ylabel("Arbitrary units")
+		plt.legend(loc='best')
+		plt.savefig("BDT_output.png")
+		plt.clf()
+	    
+	compare_train_test(bdt, X_train, y_train, X_test, y_test)
 
 	#evaluation
 	y_eval = bdt.predict(X_eval)
