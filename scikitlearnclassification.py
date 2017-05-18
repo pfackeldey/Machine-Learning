@@ -98,7 +98,7 @@ def scikit_classification(args_from_script=None):
 
 	#model and training
 	dt = DecisionTreeClassifier(min_samples_leaf=0.05)
-	bdt = AdaBoostClassifier(dt,n_estimators= 400,learning_rate=0.8)
+	bdt = AdaBoostClassifier(dt,n_estimators= 200,learning_rate=1.0)
 	bdt.fit(X_train,y_train)
 
 	#optimization of hyper parameter
@@ -151,12 +151,49 @@ def scikit_classification(args_from_script=None):
 
 
 	#BDT output plot
-	plt.hist(bdt.decision_function(X_test[y_test>0.5]).ravel(),
-         color='r', alpha=0.5, range=(-0.4,0.4), bins=30)
-	plt.hist(bdt.decision_function(X_test[y_test<0.5]).ravel(),
-         color='b', alpha=0.5, range=(-0.4,0.4), bins=30)
-	plt.xlabel("scikit-learn BDT output")
-	plt.show()
+	def compare_train_test(clf, X_train, y_train, X_test, y_test, bins=30):
+ 		decisions = []
+ 		for X,y in ((X_train, y_train), (X_test, y_test)):
+ 			d1 = clf.decision_function(X[y>0.5]).ravel()
+ 			d2 = clf.decision_function(X[y<0.5]).ravel()
+ 			decisions += [d1, d2]
+ 
+ 		low = min(np.min(d) for d in decisions)
+ 		high = max(np.max(d) for d in decisions)
+ 		low_high = (low,high)
+ 
+ 		plt.hist(decisions[0],
+ 		     color='r', alpha=0.5, range=low_high, bins=bins,
+ 		     histtype='stepfilled', normed=True,
+ 		     label='S (train)')
+ 		plt.hist(decisions[1],
+ 		     color='b', alpha=0.5, range=low_high, bins=bins,
+ 		     histtype='stepfilled', normed=True,
+ 		     label='B (train)')
+ 
+ 		hist, bins = np.histogram(decisions[2],
+ 				      bins=bins, range=low_high, normed=True)
+ 		scale = len(decisions[2]) / sum(hist)
+ 		err = np.sqrt(hist * scale) / scale
+ 
+ 		width = (bins[1] - bins[0])
+ 		center = (bins[:-1] + bins[1:]) / 2
+ 		plt.errorbar(center, hist, yerr=err, fmt='o', c='r', label='S (test)')
+ 
+		hist, bins = np.histogram(decisions[3],
+				      bins=bins, range=low_high, normed=True)
+		scale = len(decisions[2]) / sum(hist)
+		err = np.sqrt(hist * scale) / scale
+
+		plt.errorbar(center, hist, yerr=err, fmt='o', c='b', label='B (test)')
+
+		plt.xlabel("BDT output")
+		plt.ylabel("Arbitrary units")
+		plt.legend(loc='best')
+		plt.savefig("BDT_output.png")
+		plt.clf()
+	    
+	compare_train_test(bdt, X_train, y_train, X_test, y_test)
 
 	#evaluation
 	y_eval = bdt.predict(X_eval)
