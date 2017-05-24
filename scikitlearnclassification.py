@@ -72,6 +72,8 @@ def scikit_classification(args_from_script=None):
 			    weight_name=args.signal_weight)
 	signal = rec2array(signal)
 
+	print args.signal,args.folder,list_of_variables,args.signal_cut,args.signal_weight,args.signal_weight
+
 	backgr = root2array(args.background,
 			    args.folder,
 			    list_of_variables,
@@ -95,10 +97,11 @@ def scikit_classification(args_from_script=None):
 	X_train, X_eval, y_train, y_eval = train_test_split(X, y, test_size=splitting[2], random_state=42)
 	X_train, X_test, y_train, y_test = train_test_split(X_train, y_train, test_size=splitting[1], random_state=42)
 
-
+	
 	#model and training
 	dt = DecisionTreeClassifier(min_samples_leaf=0.05)
-	bdt = AdaBoostClassifier(dt,n_estimators= 200,learning_rate=1.0)
+		
+	bdt = AdaBoostClassifier(dt,algorithm='SAMME',n_estimators=50,learning_rate=0.1)
 	bdt.fit(X_train,y_train)
 
 	#optimization of hyper parameter
@@ -109,20 +112,21 @@ def scikit_classification(args_from_script=None):
 
 		# Perform grid search over all combinations
 		# of these hyper-parameters
-		param_grid = {"n_estimators": [50,200,400,1000],
-			      'learning_rate': [0.1, 0.2, 1.]}
+		param_grid = {"n_estimators": [50,100,300,500,1000],
+			      'learning_rate': [0.01,0.1,1]}
 
 		clf = grid_search.GridSearchCV(bdt,
 				               param_grid,
 				               cv=3,
 				               scoring='roc_auc',
-				               n_jobs=8)
+				               n_jobs=8,
+					       verbose=1)
 		clf.fit(X_train, y_train)
 
 		print "Best parameter set found on test dataset:"
 		print clf.best_estimator_
 
-	
+	print bdt.get_params().keys()
 	#testing
 	y_predicted = bdt.predict(X_test)
 	y_predicted.dtype = [('score', np.float64)]
@@ -194,6 +198,30 @@ def scikit_classification(args_from_script=None):
 		plt.clf()
 	    
 	compare_train_test(bdt, X_train, y_train, X_test, y_test)
+
+	"""
+
+	def visualize_tree(bdt):
+	    #Create tree png using graphviz.
+
+	    #Args
+	    #----
+	    #tree -- scikit-learn DecsisionTree.
+	    #feature_names -- list of feature names.
+	    
+	    with open("dt.dot", 'w') as f:
+		export_graphviz(bdt, out_file=f, feature_names=list_of_variables, filled=True, rounded=True,
+special_characters=True)
+
+	    command = ["dot", "-Tpng", "dt.dot", "-o", "dt.png"]
+	    try:
+		subprocess.check_call(command)
+	    except:
+		exit("Could not run dot, ie graphviz, to "
+		     "produce visualization")
+
+	visualize_tree(dt)
+	"""	
 
 	#evaluation
 	y_eval = bdt.predict(X_eval)
