@@ -101,7 +101,7 @@ def scikit_classification(args_from_script=None):
 	#model and training
 	dt = DecisionTreeClassifier(min_samples_leaf=0.05)
 		
-	bdt = AdaBoostClassifier(dt,algorithm='SAMME',n_estimators=50,learning_rate=0.1)
+	bdt = AdaBoostClassifier(dt,algorithm='SAMME.R',n_estimators=50,learning_rate=0.1)
 	bdt.fit(X_train,y_train)
 
 	#optimization of hyper parameter
