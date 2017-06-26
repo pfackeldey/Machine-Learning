@@ -10,7 +10,7 @@ Example console call: python scikitlearnclassification.py -s data/HIGGSsignal.ro
 
 More information with argument "-h" or "--help"!
 
-#Alternative to root_numpy:
+# Alternative to root_numpy:
 Instead of using root_numpy to read in the data, check this out (not tested yet): https://github.com/artus-analysis/Artus/blob/master/Utility/python/treeTools.py
 
 for accessing the root file:
