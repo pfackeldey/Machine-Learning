@@ -4,12 +4,17 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import logging
+import os
 from sklearn.tree import export_graphviz
 from sklearn import cross_validation
 from sklearn.cross_validation import ShuffleSplit
 from sklearn.learning_curve import learning_curve
 from sklearn.metrics import roc_auc_score
 from sklearn import grid_search
+
+CV = 3
+NJOBS = 6
 
 
 def plot_correlations(outdir, vars, sig, bkg):
@@ -97,13 +102,16 @@ def compare_train_test(clf, X_train, y_train, X_test, y_test, bins=30):
 
 def plot_learning_curve(outdir, bdt, x, y):
 	logging.info("creating learning curve")
-	train_sizes, train_scores, test_scores = learning_curve(bdt, x, y,
-		                                            cv=ShuffleSplit(len(x),
-		                                                            n_iter=100,
-		                                                            test_size=1.0 / CV),
-		                                            n_jobs=NJOBS,
-		                                            train_sizes=np.linspace(.1, 1., 7),
-		                                            scoring='roc_auc')
+	train_sizes, train_scores, test_scores = learning_curve(bdt,
+								x,
+								y,
+		                                                cv=ShuffleSplit(len(x),
+		                                                n_iter=100,
+		                                                test_size=1.0 / CV),
+		                                            	n_jobs=NJOBS,
+								verbosity=2,
+		                                            	train_sizes=np.linspace(.1, 1., 7),
+		                                            	scoring='roc_auc')
 	train_scores_mean = np.mean(train_scores, axis=1)
 	train_scores_std = np.std(train_scores, axis=1)
 	test_scores_mean = np.mean(test_scores, axis=1)
@@ -132,7 +140,7 @@ def run_grid_search(outdir, bdt, x, y):
 	logging.info('starting hyper-parameter optimization')
 	param_grid = {"n_estimators": [50,100,800,1000], 'learning_rate': [0.01,0.1,0.5]}
 
-	clf = grid_search.GridSearchCV(bdt, param_grid, cv=CV, scoring='roc_auc', n_jobs=NJOBS)
+	clf = grid_search.GridSearchCV(bdt, param_grid, cv=CV, scoring='roc_auc', n_jobs=NJOBS, verbosity=2)
 	clf.fit(x, y)
 
 	out = '\nHyper-parameter optimization\n'
@@ -144,4 +152,17 @@ def run_grid_search(outdir, bdt, x, y):
 		out += u'{:0.4f} (±{:0.4f}) for {}\n'.format(mean_score, scores.std(), params)
 	with codecs.open(os.path.join(outdir, "log-hyper-parameters.txt"), "w", encoding="utf8") as fd:
 		fd.write(out)
+
+def roc_curve(false_positive_rate, true_positive_rate, score):
+	plt.plot(false_positive_rate, true_positive_rate, label='ROC curve (area = %0.3f)' % score)
+	plt.plot([0,1],[0,1],'r--')
+	plt.xlim([0.0, 1.0])
+	plt.ylim([0.0, 1.0])
+	plt.xlabel('False Positive Rate or (1 - Specifity)')
+	plt.ylabel('True Positive Rate or (Sensitivity)')
+	plt.title('Receiver Operating Characteristic')
+	plt.legend(loc="lower right")
+	plt.savefig(os.path.join(outdir, 'ROC.png'))
+	plt.savefig(os.path.join(outdir, 'ROC.pdf'))
+	plt.close()
 

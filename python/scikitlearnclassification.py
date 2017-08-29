@@ -103,17 +103,16 @@ def scikit_classification(args_from_script=None):
 
 	
 	#model and training
-	dt = DecisionTreeClassifier(min_samples_leaf=0.05)
-		
+	dt = DecisionTreeClassifier(min_samples_leaf=0.05)	
 	bdt = AdaBoostClassifier(dt,algorithm='SAMME.R',n_estimators=50,learning_rate=0.1)
 	bdt.fit(X_train,y_train)
 
 	#optimization of hyper parameter
 	if args.optimize_parameter==True:
-
 		tools.run_grid_search("sklearnClassification", bdt, X_train, y_train)
 
 	print bdt.get_params().keys()
+	
 	#testing
 	y_predicted = bdt.predict(X_test)
 	y_predicted.dtype = [('score', np.float64)]
@@ -127,33 +126,21 @@ def scikit_classification(args_from_script=None):
 	false_positive_rate, true_positive_rate, thresholds = roc_curve(y_test, decisions)
 	roc_auc = auc(false_positive_rate, true_positive_rate)
 	
-	import matplotlib.pyplot as plt
-
-	plt.plot(false_positive_rate, true_positive_rate, label='ROC curve (area = %0.3f)' % roc_auc)
-	plt.plot([0,1],[0,1],'r--')
-	plt.xlim([0.0, 1.0])
-	plt.ylim([0.0, 1.0])
-	plt.xlabel('False Positive Rate or (1 - Specifity)')
-	plt.ylabel('True Positive Rate or (Sensitivity)')
-	plt.title('Receiver Operating Characteristic')
-	plt.legend(loc="lower right")
-	plt.savefig("ROC.png")
-	plt.clf()
-
+	tools.roc_curve(false_positive_rate, true_positive_rate, roc_auc)
 
 	#BDT output plot	    
 	tools.compare_train_test(bdt, X_train, y_train, X_test, y_test)
 
 	if args.additional_plots==True:
-		tools.plot_learning_curve("sklearnClassification", bdt, X_train, y_train)
-		tools.plot_correlations("sklearnClassification", list_of_variables, signal, backgr)
-		tools.plot_inputs("sklearnClassification", list_of_variables, signal, None, bkg, None)
+		#tools.plot_learning_curve("sklearnClassification", bdt, X_train, y_train)
+		#tools.plot_correlations("sklearnClassification", list_of_variables, signal, backgr)
+		tools.plot_inputs("sklearnClassification", list_of_variables, signal, None, backgr, None)
 		
 
 	#evaluation
-	y_eval = bdt.predict(X_eval)
-	y_eval.dtype = [('score', np.float64)]
-	array2root(y_eval, args.output_file, "BDTeval")
+	#y_eval = bdt.predict(X_eval)
+	#y_eval.dtype = [('score', np.float64)]
+	#array2root(y_eval, args.output_file, "BDTeval")
 
 	#finish        
 	print "Training output is written to \"" + args.output_file + "\"."
