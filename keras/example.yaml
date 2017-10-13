@@ -1,0 +1,24 @@
+training_data:
+	- example.root
+
+output_path: .
+
+classes:
+	- signal
+	- background
+
+class_weights:
+	signal: 1.0
+	background: 1.0
+
+global_weight: 1.0
+
+event_weight: weights
+
+#features = training variables
+features:
+	- feature_1
+	- feature_2
+	- feature_3
+
+train_test_split: 0.75
