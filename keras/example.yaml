@@ -1,11 +1,11 @@
 signal_inputs:
-    - ~/MachineLearning/data/HIGGSsignal.root
+    - HIGGSsignal.root
 
 signal_weights:
     - 1.0
 
 background_inputs:
-    - ~/MachineLearning/data/HIGGSbackground.root
+    - HIGGSbackground.root
 
 background_weights:
     - 1.0
