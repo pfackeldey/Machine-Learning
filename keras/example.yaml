@@ -51,4 +51,4 @@ features:
     - m_wbb
     - m_wwbb
 
-train_test_split: 0.5
+train_test_split: "nTrain_Signal=0:nTrain_Background=0:nTest_Signal=250000:nTest_Background=250000:SplitMode=Random:NormMode=EqualNumEvents"
