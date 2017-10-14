@@ -1,3 +1,6 @@
 *.pyc
 *.py~
 *.yaml~
+*.root
+*.h5
+example_training/
