@@ -5,37 +5,41 @@ from keras.layers import Dense, Dropout
 from keras.optimizers import Adam
 
 __all__ = [
-    "KerasModel"
+    "KerasModels"
 ]
 
-class KerasModel:
 
-	#Class for a model using Keras backend Tensorflow
-	
-	def __init__(self, n_features, n_classes, learning_rate):
+class KerasModels:
 
-		self.n_features = n_features
-		self.n_classes = n_classes
-		self.learning_rate = learning_rate
-		
+    # Class for a model using Keras backend Tensorflow
 
-	def example_model(self):
-		
-		"""
-		3 (linear connected) layer example model: 
-		- 1 Dense layer with n_features (training variables) dimension 
-		- 1 Dropout layer (reduces overtraining effects) 
-		- 1 Dense layer with n_classes dimension
-		"""
+    def __init__(self, n_features, n_classes, learning_rate):
 
-		model = Sequential()
-		model.add(Dense(10, activation = 'relu', input_shape = self.n_features))
-		model.add(Dropout(0.5))
-		model.add(Dense(self.n_classes, activation = 'softmax'))
+        self.n_features = n_features
+        self.n_classes = n_classes
+        self.learning_rate = learning_rate
 
-		# Compile the model:
+    def example_model(self):
+        """
+        3 (linear connected) layer example model:
+        - 1 Dense (128) layer with dimension: n_features (training variables)
+        - 1 Dropout layer (reduces overtraining effects)
+        - 1 Dense (64) layer with dimension: 128
+        - 1 Dropout layer (reduces overtraining effects)
+        - 1 Dense layer with dimension: n_classes
+        """
 
-		model.compile(loss = 'categorical_crossentropy', optimizer = Adam(lr = self.learning_rate), metrics = ['accuracy'])
+        model = Sequential()
+        model.add(Dense(128, activation='relu', input_dim=self.n_features))
+        model.add(Dropout(0.1))
+        model.add(Dense(64, activation='relu', input_dim=128))
+        model.add(Dropout(0.1))
+        model.add(Dense(self.n_classes, activation='softmax'))
 
-		
-		
+        # Compile the model:
+
+        model.compile(loss='categorical_crossentropy', optimizer=Adam(
+            lr=self.learning_rate), metrics=['accuracy'])
+
+        model.summary()
+        model.save("example_model.h5")
