@@ -25,6 +25,8 @@ Download the following two benchmark files for signal and background:
 1. Signal: <https://figshare.com/articles/HIGGS/1314899>
 2. Background: <https://figshare.com/articles/HIGGS_background/1314900>
 
+and move them to the repository. One has to specify the path in the example.yaml otherwise.
+
 Call scikit-learn script:
 
 ```
