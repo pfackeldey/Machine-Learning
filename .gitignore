@@ -3,4 +3,6 @@
 *.yaml~
 *.root
 *.h5
+*.png
+*.pdf
 example_training/
