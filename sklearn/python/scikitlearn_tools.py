@@ -162,7 +162,7 @@ def roc_curve(false_positive_rate, true_positive_rate, score):
 	plt.ylabel('True Positive Rate or (Sensitivity)')
 	plt.title('Receiver Operating Characteristic')
 	plt.legend(loc="lower right")
-	plt.savefig(os.path.join(outdir, 'ROC.png'))
-	plt.savefig(os.path.join(outdir, 'ROC.pdf'))
+	plt.savefig('ROC.png')
+	plt.savefig('ROC.pdf')
 	plt.close()
 

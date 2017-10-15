@@ -52,7 +52,7 @@ def scikit_classification(args_from_script=None):
 	                    help="Training variables.")
 	parser.add_argument("--splitting", nargs="+", default="0.3 0.1 0.6",
 	                    help="Set relative size of training, test and evaluation subsample (sum has to be 1). [Default: %(default)s]")
-	parser.add_argument("-o", "--output-file", default="sklearnClassification/output.root",
+	parser.add_argument("-o", "--output-file", default="output.root",
 	                    help="Output file. [Default: %(default)s]")
 	parser.add_argument("--optimize-parameter", default=False, action='store_true',
 	                    help="Optimize the model for a fixed hyperparameter space. [Default: %(default)s]")
