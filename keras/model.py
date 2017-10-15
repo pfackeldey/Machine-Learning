@@ -30,9 +30,10 @@ class KerasModels:
         """
 
         model = Sequential()
-        model.add(Dense(128, activation='relu', input_dim=self.n_features))
+        model.add(Dense(64, init='glorot_normal',
+                        activation='relu', input_dim=self.n_features))
         model.add(Dropout(0.1))
-        model.add(Dense(64, activation='relu', input_dim=128))
+        model.add(Dense(16, activation='relu', input_dim=64))
         model.add(Dropout(0.1))
         model.add(Dense(self.n_classes, activation='softmax'))
 
