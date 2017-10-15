@@ -64,8 +64,6 @@ def scikit_classification(args_from_script=None):
 	
 	#training variables
 	list_of_variables = args.variables[0].split(";")
-
-	print list_of_variables
 	
 	#prepare signal and background
 	signal = root2array(args.signal,
@@ -75,8 +73,6 @@ def scikit_classification(args_from_script=None):
 			    include_weight=True if args.signal_weight else False,
 			    weight_name=args.signal_weight)
 	signal = rec2array(signal)
-
-	print args.signal,args.folder,list_of_variables,args.signal_cut,args.signal_weight,args.signal_weight
 
 	backgr = root2array(args.background,
 			    args.folder,
@@ -110,8 +106,6 @@ def scikit_classification(args_from_script=None):
 	#optimization of hyper parameter
 	if args.optimize_parameter==True:
 		tools.run_grid_search("sklearnClassification", bdt, X_train, y_train)
-
-	print bdt.get_params().keys()
 	
 	#testing
 	y_predicted = bdt.predict(X_test)
