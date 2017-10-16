@@ -32,17 +32,17 @@ class KerasModels:
         """
 
         model = Sequential()
-        model.add(Dense(64, init='glorot_normal',
-                        activation='relu', input_dim=self.n_features))
+        model.add(Dense(64, init = 'glorot_normal',
+                        activation = 'relu', input_dim = self.n_features))
         model.add(Dropout(0.1))
-        model.add(Dense(16, activation='relu', input_dim=64))
+        model.add(Dense(16, activation = 'relu', input_dim = 64))
         model.add(Dropout(0.1))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
 
-        model.compile(loss='categorical_crossentropy', optimizer=Adam(
-            lr=self.learning_rate), metrics=['accuracy'])
+        model.compile(loss = 'categorical_crossentropy', optimizer = Adam(
+            lr = self.learning_rate), metrics = ['accuracy'])
 
         model.summary()
         model.save("example_model.h5")
@@ -52,14 +52,16 @@ class KerasModels:
 	First simple model
 	"""
 	model = Sequential()
-	model.add(Dense(32, activation = 'relu', input_dim = self.n_features))
-	model.add(Dropout(0.5))
-	model.add(Dense(self.n_classes, activation='softmax'))
+	model.add(Dense(128, init = 'glorot_normal', activation = 'relu', input_dim = self.n_features))
+	model.add(Dropout(0.1))
+	model.add(Dense(32, activation='relu', input_dim = 128))
+	model.add(Dropout(0.1))
+	model.add(Dense(self.n_classes, activation = 'softmax'))
 
  	# Compile the model:
 
-        model.compile(loss='categorical_crossentropy', optimizer=Adam(
-            lr=self.learning_rate), metrics=['accuracy'])
+        model.compile(loss = 'categorical_crossentropy', optimizer = Adam(
+            lr = self.learning_rate), metrics = ['accuracy'])
 
         model.summary()
         model.save("MSSM_HWW_model.h5")
