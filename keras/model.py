@@ -53,7 +53,7 @@ class KerasModels:
 	"""
 	model = Sequential()
 	model.add(Dense(32, activation = 'relu', input_dim = self.n_features))
-	model.Dropout(0.5)
+	model.add(Dropout(0.5))
 	model.add(Dense(self.n_classes, activation='softmax'))
 
  	# Compile the model:
