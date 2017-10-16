@@ -45,12 +45,9 @@ def classificationNeuralNetwork(args_from_script=None):
         signal_weight = signal_weight * config["global_weight"]
     dataloader.AddSignalTree(signal, signal_weight)
 
-    print "LENGTH OF BKG INPUTS: ", len(config["background_inputs"])
-
     background = ROOT.TChain("em_nominal/ntuple")
     for background_, background_weight in zip(config["background_inputs"], config["background_weights"]):
         background = ROOT.TChain("em_nominal/ntuple")
-	print background_
         background.Add(background_)
         background_weight = background_weight * config["global_weight"]
     dataloader.AddBackgroundTree(background, background_weight)
