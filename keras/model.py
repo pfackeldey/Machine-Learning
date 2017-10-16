@@ -3,6 +3,8 @@
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.optimizers import Adam
+import tensorflow as tf
+tf.python.control_flow_ops = tf
 
 __all__ = [
     "KerasModels"
@@ -21,7 +23,7 @@ class KerasModels:
 
     def example_model(self):
         """
-        3 (linear connected) layer example model:
+        5 (linear connected) layer example model:
         - 1 Dense (128) layer with dimension: n_features (training variables)
         - 1 Dropout layer (reduces overtraining effects)
         - 1 Dense (64) layer with dimension: 128
@@ -44,3 +46,20 @@ class KerasModels:
 
         model.summary()
         model.save("example_model.h5")
+
+    def MSSM_HWW_model(self):
+	"""
+	First simple model
+	"""
+	model = Sequential()
+	model.add(Dense(32, activation = 'relu', input_dim = self.n_features))
+	model.Dropout(0.5)
+	model.add(Dense(self.n_classes, activation='softmax'))
+
+ 	# Compile the model:
+
+        model.compile(loss='categorical_crossentropy', optimizer=Adam(
+            lr=self.learning_rate), metrics=['accuracy'])
+
+        model.summary()
+        model.save("MSSM_HWW_model.h5")
