@@ -37,7 +37,7 @@ def classificationNeuralNetwork(args_from_script=None):
     # load yaml training config
     config = yaml.load(open(args.config, "r"))
 
-    dataloader = ROOT.TMVA.DataLoader("example_training")
+    dataloader = ROOT.TMVA.DataLoader("MSSM_training")
 
     for signal_, signal_weight in zip(config["signal_inputs"], config["signal_weights"]):
         signal = ROOT.TFile.Open(signal_)
