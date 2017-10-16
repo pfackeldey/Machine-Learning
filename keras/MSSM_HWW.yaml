@@ -29,4 +29,4 @@ features:
     - mt_llmet
     - pZetaMissVis
 
-train_test_split: "nTrain_Signal=0:nTrain_Background=0:nTest_Signal=2500:nTest_Background=25000:SplitMode=Random:NormMode=EqualNumEvents"
+train_test_split: "nTrain_Signal=0:nTrain_Background=0:nTest_Signal=1500:nTest_Background=25000:SplitMode=Random:NormMode=EqualNumEvents"
