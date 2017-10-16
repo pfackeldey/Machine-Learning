@@ -55,7 +55,7 @@ class KerasModels:
 	model.add(Dense(128, init = 'glorot_normal', activation = 'relu', input_dim = self.n_features))
 	model.add(Dropout(0.1))
 	model.add(Dense(32, activation='relu', input_dim = 128))
-	model.add(Dropout(0.1))
+	model.add(Dropout(0.05))
 	model.add(Dense(self.n_classes, activation = 'softmax'))
 
  	# Compile the model:
