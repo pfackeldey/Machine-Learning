@@ -31,21 +31,22 @@ def addMVATrainingToTrees():
     # add features to TMVA reader
     values = {}
     for feature in config["features"]:
-	values[feature] = array("f", [-999])
+        values[feature] = array("f", [-999])
         reader.AddVariable(feature, values[feature])
 
     # book the classification method (trainings weight file)
-    reader.BookMVA(config["trainings_weight_file"], config["trainings_weight_file"])
+    reader.BookMVA(config["trainings_weight_file"],
+                   config["trainings_weight_file"])
 
     # add new branch with TreeExtender
     src = config["source_file"]
     dst = config["target_file"]
     with TreeExtender(src, dst) as te:
-        te.addBranch("PyKeras_MSSM_HWW", unpackBranches=[
-                     feature for feature in config["features"]])
+        te.addBranch("PyKeras_MSSM_HWW", unpackBranches=[])
         for entry in te:
-            entry.PyKeras_MSSM_HWW[0] = reader.EvaluateMVA(config["trainings_weight_file"])
+            entry.PyKeras_MSSM_HWW[0] = reader.EvaluateMVA(
+                config["trainings_weight_file"])
+
 
 if __name__ == "__main__" and len(sys.argv) > 1:
     addMVATrainingToTrees()
-
