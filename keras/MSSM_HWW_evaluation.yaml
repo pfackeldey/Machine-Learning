@@ -2,8 +2,6 @@ source_file: "source.root"
 
 target_file: "target.root"
 
-
-
 #features = training variables
 features:
     - met
