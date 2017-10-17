@@ -33,7 +33,7 @@ def addMVATrainingToTrees():
     # add new branch with TreeExtender
     src = config["source_file"]
     dst = config["target_file"]
-    with TreeExtender(src) as te:
+    with TreeExtender(src, dst) as te:
         te.addBranch("PyKeras_MSSM_HWW", unpackBranches=[
                      feature for feature in config["features"]])
         for entry in te:
