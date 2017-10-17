@@ -39,12 +39,11 @@ Call Keras backend tensorflow script:
 python keras/train.py example.yaml
 ```
 
+More info using `--help` or `-h` option.
+
 Write your own .yaml configuration and your own model in the KerasModels class to perform neural network classification!
 
-## Alternative to root_numpy:
-
-Instead of using root_numpy to read in the data, check this out (not tested yet): <https://github.com/artus-analysis/Artus/blob/master/Utility/python/treeTools.py>
-
+## Evaluation:
 for appending new branch in the root file:
 
 ```python
@@ -53,3 +52,6 @@ with TreeExtender("/source/file.root/myTree", "/target/file.root") as extender:
            for entry in extender:
                entry.myNewBranch[0] = entry.branchXYZ * 2
 ```
+or use the appropriate TMVA Reader producer in an Artus run!
+Keep in mind, that one has to add the same features/trainingvariables to the TMVA::Reader as used in the training.
+
