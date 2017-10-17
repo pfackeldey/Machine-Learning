@@ -23,7 +23,7 @@ def addMVATrainingToTrees():
     ROOT.TMVA.PyMethodBase.PyInitialize()
 
     # initialize TMVA reader
-    reader = ROOT.TMVA.Reader('Color:!Silent', verbose = 1)
+    reader = ROOT.TMVA.Reader('Color:!Silent')
 
     # load config with training features and weight files...
     config = yaml.load(open(args.config, "r"))
