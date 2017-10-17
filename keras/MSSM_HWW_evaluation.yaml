@@ -1,6 +1,6 @@
-source_file: "source.root"
+source_file: "/net/scratch_cms3b/droy/myem_R2M_oldgood2/SingleElectron_Run2016D_03Feb2017v1_13TeV_MINIAOD/SingleElectron_Run2016D_03Feb2017v1_13TeV_MINIAOD.root/em_nominal/ntuple"
 
-target_file: "target.root"
+target_file: "./target.root"
 
 #features = training variables
 features:
