@@ -15,7 +15,7 @@ import sys
 import yaml
 
 EPOCHS = 3
-BATCH_SIZE = 16
+BATCH_SIZE = 256
 
 
 def classificationNeuralNetwork(args_from_script=None):
@@ -46,11 +46,10 @@ def classificationNeuralNetwork(args_from_script=None):
     dataloader.AddSignalTree(signal, signal_weight)
 
     background = ROOT.TChain("em_nominal/ntuple")
-    for background_, background_weight in zip(config["background_inputs"], config["background_weights"]):
-        background = ROOT.TChain("em_nominal/ntuple")
+    for background_, background_weight in zip(config["background_inputs"], config["background_weights"] * len(config["background_inputs"])):
         background.Add(background_)
         background_weight = background_weight * config["global_weight"]
-    dataloader.AddBackgroundTree(background, background_weight)
+    	dataloader.AddBackgroundTree(background, background_weight)
 
     for feature in config["features"]:
         dataloader.AddVariable(feature)
@@ -59,11 +58,11 @@ def classificationNeuralNetwork(args_from_script=None):
         ROOT.TCut(""), config["train_test_split"])
 
     model = KerasModels(n_features=len(config["features"]), n_classes=len(
-        config["classes"]), learning_rate=0.00001)
+        config["classes"]), learning_rate=0.0001)
     model.MSSM_HWW_model()
 
     factory.BookMethod(dataloader, ROOT.TMVA.Types.kPyKeras, "PyKeras_MSSM_HWW",
-                       "!H:!V:VarTransform=None:FileNameModel=example_model.h5:SaveBestOnly=true:TriesEarlyStopping=-1:NumEpochs={}:".format(EPOCHS) + "BatchSize={}".format(BATCH_SIZE))
+                       "!H:!V:VarTransform=None:FileNameModel=MSSM_HWW_model.h5:SaveBestOnly=true:TriesEarlyStopping=-1:NumEpochs={}:".format(EPOCHS) + "BatchSize={}".format(BATCH_SIZE))
 
     factory.TrainAllMethods()
     factory.TestAllMethods()
