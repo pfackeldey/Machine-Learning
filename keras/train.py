@@ -58,7 +58,7 @@ def classificationNeuralNetwork(args_from_script=None):
         ROOT.TCut(""), config["train_test_split"])
 
     model = KerasModels(n_features=len(config["features"]), n_classes=len(
-        config["classes"]), learning_rate=0.0005)
+        config["classes"]), learning_rate=0.0005, plot_model=True)
     model.example_model()
 
     factory.BookMethod(dataloader, ROOT.TMVA.Types.kPyKeras, "PyKeras_example",
