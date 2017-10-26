@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/CMSAachen3B/Machine-Learning.svg?branch=master)]
+
 # Machine-Learning
 
 Modules and tools for a multivariate analysis
