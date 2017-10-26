@@ -8,6 +8,7 @@ import unittest
 
 base = os.path.normpath(os.path.join(os.path.abspath(__file__), "../.."))
 sys.path.append(base)
+from keras.tools import *
 
 try:
     from model import KerasModels
@@ -33,9 +34,20 @@ class TestCase(unittest.TestCase):
     @if_kerasmodel
     def test_kerasmodel(self):
         model = KerasModels.example_model()
-        self.assertEqual(self.model.ismethod(), True)
+        self.assertEqual(model.ismethod(), True)
 
     @if_treetool
     def test_treetool(self):
         tool = TreeExtender()
-        self.assertEqual(self.tool.ismethod(), True)
+        self.assertEqual(tool.ismethod(), True)
+
+    def test_flattenlist(self):
+        a = [[1., 2.], [3.]]
+        self.assertEqual(flattenList(a), [1., 2., 3.])
+
+    def test_matchingItem(self):
+        string = 'foo'
+        regex1 = 'f'
+        regex2 = 'a'
+        self.assertEqual(matchingItem(regex1, string), 'f')
+        self.assertEqual(matchingItem(regex2, string), None)
