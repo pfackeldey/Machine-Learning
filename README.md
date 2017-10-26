@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/CMSAachen3B/Machine-Learning.svg?branch=master)]
+[![Build Status](https://travis-ci.org/CMSAachen3B/Machine-Learning.svg?branch=master)](https://travis-ci.org/CMSAachen3B/Machine-Learning)
 
 # Machine-Learning
 
