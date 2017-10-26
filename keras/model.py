@@ -15,11 +15,12 @@ class KerasModels:
 
     # Class for a model using Keras backend Tensorflow
 
-    def __init__(self, n_features, n_classes, learning_rate):
+    def __init__(self, n_features, n_classes, learning_rate, plot_model):
 
         self.n_features = n_features
         self.n_classes = n_classes
         self.learning_rate = learning_rate
+        self.plot_model = plot_model
 
     def example_model(self):
         """
@@ -47,6 +48,14 @@ class KerasModels:
         model.summary()
         model.save("example_model.h5")
 
+        if self.plot_model:
+            # Visualize model as graph
+            try:
+                from keras.utils.visualize_util import plot
+                plot(model, to_file='model.png', show_shapes=True)
+            except:
+                print('[INFO] Failed to make model plot')
+
     def MSSM_HWW_model(self):
         """
         First simple model
@@ -56,7 +65,7 @@ class KerasModels:
                         activation='relu', input_dim=self.n_features))
         model.add(Dropout(0.1))
         model.add(Dense(32, activation='relu', input_dim=128))
-	model.add(Dropout(0.1))
+            model.add(Dropout(0.1))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
@@ -66,3 +75,11 @@ class KerasModels:
 
         model.summary()
         model.save("MSSM_HWW_model.h5")
+
+        if self.plot_model:
+            # Visualize model as graph
+            try:
+                from keras.utils.visualize_util import plot
+                plot(model, to_file='model.png', show_shapes=True)
+            except:
+                print('[INFO] Failed to make model plot')
