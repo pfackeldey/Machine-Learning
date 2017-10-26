@@ -14,8 +14,8 @@ import os
 import sys
 import yaml
 
-EPOCHS = 3
-BATCH_SIZE = 256
+EPOCHS = 1
+BATCH_SIZE = 64
 
 
 def classificationNeuralNetwork(args_from_script=None):
@@ -49,7 +49,7 @@ def classificationNeuralNetwork(args_from_script=None):
     for background_, background_weight in zip(config["background_inputs"], config["background_weights"] * len(config["background_inputs"])):
         background.Add(background_)
         background_weight = background_weight * config["global_weight"]
-    	dataloader.AddBackgroundTree(background, background_weight)
+    dataloader.AddBackgroundTree(background, background_weight)
 
     for feature in config["features"]:
         dataloader.AddVariable(feature)
@@ -58,7 +58,7 @@ def classificationNeuralNetwork(args_from_script=None):
         ROOT.TCut(""), config["train_test_split"])
 
     model = KerasModels(n_features=len(config["features"]), n_classes=len(
-        config["classes"]), learning_rate=0.0001)
+        config["classes"]), learning_rate=0.00001)
     model.MSSM_HWW_model()
 
     factory.BookMethod(dataloader, ROOT.TMVA.Types.kPyKeras, "PyKeras_MSSM_HWW",
