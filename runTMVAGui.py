@@ -9,6 +9,5 @@ parser = argparse.ArgumentParser(description="Start TMVA Graphic User Interface.
 parser.add_argument("-i", "--input", help="Path to TMVA output", required=True)
 args = parser.parse_args()
 
-ROOT.gROOT.LoadMacro("$ROOTSYS/tmva/test/TMVAGui.C")
-ROOT.TMVAGui(args.input)
+ROOT.TMVA.TMVAGui(args.input)
 raw_input("Press Enter to exit")
