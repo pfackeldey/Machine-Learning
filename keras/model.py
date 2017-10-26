@@ -4,7 +4,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.optimizers import Adam
 import tensorflow as tf
-tf.python.control_flow_ops = tf
+#tf.python.control_flow_ops = tf
 
 __all__ = [
     "KerasModels"
@@ -33,10 +33,10 @@ class KerasModels:
         """
 
         model = Sequential()
-        model.add(Dense(64, init='glorot_normal',
+        model.add(Dense(128, init='glorot_normal',
                         activation='relu', input_dim=self.n_features))
         model.add(Dropout(0.1))
-        model.add(Dense(16, activation='relu', input_dim=64))
+        model.add(Dense(64, activation='relu', input_dim=128))
         model.add(Dropout(0.1))
         model.add(Dense(self.n_classes, activation='softmax'))
 
@@ -65,7 +65,7 @@ class KerasModels:
                         activation='relu', input_dim=self.n_features))
         model.add(Dropout(0.1))
         model.add(Dense(32, activation='relu', input_dim=128))
-            model.add(Dropout(0.1))
+        model.add(Dropout(0.1))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
