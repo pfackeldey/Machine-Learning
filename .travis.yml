@@ -9,3 +9,6 @@ install:
 
 script:
   - python -m unittest tests
+
+notifications:
+  email: false
