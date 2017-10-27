@@ -4,5 +4,3 @@ seaborn
 tensorflow
 keras
 matplotlib
-rootpy
-root_numpy
