@@ -56,9 +56,9 @@ class KerasModels:
             except:
                 print('[INFO] Failed to make model plot')
 
-    def MSSM_HWW_model(self):
+    def binary_MSSM_HWW_model(self):
         """
-        First simple model
+        Binary classification model Signal vs. Background
         """
         model = Sequential()
         model.add(Dense(128, init='glorot_normal',
@@ -74,7 +74,36 @@ class KerasModels:
             lr=self.learning_rate), metrics=['accuracy'])
 
         model.summary()
-        model.save("MSSM_HWW_model.h5")
+        model.save("binary_MSSM_HWW_model.h5")
+
+        if self.plot_model:
+            # Visualize model as graph
+            try:
+                from keras.utils.visualize_util import plot
+                plot(model, to_file='model.png', show_shapes=True)
+            except:
+                print('[INFO] Failed to make model plot')
+
+    def multiclass_MSSM_HWW_model(self):
+        """
+        Multiclassification model
+        """
+        model = Sequential()
+        model.add(Dense(256, init='glorot_normal',
+                        activation='relu', input_dim=self.n_features))
+        model.add(Dropout(0.1))
+        model.add(Dense(256, activation='relu', input_dim=256))
+        model.add(Dropout(0.1))
+        model.add(Dense(256, activation='relu', input_dim=256))
+        model.add(Dense(self.n_classes, activation='softmax'))
+
+        # Compile the model:
+
+        model.compile(loss='categorical_crossentropy', optimizer=Adam(
+            lr=self.learning_rate), metrics=['accuracy'])
+
+        model.summary()
+        model.save("multiclass_MSSM_HWW_model.h5")
 
         if self.plot_model:
             # Visualize model as graph
