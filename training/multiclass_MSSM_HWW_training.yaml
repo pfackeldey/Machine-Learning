@@ -1,0 +1,65 @@
+class_file: trainingset.root
+
+classes:
+    - hww
+    - htt
+    - ztt
+    - zll
+    - wjets
+    - tt
+    - qcd
+    - vv
+
+class_weights:
+    hww: 1.0
+    htt: 1.0
+    ztt: 1.0
+    zll: 1.0
+    wjets: 1.0
+    tt: 1.0
+    qcd: 1.0
+    vv: 1.0
+
+general_cut: event%10<4
+
+output_path: .
+
+global_weight: 1.0
+
+event_weights: weights
+
+#features = training variables
+features:
+    - m_sv
+    - mjj
+    - H_pt
+    - m_vis
+    - mt_1
+    - mt_2
+    - ptvis
+    - pt_tt
+    - dijetpt
+    - met
+    - dijetphi
+    - jdeta
+    - H_mass
+    - pt_1
+    - pt_2
+    - eta_2
+    - jpt_1
+    - jpt_2
+    - jphi_2
+    - jm_1
+    - jm_2
+    - bpt_1
+    - bpt_2
+    - beta_1
+    - beta_2
+    - bphi_1
+    - bphi_2
+    - njets
+    - nbtag
+
+train_test_split: 0.75
+
+trainings_weight_file: "MSSM_training/weights/TMVAmulticlassification_PyKeras_MSSM_HWW.weights.xml"
