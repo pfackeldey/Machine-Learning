@@ -8,11 +8,11 @@ import unittest
 
 base = os.path.normpath(os.path.join(os.path.abspath(__file__), "../.."))
 sys.path.append(base)
-from keras.tools import *
+from utils.tools import *
 
 try:
-    from model import KerasModels
-    from treetools import TreeExtender
+    from utils.model import KerasModels
+    from utils.treetools import TreeExtender
     HAS_MODEL = True
     HAS_TREETOOLS = True
 except ImportError:
