@@ -50,9 +50,10 @@ def multiclassNeuralNetwork(args_from_script=None):
         dataloader.AddVariable(feature)
 
     # add classes
-    for class_ in config["classes"]:
+    prepare_classes = ""
+    for class_, trees in config["classes"].iteritems():
         class_chain = ROOT.TChain("em_nominal/ntuple")
-        for tree in class_:
+        for tree in trees:
             class_chain.Add(tree)
         dataloader.AddTree(class_chain, class_,
                            config["class_weights"][class_] * config["global_weight"])
@@ -67,7 +68,7 @@ def multiclassNeuralNetwork(args_from_script=None):
     model.multiclass_MSSM_HWW_model()
 
     factory.BookMethod(dataloader, ROOT.TMVA.Types.kPyKeras, "PyKeras_MSSM_HWW",
-                       "!H:!V:VarTransform=None:FileNameModel=MSSM_HWW_model.h5:SaveBestOnly=true:TriesEarlyStopping=-1:NumEpochs={}:".format(args.epochs) + "BatchSize={}".format(args.batch_size))
+                       "!H:!V:VarTransform=None:FileNameModel=multiclass_MSSM_HWW_model.h5:SaveBestOnly=true:TriesEarlyStopping=-1:NumEpochs={}:".format(args.epochs) + "BatchSize={}".format(args.batch_size))
 
     factory.TrainAllMethods()
     factory.TestAllMethods()
