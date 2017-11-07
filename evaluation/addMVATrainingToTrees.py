@@ -11,8 +11,6 @@ import argparse
 import yaml
 from array import array
 import keras
-import tensorflow as tf
-tf.python.control_flow_ops = tf
 
 
 def addMVATrainingToTrees():
