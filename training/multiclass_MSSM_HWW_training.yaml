@@ -45,7 +45,7 @@ classes:
 
 
 class_weights:
-    hww: 1.0
+    hww: 100.0
     dy: 1.0
     wjets: 1.0
     tt: 1.0
@@ -57,7 +57,7 @@ output_path: .
 
 global_weight: 1.0
 
-event_weights: weights
+#event_weights: weights
 
 #features = training variables
 features:
