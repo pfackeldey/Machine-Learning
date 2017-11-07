@@ -61,9 +61,7 @@ global_weight: 1.0
 
 #features = training variables
 features:
-    - m_sv
     - mjj
-    - H_pt
     - m_vis
     - mt_1
     - mt_2
@@ -73,7 +71,6 @@ features:
     - met
     - dijetphi
     - jdeta
-    - H_mass
     - pt_1
     - pt_2
     - eta_2
