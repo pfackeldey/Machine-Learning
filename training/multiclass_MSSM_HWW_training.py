@@ -51,10 +51,12 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     # add classes
     for class_ in config["classes"]:
-        class_tree = config["class_file"].Get(class_)
-        dataloader.AddTree(class_tree, class_,
+        class_chain = ROOT.TChain("em_nominal/ntuple")
+        for tree in class_:
+            class_chain.Add(tree)
+        dataloader.AddTree(class_chain, class_,
                            config["class_weights"][class_] * config["global_weight"])
-        dataloader.SetWeightExpression(config["event_weights"], class_)
+        #dataloader.SetWeightExpression(config["event_weights"], class_)
         prepare_classes += "TrainTestSplit_{}={}:".format(
             class_, config["train_test_split"])
     dataloader.PrepareTrainingAndTestTree(
