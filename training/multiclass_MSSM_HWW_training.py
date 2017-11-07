@@ -71,4 +71,9 @@ def multiclassNeuralNetwork(args_from_script=None):
 
 
 if __name__ == "__main__" and len(sys.argv) > 1:
-    multiclassNeuralNetwork()
+    try:
+        import tensorflow as tf
+        tf.python.control_flow_ops = tf
+        multiclassNeuralNetwork()
+    except AttributeError:
+        multiclassNeuralNetwork()

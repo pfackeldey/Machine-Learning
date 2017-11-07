@@ -74,4 +74,9 @@ def classificationNeuralNetwork(args_from_script=None):
 
 
 if __name__ == "__main__" and len(sys.argv) > 1:
-    classificationNeuralNetwork()
+    try:
+        import tensorflow as tf
+        tf.python.control_flow_ops = tf
+        classificationNeuralNetwork()
+    except AttributeError:
+        classificationNeuralNetwork()
