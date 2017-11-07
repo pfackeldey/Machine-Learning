@@ -3,8 +3,6 @@
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from keras.optimizers import Adam
-import tensorflow as tf
-tf.python.control_flow_ops = tf
 
 __all__ = [
     "KerasModels"
