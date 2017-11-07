@@ -18,15 +18,17 @@ import os
 import sys
 import yaml
 
-EPOCHS = 1
-BATCH_SIZE = 64
-
 
 def multiclassNeuralNetwork(args_from_script=None):
 
     parser = argparse.ArgumentParser(description="Perform multiclassification NN training with kPyKeras (TMVA).",
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
-
+    parser.add_argument("--epochs", default=1,
+                        help="Number of training epochs. [Default: %(default)s]")
+    parser.add_argument("--learning-rate", default=0.0001,
+                        help="Learning rate of NN. [Default: %(default)s]")
+    parser.add_argument("--batch-size", default=64,
+                        help="Batch size for training. [Default: %(default)s]")
     parser.add_argument("config", help="Path to training config")
     args = parser.parse_args()
 
@@ -59,11 +61,11 @@ def multiclassNeuralNetwork(args_from_script=None):
         ROOT.TCut(""), prepare_classes + "SplitMode=Random:NormMode=None")
 
     model = KerasModels(n_features=len(config["features"]), n_classes=len(
-        config["classes"]), learning_rate=0.00001, plot_model=False)
+        config["classes"]), learning_rate=args.learning_rate, plot_model=False)
     model.multiclass_MSSM_HWW_model()
 
     factory.BookMethod(dataloader, ROOT.TMVA.Types.kPyKeras, "PyKeras_MSSM_HWW",
-                       "!H:!V:VarTransform=None:FileNameModel=MSSM_HWW_model.h5:SaveBestOnly=true:TriesEarlyStopping=-1:NumEpochs={}:".format(EPOCHS) + "BatchSize={}".format(BATCH_SIZE))
+                       "!H:!V:VarTransform=None:FileNameModel=MSSM_HWW_model.h5:SaveBestOnly=true:TriesEarlyStopping=-1:NumEpochs={}:".format(args.epochs) + "BatchSize={}".format(args.batch_size))
 
     factory.TrainAllMethods()
     factory.TestAllMethods()
