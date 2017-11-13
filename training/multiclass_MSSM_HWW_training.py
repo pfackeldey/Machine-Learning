@@ -23,11 +23,11 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     parser = argparse.ArgumentParser(description="Perform multiclassification NN training with kPyKeras (TMVA).",
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
-    parser.add_argument("--epochs", default=1,
+    parser.add_argument("--epochs", default=50,
                         help="Number of training epochs. [Default: %(default)s]")
     parser.add_argument("--learning-rate", default=0.0001,
                         help="Learning rate of NN. [Default: %(default)s]")
-    parser.add_argument("--batch-size", default=64,
+    parser.add_argument("--batch-size", default=8000,
                         help="Batch size for training. [Default: %(default)s]")
     parser.add_argument("config", help="Path to training config")
     args = parser.parse_args()
