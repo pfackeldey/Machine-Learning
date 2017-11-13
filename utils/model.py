@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from keras.models import Sequential
-from keras.layers import Dense, Dropout
+from keras.layers import Dense, Dropout, BatchNormalization, Activation
 from keras.optimizers import Adam
 
 __all__ = [
@@ -110,3 +110,26 @@ class KerasModels:
                 plot(model, to_file='model.png', show_shapes=True)
             except:
                 print('[INFO] Failed to make model plot')
+
+    def multiclass_MSSM_HWW_testmodel(self):
+        """
+        Multiclassification model
+        """
+        model = Sequential()
+        model.add(Dense(300, init='glorot_normal', input_dim=self.n_features))
+        model.add(BatchNormalization())
+        model.add(Activation('selu'))
+        model.add(Dense(300))
+        model.add(BatchNormalization())
+        model.add(Activation('selu'))
+        model.add(Dropout(0.5))
+        model.add(Dense(300, activation='selu'))
+        model.add(Dense(self.n_classes, activation='softmax'))
+
+        # Compile the model:
+
+        model.compile(loss='categorical_crossentropy', optimizer=Adam(
+            lr=self.learning_rate), metrics=['accuracy'])
+
+        model.summary()
+        model.save("multiclass_MSSM_HWW_testmodel.h5")
