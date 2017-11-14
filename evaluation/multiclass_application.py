@@ -42,7 +42,7 @@ def multiclass_application():
 
     # add new branch with TreeExtender
     dst = config["target_file"]
-    for file_ in config["source_file"]:
+    for file_ in config["source_files"]:
         with TreeExtender(file_, dst) as te:
             te.addBranch("PyKeras_MSSM_HWW", unpackBranches=["event"])
             for entry in te:
