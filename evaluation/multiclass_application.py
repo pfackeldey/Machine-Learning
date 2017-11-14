@@ -13,7 +13,7 @@ from array import array
 import keras
 
 
-def addMVATrainingToTrees():
+def multiclass_application():
     parser = argparse.ArgumentParser(description="Perform binary classification NN evaluation with kPyKeras (TMVA).",
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
 
@@ -41,31 +41,29 @@ def addMVATrainingToTrees():
                    config["trainings_weight_file"])
 
     # add new branch with TreeExtender
-    chain = ROOT.TChain("em_nominal/ntuple")
-    for tree in config["source_file"]:
-        chain.Add(tree)
     dst = config["target_file"]
-    with TreeExtender(chain, dst) as te:
-        te.addBranch("PyKeras_MSSM_HWW", unpackBranches=["event"])
-        for entry in te:
-            response = reader.EvaluateMulticlass(
-                config["trainings_weight_file"][event % 10 >= 4])
+    for file_ in config["source_file"]:
+        with TreeExtender(file_, dst) as te:
+            te.addBranch("PyKeras_MSSM_HWW", unpackBranches=["event"])
+            for entry in te:
+                response = reader.EvaluateMulticlass(
+                    config["trainings_weight_file"][event % 10 >= 4])
 
-        # Find max score and index
-        response_max_score[0] = -999.0
-        for i, r in enumerate(response):
-            response_single_scores[i][0] = r
-            if r > response_max_score[0]:
-                response_max_score[0] = r
-                response_max_index[0] = i
+            # Find max score and index
+            response_max_score[0] = -999.0
+            for i, r in enumerate(response):
+                response_single_scores[i][0] = r
+                if r > response_max_score[0]:
+                    response_max_score[0] = r
+                    response_max_index[0] = i
 
-        entry.PyKeras_MSSM_HWW[0] = response_max_score[0]
+            entry.PyKeras_MSSM_HWW[0] = response_max_score[0]
 
 
 if __name__ == "__main__" and len(sys.argv) > 1:
     try:
         import tensorflow as tf
         tf.python.control_flow_ops = tf
-        addMVATrainingToTrees()
+        multiclass_application()
     except AttributeError:
-        addMVATrainingToTrees()
+        multiclass_application()
