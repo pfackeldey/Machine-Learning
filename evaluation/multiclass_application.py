@@ -48,8 +48,18 @@ def addMVATrainingToTrees():
     with TreeExtender(chain, dst) as te:
         te.addBranch("PyKeras_MSSM_HWW", unpackBranches=["event"])
         for entry in te:
-            entry.PyKeras_MSSM_HWW[0] = reader.EvaluateMulticlass(
+            response = reader.EvaluateMulticlass(
                 config["trainings_weight_file"][event % 10 >= 4])
+
+        # Find max score and index
+        response_max_score[0] = -999.0
+        for i, r in enumerate(response):
+            response_single_scores[i][0] = r
+            if r > response_max_score[0]:
+                response_max_score[0] = r
+                response_max_index[0] = i
+
+        entry.PyKeras_MSSM_HWW[0] = response_max_score[0]
 
 
 if __name__ == "__main__" and len(sys.argv) > 1:
