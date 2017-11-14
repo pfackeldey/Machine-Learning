@@ -41,9 +41,11 @@ def addMVATrainingToTrees():
                    config["trainings_weight_file"])
 
     # add new branch with TreeExtender
-    src = config["source_file"]
+    chain = ROOT.TChain("em_nominal/ntuple")
+    for tree in config["source_file"]:
+        chain.Add(tree)
     dst = config["target_file"]
-    with TreeExtender(src, dst) as te:
+    with TreeExtender(chain, dst) as te:
         te.addBranch("PyKeras_MSSM_HWW", unpackBranches=["event"])
         for entry in te:
             entry.PyKeras_MSSM_HWW[0] = reader.EvaluateMulticlass(
