@@ -36,7 +36,7 @@ class TreeExtender(object):
     this value be changing the class member *DEFAULT_VALUE* which defaults to ``-1e5``.
     """
 
-    DEFAULT_VALUE = -1e5
+    DEFAULT_VALUE = -999
 
     def __init__(self, treePath, copyTreePath=None, force=False, writeEvery=-1):
         super(TreeExtender, self).__init__()
