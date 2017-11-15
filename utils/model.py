@@ -13,12 +13,13 @@ class KerasModels:
 
     # Class for a model using Keras backend Tensorflow
 
-    def __init__(self, n_features, n_classes, learning_rate, plot_model):
+    def __init__(self, n_features, n_classes, learning_rate, plot_model, modelname):
 
         self.n_features = n_features
         self.n_classes = n_classes
         self.learning_rate = learning_rate
         self.plot_model = plot_model
+        self.modelname = modelname
 
     def example_model(self):
         """
@@ -44,7 +45,7 @@ class KerasModels:
             lr=self.learning_rate), metrics=['accuracy'])
 
         model.summary()
-        model.save("example_model.h5")
+        model.save(self.modelname)
 
         if self.plot_model:
             # Visualize model as graph
@@ -72,7 +73,7 @@ class KerasModels:
             lr=self.learning_rate), metrics=['accuracy'])
 
         model.summary()
-        model.save("binary_MSSM_HWW_model.h5")
+        model.save(self.modelname)
 
         if self.plot_model:
             # Visualize model as graph
@@ -101,7 +102,7 @@ class KerasModels:
             lr=self.learning_rate), metrics=['accuracy'])
 
         model.summary()
-        model.save("multiclass_MSSM_HWW_model.h5")
+        model.save(self.modelname)
 
         if self.plot_model:
             # Visualize model as graph
@@ -132,4 +133,4 @@ class KerasModels:
             lr=self.learning_rate), metrics=['accuracy'])
 
         model.summary()
-        model.save("multiclass_MSSM_HWW_testmodel.h5")
+        model.save(self.modelname)
