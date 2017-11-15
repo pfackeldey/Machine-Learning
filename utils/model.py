@@ -88,12 +88,14 @@ class KerasModels:
         Multiclassification model
         """
         model = Sequential()
-        model.add(Dense(256, init='glorot_normal',
-                        activation='relu', input_dim=self.n_features))
-        model.add(Dropout(0.1))
-        model.add(Dense(256, activation='relu', input_dim=256))
-        model.add(Dropout(0.1))
-        model.add(Dense(256, activation='relu', input_dim=256))
+        model.add(Dense(300, init='glorot_normal', input_dim=self.n_features))
+        model.add(BatchNormalization())
+        model.add(Activation('relu'))
+        model.add(Dense(300))
+        model.add(BatchNormalization())
+        model.add(Activation('relu'))
+        model.add(Dropout(0.3))
+        model.add(Dense(300, activation='selu'))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
@@ -103,7 +105,6 @@ class KerasModels:
 
         model.summary()
         model.save(self.modelname)
-
         if self.plot_model:
             # Visualize model as graph
             try:
@@ -118,10 +119,8 @@ class KerasModels:
         """
         model = Sequential()
         model.add(Dense(300, init='glorot_normal', input_dim=self.n_features))
-        model.add(BatchNormalization())
         model.add(Activation('selu'))
         model.add(Dense(300))
-        model.add(BatchNormalization())
         model.add(Activation('selu'))
         model.add(Dropout(0.5))
         model.add(Dense(300, activation='selu'))
