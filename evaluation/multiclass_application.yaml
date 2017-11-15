@@ -40,6 +40,13 @@ source_files:
 
 target_file: "./testapplication.root"
 
+classes:
+    - hww
+    - dy
+    - wjets
+    - tt
+    - vv
+
 #features = training variables
 features:
     - mjj
