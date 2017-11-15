@@ -80,7 +80,7 @@ def multiclassNeuralNetwork(args_from_script=None):
     model.multiclass_MSSM_HWW_model()
 
     factory.BookMethod(dataloader, ROOT.TMVA.Types.kPyKeras, "PyKeras_MSSM_HWW",
-                       "!H:!V:VarTransform=None:FileNameModel=multiclass_model_fold{}.h5".format(args.fold) + ":SaveBestOnly=true:TriesEarlyStopping=-1:NumEpochs={}:".format(args.epochs) + "BatchSize={}".format(args.batch_size))
+                       "!H:!V:VarTransform=None:FileNameModel=multiclass_model_fold{}.h5".format(args.fold) + ":SaveBestOnly=true:TriesEarlyStopping=5:NumEpochs={}:".format(args.epochs) + "BatchSize={}".format(args.batch_size))
 
     factory.TrainAllMethods()
     factory.TestAllMethods()
