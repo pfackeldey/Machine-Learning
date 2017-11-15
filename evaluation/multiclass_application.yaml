@@ -47,6 +47,8 @@ classes:
     - tt
     - vv
 
+event_branch: "event"
+
 #features = training variables
 features:
     - mjj
