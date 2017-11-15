@@ -64,7 +64,7 @@ def classificationNeuralNetwork(args_from_script=None):
         ROOT.TCut(config["general_cut"]), config["train_test_split"])
 
     model = KerasModels(n_features=len(config["features"]), n_classes=len(
-        config["classes"]), learning_rate=args.learning_rate, plot_model=False)
+        config["classes"]), learning_rate=args.learning_rate, plot_model=False, modelname="binary_MSSM_HWW_model.h5")
     model.binary_MSSM_HWW_model()
 
     factory.BookMethod(dataloader, ROOT.TMVA.Types.kPyKeras, "PyKeras_MSSM_HWW",
