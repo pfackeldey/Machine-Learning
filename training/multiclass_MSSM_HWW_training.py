@@ -35,44 +35,50 @@ def multiclassNeuralNetwork(args_from_script=None):
     ROOT.TMVA.Tools.Instance()
     ROOT.TMVA.PyMethodBase.PyInitialize()
 
-    # initialize factory:
-
-    factory = ROOT.TMVA.Factory("TMVAMulticlassification", ROOT.TFile.Open("MSSM_HWW_multiclass_training.root", "RECREATE"),
-                                "!V:!Silent:Color:!DrawProgressBar:Transformations=None:AnalysisType=multiclass")
-
     # load yaml training config
     config = yaml.load(open(args.config, "r"))
 
-    dataloader = ROOT.TMVA.DataLoader("MSSM_training")
+    folds = ["0", "1"]
+    foldcuts = ["event%2==0", "event%2==1"]
 
-    # add training variables
-    for feature in config["features"]:
-        dataloader.AddVariable(feature)
+    for fold, foldcut in zip(folds, foldcuts):
 
-    # add classes
-    prepare_classes = ""
-    for class_, trees in config["classes"].iteritems():
-        class_chain = ROOT.TChain("em_nominal/ntuple")
-        for tree in trees:
-            class_chain.Add(tree)
-        dataloader.AddTree(class_chain, class_,
-                           config["class_weights"][class_] * config["global_weight"])
-        #dataloader.SetWeightExpression(config["event_weights"], class_)
-        prepare_classes += "TrainTestSplit_{}={}:".format(
-            class_, config["train_test_split"])
-    dataloader.PrepareTrainingAndTestTree(
-        ROOT.TCut(""), prepare_classes + "SplitMode=Random:NormMode=None")
+        # initialize factory:
 
-    model = KerasModels(n_features=len(config["features"]), n_classes=len(
-        config["classes"]), learning_rate=args.learning_rate, plot_model=False)
-    model.multiclass_MSSM_HWW_model()
+        factory = ROOT.TMVA.Factory("TMVAMulticlassification", ROOT.TFile.Open("MSSM_training_{}.root".format(fold), "RECREATE"),
+                                    "!V:!Silent:Color:!DrawProgressBar:Transformations=None:AnalysisType=multiclass")
 
-    factory.BookMethod(dataloader, ROOT.TMVA.Types.kPyKeras, "PyKeras_MSSM_HWW",
-                       "!H:!V:VarTransform=None:FileNameModel=multiclass_MSSM_HWW_model.h5:SaveBestOnly=true:TriesEarlyStopping=-1:NumEpochs={}:".format(args.epochs) + "BatchSize={}".format(args.batch_size))
+        dataloader = ROOT.TMVA.DataLoader(
+            "MSSM_training", "fold{}_training".format(fold))
 
-    factory.TrainAllMethods()
-    factory.TestAllMethods()
-    factory.EvaluateAllMethods()
+        # add training variables
+        for feature in config["features"]:
+            dataloader.AddVariable(feature)
+
+        # add classes
+        prepare_classes = ""
+        for class_, trees in config["classes"].iteritems():
+            class_chain = ROOT.TChain("em_nominal/ntuple")
+            for tree in trees:
+                class_chain.Add(tree)
+            dataloader.AddTree(class_chain, class_,
+                               config["class_weights"][class_] * config["global_weight"], foldcut)
+            #dataloader.SetWeightExpression(config["event_weights"], class_)
+            prepare_classes += "TrainTestSplit_{}={}:".format(
+                class_, config["train_test_split"])
+        dataloader.PrepareTrainingAndTestTree(
+            ROOT.TCut(""), prepare_classes + "SplitMode=Random:NormMode=None")
+
+        model = KerasModels(n_features=len(config["features"]), n_classes=len(
+            config["classes"]), learning_rate=args.learning_rate, plot_model=False, modelname="multiclass_model_fold{}.h5".format(fold))
+        model.multiclass_MSSM_HWW_model()
+
+        factory.BookMethod(dataloader, ROOT.TMVA.Types.kPyKeras, "PyKeras_MSSM_HWW",
+                           "!H:!V:VarTransform=None:FileNameModel=multiclass_model_fold{}.h5".format(fold) + ":SaveBestOnly=true:TriesEarlyStopping=-1:NumEpochs={}:".format(args.epochs) + "BatchSize={}".format(args.batch_size))
+
+        factory.TrainAllMethods()
+        factory.TestAllMethods()
+        factory.EvaluateAllMethods()
 
 
 if __name__ == "__main__" and len(sys.argv) > 1:
