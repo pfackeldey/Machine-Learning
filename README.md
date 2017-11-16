@@ -38,7 +38,7 @@ python sklearn/scikitlearnclassification.py -s HIGGSsignal.root -b HIGGSbackgrou
 Call Keras backend tensorflow script:
 
 ```
-python keras/train.py example.yaml
+python training/train.py training/example.yaml
 ```
 
 More info using `--help` or `-h` option.
@@ -47,7 +47,7 @@ Write your own .yaml configuration and your own model in the KerasModels class t
 
 ## Evaluation:
 
-for appending new branch in the root file:
+for appending new branch in the root file, see `evaluation/addMVATrainingToTrees.py`. It mainly makes use of the TreeExtender class, which is a handy and efficient way to add a new branch to a existing tree:
 
 ```python
 with TreeExtender("/source/file.root/myTree", "/target/file.root") as extender:
@@ -57,3 +57,7 @@ with TreeExtender("/source/file.root/myTree", "/target/file.root") as extender:
 ```
 
 or use the appropriate TMVA Reader producer in an Artus run! Keep in mind, that one has to add the same features/trainingvariables to the TMVA::Reader as used in the training.
+
+## More information
+
+For a more detailed overview about the code and how to use it, take a look into the wiki!
