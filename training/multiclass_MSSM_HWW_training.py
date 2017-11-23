@@ -25,7 +25,7 @@ def multiclassNeuralNetwork(args_from_script=None):
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
     parser.add_argument("--fold", default="0", choices=["0", "1"],
                         help="Training fold. [Default: %(default)s]")
-    parser.add_argument("--tree", default="em_nominal",
+    parser.add_argument("--tree", default="latino",
                         help="Path to tree for TChain. [Default: %(default)s]")
     parser.add_argument("--epochs", default=50,
                         help="Number of training epochs. [Default: %(default)s]")
