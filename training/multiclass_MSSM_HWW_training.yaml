@@ -203,6 +203,21 @@ class_weights:
     wjets: "(fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(METFilter_DATA)"
     top: 1.0
 
+classes:
+    - hww120_200
+    - hww210_300
+    - hww350_500
+    - hww550_750
+    - hww800_1500
+    - hww2000_3000
+    - dy
+    - WW
+    - VVV
+    - DiBoson
+    - wjets
+    - top
+
+
 #general_cut: event%10<4
 
 output_path: /home/mf278754/master/
