@@ -55,7 +55,7 @@ def multiclassNeuralNetwork(args_from_script=None):
                                 "!V:!Silent:Color:!DrawProgressBar:Transformations=None:AnalysisType=multiclass")
 
     dataloader = ROOT.TMVA.DataLoader(
-        "MSSM_training", "fold{}_training".format(args.fold))
+        "TMVAMulticlassification", "MSSM_training_{}".format(args.fold))
 
     # add training variables
     for feature in config["features"]:
@@ -83,8 +83,8 @@ def multiclassNeuralNetwork(args_from_script=None):
                        "!H:!V:VarTransform=None:FileNameModel=multiclass_model_fold{}.h5".format(args.fold) + ":SaveBestOnly=true:TriesEarlyStopping=5:NumEpochs={}:".format(args.epochs) + "BatchSize={}".format(args.batch_size))
 
     factory.TrainAllMethods()
-    factory.TestAllMethods()
-    factory.EvaluateAllMethods()
+    # factory.TestAllMethods()
+    # factory.EvaluateAllMethods()
 
 
 if __name__ == "__main__" and len(sys.argv) > 1:
