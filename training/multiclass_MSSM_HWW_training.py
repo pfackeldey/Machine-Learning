@@ -55,7 +55,7 @@ def multiclassNeuralNetwork(args_from_script=None):
                                 "!V:!Silent:Color:!DrawProgressBar:Transformations=None:AnalysisType=multiclass")
 
     dataloader = ROOT.TMVA.DataLoader(
-        "TMVAMulticlassification", "MSSM_training_{}".format(args.fold))
+        "TMVAMulticlassification")
 
     # add training variables
     for feature in config["features"]:
