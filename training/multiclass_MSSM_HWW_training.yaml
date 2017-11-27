@@ -200,7 +200,7 @@ class_weights:
     WW: 1.0
     VVV: 1.0
     DiBoson: 1.0
-    wjets: "(fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(METFilter_DATA)"
+    wjets: 1.0 
     top: 1.0
 
 classes:
