@@ -69,7 +69,9 @@ def multiclassNeuralNetwork(args_from_script=None):
             class_chain.Add(tree)
         dataloader.AddTree(class_chain, class_,
                            config["class_weights"][class_] * config["global_weight"], foldcut)
-        #dataloader.SetWeightExpression(config["event_weights"], class_)
+        if class_ == "wjets":
+            dataloader.SetWeightExpression(
+                "(fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(METFilter_DATA)", class_)
         prepare_classes += "TrainTestSplit_{}={}:".format(
             class_, config["train_test_split"])
     dataloader.PrepareTrainingAndTestTree(
