@@ -9,6 +9,7 @@ import yaml
 import os
 import subprocess
 from array import array
+import sys
 
 import logging
 logger = logging.getLogger("create_training_dataset")
