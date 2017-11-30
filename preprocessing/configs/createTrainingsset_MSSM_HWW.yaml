@@ -1,5 +1,5 @@
 # Path to output directory
-output_path: .
+output_path: /net/scratch_cms3b/fackeldey/trainingssets/
 
 # Filename postfix of merged training dataset
 output_filename: "MSSM_HWW_trainingsset.root"
@@ -8,7 +8,7 @@ output_filename: "MSSM_HWW_trainingsset.root"
 tree_path: "latino"
 
 # Base path prefix for processes files
-base_path: /net/scratch_cms3b/fackeldey/trainingssets
+base_path: /net/scratch_cms3b/fackeldey/artus/HWW/
 
 # Branch in all files holding the event number used for creating the folds
 event_branch: "event"
@@ -18,221 +18,221 @@ training_weight_branch: "training_weight"
 
 # Define the processes and the according files
 processes:
-    hww120_300::
+    hww120_300:
         files:
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M120.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M125.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M130.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M135.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M140.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M145.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M150.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M155.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M160.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M165.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M170.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M175.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M180.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M190.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M200.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M210.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M230.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M250.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_M270.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M300.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M120.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M125.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M130.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M135.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M140.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M145.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M150.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M155.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M160.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M165.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M170.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M175.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M180.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M190.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M200.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M210.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M230.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M250.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M270.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M300.root
         cut_string: "trigger==1"
         weight_string: "1.0"
         class: hww120_300
 
     hww350_750:
         files:
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M350.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M400.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M450.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M500.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M550.root
-            #- /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M600.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M650.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M700.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M750.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M350.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M400.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M450.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M500.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M550.root
+            #- latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M600.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M650.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M700.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M750.root
         cut_string: "trigger==1"
         weight_string: "1.0"
         class: hww350_750
 
     hww800_3000:
         files:
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M800.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M900.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M1000.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M1500.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2000.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2500.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M3000.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M800.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M900.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M1000.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M1500.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2000.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2500.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M3000.root
         cut_string: "trigger==1"
         weight_string: "1.0"
         class: hww800_3000
 
     DY:
         files:
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_DYJetsToLL_M-10to50.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_DYJetsToTT_MuEle_M-50__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_DYJetsToTT_MuEle_M-50__part1.root
+            - latino/latino_DYJetsToLL_M-10to50.root
+            - latino/latino_DYJetsToTT_MuEle_M-50__part0.root
+            - latino/latino_DYJetsToTT_MuEle_M-50__part1.root
         cut_string: "trigger==1"
         weight_string: "1.0"
         class: DY
 
     WW:
         files:
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_GluGluWWTo2L2Nu_MCFM.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_WWTo2L2Nu.root
+            - latino/latino_GluGluWWTo2L2Nu_MCFM.root
+            - latino/latino_WWTo2L2Nu.root
         cut_string: "trigger==1"
         weight_string: "1.0"
         class: WW
 
     VVV:
         files:
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_WWW.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_WWZ.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_WZZ.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ZZZ.root
+            - latino/latino_WWW.root
+            - latino/latino_WWZ.root
+            - latino/latino_WZZ.root
+            - latino/latino_ZZZ.root
         cut_string: "trigger==1"
         weight_string: "1.0"
         class: VVV
 
     DiBoson:
         files:
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_Wg_MADGRAPHMLM.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_WgStarLNuEE.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_WgStarLNuMuMu.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_WZTo2L2Q__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_WZTo2L2Q__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_WZTo2L2Q__part2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_WZTo2L2Q__part3.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_WZTo3LNu.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_Zg__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_Zg__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_Zg__part2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ZZTo2L2Nu__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ZZTo2L2Nu__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ZZTo2L2Nu__part2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ZZTo2L2Q__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ZZTo2L2Q__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ZZTo2L2Q__part2.root
+            - latino/latino_Wg_MADGRAPHMLM.root
+            - latino/latino_WgStarLNuEE.root
+            - latino/latino_WgStarLNuMuMu.root
+            - latino/latino_WZTo2L2Q__part0.root
+            - latino/latino_WZTo2L2Q__part1.root
+            - latino/latino_WZTo2L2Q__part2.root
+            - latino/latino_WZTo2L2Q__part3.root
+            - latino/latino_WZTo3LNu.root
+            - latino/latino_Zg__part0.root
+            - latino/latino_Zg__part1.root
+            - latino/latino_Zg__part2.root
+            - latino/latino_ZZTo2L2Nu__part0.root
+            - latino/latino_ZZTo2L2Nu__part1.root
+            - latino/latino_ZZTo2L2Nu__part2.root
+            - latino/latino_ZZTo2L2Q__part0.root
+            - latino/latino_ZZTo2L2Q__part1.root
+            - latino/latino_ZZTo2L2Q__part2.root
         cut_string: "trigger==1"
         weight_string: "1.0"
         class: DiBoson
 
     WJets:
         files:
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleElectron_Run2016F-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MET_Run2016H-03Feb2017_ver2-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleElectron_Run2016H-03Feb2017_ver3-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MET_Run2016D-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleElectron_Run2016D-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleEG_Run2016H-03Feb2017_ver3-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016C-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016D-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016E-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleEG_Run2016E-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleElectron_Run2016E-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MET_Run2016E-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MET_Run2016B-03Feb2017_ver2-v2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MET_Run2016G-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleElectron_Run2016G-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MET_Run2016C-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleEG_Run2016F-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MuonEG_Run2016H-03Feb2017_ver2-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016F-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver3-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MuonEG_Run2016F-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MET_Run2016H-03Feb2017_ver3-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MuonEG_Run2016H-03Feb2017_ver3-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleEG_Run2016C-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part3.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MuonEG_Run2016C-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleElectron_Run2016C-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016E-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleEG_Run2016G-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MuonEG_Run2016G-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MuonEG_Run2016B-03Feb2017_ver2-v2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleEG_Run2016D-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleEG_Run2016G-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part3.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MuonEG_Run2016D-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016F-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MET_Run2016F-03Feb2017-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016D-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver3-v1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleElectron_Run2016G-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016C-03Feb2017-v1__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/wjets_data/latino_MuonEG_Run2016E-03Feb2017-v1.root
+            - wjets_data/latino_SingleElectron_Run2016F-03Feb2017-v1.root
+            - wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
+            - wjets_data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
+            - wjets_data/latino_MET_Run2016H-03Feb2017_ver2-v1.root
+            - wjets_data/latino_SingleElectron_Run2016H-03Feb2017_ver3-v1.root
+            - wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
+            - wjets_data/latino_MET_Run2016D-03Feb2017-v1.root
+            - wjets_data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part0.root
+            - wjets_data/latino_SingleElectron_Run2016D-03Feb2017-v1.root
+            - wjets_data/latino_DoubleEG_Run2016H-03Feb2017_ver3-v1.root
+            - wjets_data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
+            - wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part0.root
+            - wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
+            - wjets_data/latino_SingleMuon_Run2016C-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part1.root
+            - wjets_data/latino_SingleMuon_Run2016D-03Feb2017-v1__part1.root
+            - wjets_data/latino_SingleMuon_Run2016E-03Feb2017-v1__part0.root
+            - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part2.root
+            - wjets_data/latino_DoubleEG_Run2016E-03Feb2017-v1.root
+            - wjets_data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
+            - wjets_data/latino_SingleElectron_Run2016E-03Feb2017-v1.root
+            - wjets_data/latino_MET_Run2016E-03Feb2017-v1.root
+            - wjets_data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part1.root
+            - wjets_data/latino_MET_Run2016B-03Feb2017_ver2-v2.root
+            - wjets_data/latino_MET_Run2016G-03Feb2017-v1.root
+            - wjets_data/latino_SingleElectron_Run2016G-03Feb2017-v1__part1.root
+            - wjets_data/latino_MET_Run2016C-03Feb2017-v1.root
+            - wjets_data/latino_DoubleEG_Run2016F-03Feb2017-v1.root
+            - wjets_data/latino_MuonEG_Run2016H-03Feb2017_ver2-v1.root
+            - wjets_data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
+            - wjets_data/latino_SingleMuon_Run2016F-03Feb2017-v1__part1.root
+            - wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver3-v1.root
+            - wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
+            - wjets_data/latino_MuonEG_Run2016F-03Feb2017-v1.root
+            - wjets_data/latino_MET_Run2016H-03Feb2017_ver3-v1.root
+            - wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
+            - wjets_data/latino_MuonEG_Run2016H-03Feb2017_ver3-v1.root
+            - wjets_data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part0.root
+            - wjets_data/latino_DoubleEG_Run2016C-03Feb2017-v1.root
+            - wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
+            - wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
+            - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part3.root
+            - wjets_data/latino_MuonEG_Run2016C-03Feb2017-v1.root
+            - wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part1.root
+            - wjets_data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2__part0.root
+            - wjets_data/latino_SingleElectron_Run2016C-03Feb2017-v1.root
+            - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part1.root
+            - wjets_data/latino_SingleMuon_Run2016E-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleEG_Run2016G-03Feb2017-v1__part1.root
+            - wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
+            - wjets_data/latino_MuonEG_Run2016G-03Feb2017-v1.root
+            - wjets_data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part1.root
+            - wjets_data/latino_MuonEG_Run2016B-03Feb2017_ver2-v2.root
+            - wjets_data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleEG_Run2016D-03Feb2017-v1.root
+            - wjets_data/latino_DoubleEG_Run2016G-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part3.root
+            - wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part1.root
+            - wjets_data/latino_MuonEG_Run2016D-03Feb2017-v1.root
+            - wjets_data/latino_SingleMuon_Run2016F-03Feb2017-v1__part0.root
+            - wjets_data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2__part1.root
+            - wjets_data/latino_MET_Run2016F-03Feb2017-v1.root
+            - wjets_data/latino_SingleMuon_Run2016D-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver3-v1.root
+            - wjets_data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part0.root
+            - wjets_data/latino_SingleElectron_Run2016G-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part1.root
+            - wjets_data/latino_SingleMuon_Run2016C-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part2.root
+            - wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
+            - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
+            - wjets_data/latino_MuonEG_Run2016E-03Feb2017-v1.root
         cut_string: "trigger==1"
         weight_string: "(fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(METFilter_DATA)"
         class: WJets
 
     Top:
         files:
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ST_s-channel.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ST_t-channel_antitop.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ST_t-channel_top.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ST_tW_antitop.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_ST_tW_top.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part0.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part1.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part2.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part3.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part4.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part5.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part6.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part7.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part9.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part10.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part11.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part12.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part13.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part14.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part15.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part16.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part17.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part18.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part19.root
-            - /net/scratch_cms3b/fackeldey/artus/HWW/latino/latino_TTTo2L2Nu__part20.root
+            - latino/latino_ST_s-channel.root
+            - latino/latino_ST_t-channel_antitop.root
+            - latino/latino_ST_t-channel_top.root
+            - latino/latino_ST_tW_antitop.root
+            - latino/latino_ST_tW_top.root
+            - latino/latino_TTTo2L2Nu__part0.root
+            - latino/latino_TTTo2L2Nu__part1.root
+            - latino/latino_TTTo2L2Nu__part2.root
+            - latino/latino_TTTo2L2Nu__part3.root
+            - latino/latino_TTTo2L2Nu__part4.root
+            - latino/latino_TTTo2L2Nu__part5.root
+            - latino/latino_TTTo2L2Nu__part6.root
+            - latino/latino_TTTo2L2Nu__part7.root
+            - latino/latino_TTTo2L2Nu__part9.root
+            - latino/latino_TTTo2L2Nu__part10.root
+            - latino/latino_TTTo2L2Nu__part11.root
+            - latino/latino_TTTo2L2Nu__part12.root
+            - latino/latino_TTTo2L2Nu__part13.root
+            - latino/latino_TTTo2L2Nu__part14.root
+            - latino/latino_TTTo2L2Nu__part15.root
+            - latino/latino_TTTo2L2Nu__part16.root
+            - latino/latino_TTTo2L2Nu__part17.root
+            - latino/latino_TTTo2L2Nu__part18.root
+            - latino/latino_TTTo2L2Nu__part19.root
+            - latino/latino_TTTo2L2Nu__part20.root
         cut_string: "trigger==1"
         weight_string: "1.0"
         class: Top
