@@ -43,7 +43,7 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     features = config["features"]
 
-    filename = config["datasets"][args.fold]
+    filename = config["trainingssets"][args.fold]
 
     x = []
     y = []
@@ -57,10 +57,10 @@ def multiclassNeuralNetwork(args_from_script=None):
             raise Exception
 
         # Get inputs for this class
-        x_class = np.zeros((tree.GetEntries(), len(variables)))
-        x_conv = root_numpy.tree2array(tree, branches=variables)
-        for i_var, var in enumerate(variables):
-            x_class[:, i_var] = x_conv[var]
+        x_class = np.zeros((tree.GetEntries(), len(features)))
+        x_conv = root_numpy.tree2array(tree, branches=features)
+        for i_feature, feature in enumerate(features):
+            x_class[:, i_feature] = x_conv[feature]
         x.append(x_class)
 
         # Get weights
@@ -79,7 +79,7 @@ def multiclassNeuralNetwork(args_from_script=None):
     # Stack inputs, targets and weights to a Keras-readable dataset
     x = np.vstack(x)  # inputs
     y = np.vstack(y)  # targets
-    w = np.vstack(w) * config["global_weight_scale"]  # weights
+    w = np.vstack(w) * config["global_weight"]  # weights
     w = np.squeeze(w)  # needed to get weights into keras
 
     # Split data in training and testing
