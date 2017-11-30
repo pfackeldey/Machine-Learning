@@ -1,0 +1,54 @@
+signal_inputs:
+    - HIGGSsignal.root
+
+signal_weights:
+    - 1.0
+
+background_inputs:
+    - HIGGSbackground.root
+
+background_weights:
+    - 1.0
+
+output_path: .
+
+classes:
+    - signal
+    - background
+
+global_weight: 1.0
+
+event_weight: weights
+
+#features = training variables
+features:
+    - lepton_pT
+    - lepton_eta
+    - lepton_phi
+    - missing_energy_magnitude
+    - missing_energy_phi
+    - jet_1_pt
+    - jet_1_eta
+    - jet_1_phi
+    - jet_1_b_tag
+    - jet_2_pt
+    - jet_2_eta
+    - jet_2_phi
+    - jet_2_b_tag
+    - jet_3_pt
+    - jet_3_eta
+    - jet_3_phi
+    - jet_3_b_tag
+    - jet_4_pt
+    - jet_4_eta
+    - jet_4_phi
+    - jet_4_b_tag
+    - m_jj
+    - m_jjj
+    - m_lv
+    - m_jlv
+    - m_bb
+    - m_wbb
+    - m_wwbb
+
+train_test_split: "nTrain_Signal=0:nTrain_Background=0:nTest_Signal=250000:nTest_Background=250000:SplitMode=Random:NormMode=EqualNumEvents"

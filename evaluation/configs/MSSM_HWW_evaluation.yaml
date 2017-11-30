@@ -1,0 +1,14 @@
+source_file: "/net/scratch_cms3b/droy/myem_R2M_oldgood2/SingleElectron_Run2016D_03Feb2017v1_13TeV_MINIAOD/SingleElectron_Run2016D_03Feb2017v1_13TeV_MINIAOD.root/em_nominal/ntuple"
+
+target_file: "./target.root"
+
+#features = training variables
+features:
+    - met
+    - mt_i
+    - m_vis
+    - ptvis
+    - mt_llmet
+    - pZetaMissVis
+
+trainings_weight_file: "MSSM_training/weights/TMVAclassification_PyKeras_MSSM_HWW.weights.xml"
