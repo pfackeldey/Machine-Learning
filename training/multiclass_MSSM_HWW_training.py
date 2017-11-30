@@ -25,8 +25,6 @@ def multiclassNeuralNetwork(args_from_script=None):
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
     parser.add_argument("--fold", default="0", choices=["0", "1"],
                         help="Training fold. [Default: %(default)s]")
-    parser.add_argument("--tree", default="latino",
-                        help="Path to tree for TChain. [Default: %(default)s]")
     parser.add_argument("--epochs", default=150,
                         help="Number of training epochs. [Default: %(default)s]")
     parser.add_argument("--learning-rate", default=0.00005,
@@ -42,13 +40,6 @@ def multiclassNeuralNetwork(args_from_script=None):
     # load yaml training config
     config = yaml.load(open(args.config, "r"))
 
-    if args.fold == "0":
-        foldcut = "event%2==0"
-    elif args.fold == "1":
-        foldcut = "event%2==1"
-    else:
-        sys.exit("Currently only fold 0 and 1 are supported")
-
     # initialize factory:
 
     factory = ROOT.TMVA.Factory("TMVAMulticlassification", ROOT.TFile.Open("MSSM_training_{}.root".format(args.fold), "RECREATE"),
@@ -63,15 +54,20 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     # add classes
     prepare_classes = ""
-    for class_, trees in config["classes"].iteritems():
-        class_chain = ROOT.TChain(args.tree)
-        for tree in trees:
-            class_chain.Add(tree)
-        dataloader.AddTree(class_chain, class_,
-                           config["class_weights"][class_] * config["global_weight"], foldcut)
+    input_file = ROOT.TFile(config["trainingssets"][args.fold])
+    trees = {}
+    for class_ in config["classes"]:
+        trees[class_] = input_file.Get(class_)
+        if trees[class_] == None:
+            raise Exception("Tree for class {} does not exist.".format(class_))
+        dataloader.AddTree(
+            trees[class_], class_,
+            config["class_weights"][class_] * config["global_weight_scale"])
+        """
         if class_ == "wjets":
             dataloader.SetWeightExpression(
                 "(fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(METFilter_DATA)", class_)
+        """
         prepare_classes += "TrainTestSplit_{}={}:".format(
             class_, config["train_test_split"])
     dataloader.PrepareTrainingAndTestTree(
@@ -85,8 +81,8 @@ def multiclassNeuralNetwork(args_from_script=None):
                        "!H:!V:VarTransform=None:FileNameModel=multiclass_model_fold{}.h5".format(args.fold) + ":SaveBestOnly=true:TriesEarlyStopping=5:NumEpochs={}:".format(args.epochs) + "BatchSize={}".format(args.batch_size))
 
     factory.TrainAllMethods()
-    # factory.TestAllMethods()
-    # factory.EvaluateAllMethods()
+    factory.TestAllMethods()
+    factory.EvaluateAllMethods()
 
 
 if __name__ == "__main__" and len(sys.argv) > 1:
