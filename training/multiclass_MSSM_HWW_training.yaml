@@ -1,3 +1,7 @@
+trainingssets:
+    - /net/scratch_cms3b/fackeldey/trainingssets/fold0_MSSM_HWW_trainingsset.root
+    - /net/scratch_cms3b/fackeldey/trainingssets/fold1_MSSM_HWW_trainingsset.root
+
 class_weights:
     hww120_300: 1.0
     hww350_750: 1.0
@@ -23,6 +27,8 @@ classes:
 output_path: /net/scratch_cms3b/fackeldey/
 
 global_weight: 1.
+
+event_weights: training_weight
 
 #features = training variables
 features:
