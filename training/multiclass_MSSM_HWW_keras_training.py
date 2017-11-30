@@ -53,7 +53,7 @@ def multiclassNeuralNetwork(args_from_script=None):
     for i_class, class_ in enumerate(classes):
         tree = rfile.Get(class_)
         if tree == None:
-            print("Tree %s not found in file %s.", class_, filename)
+            print "Tree %s not found in file %s.", class_, filename
             raise Exception
 
         # Get inputs for this class
