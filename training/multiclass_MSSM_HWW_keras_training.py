@@ -51,10 +51,9 @@ def multiclassNeuralNetwork(args_from_script=None):
     rfile = ROOT.TFile(filename, "READ")
     classes = config["classes"]
     for i_class, class_ in enumerate(classes):
-        logger.debug("Process class %s.", class_)
         tree = rfile.Get(class_)
         if tree == None:
-            logger.fatal("Tree %s not found in file %s.", class_, filename)
+            print("Tree %s not found in file %s.", class_, filename)
             raise Exception
 
         # Get inputs for this class
