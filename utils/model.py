@@ -95,7 +95,7 @@ class KerasModels:
         model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(Dropout(0.3))
-        model.add(Dense(300, init='glorot_normal', activation='selu'))
+        model.add(Dense(300, init='glorot_normal', activation='relu'))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
@@ -119,11 +119,11 @@ class KerasModels:
         """
         model = Sequential()
         model.add(Dense(300, init='glorot_normal', input_dim=self.n_features))
-        model.add(Activation('selu'))
+        model.add(Activation('relu'))
         model.add(Dense(300, init='glorot_normal'))
-        model.add(Activation('selu'))
+        model.add(Activation('relu'))
         model.add(Dropout(0.5))
-        model.add(Dense(300, init='glorot_normal', activation='selu'))
+        model.add(Dense(300, init='glorot_normal', activation='relu'))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
