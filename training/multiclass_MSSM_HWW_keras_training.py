@@ -102,7 +102,7 @@ def multiclassNeuralNetwork(args_from_script=None):
         config["classes"]), learning_rate=args.learning_rate, plot_model=False, modelname="multiclass_model_fold{}.h5".format(args.fold))
     model.multiclass_MSSM_HWW_model()
 
-    model.fit(
+    model.model.fit(
         x_train,
         y_train,
         sample_weight=w_train,
