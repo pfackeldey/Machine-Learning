@@ -88,10 +88,10 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     # Add callbacks
     callbacks = []
-    callbacks.append(TensorBoard(log_dir='./logs', histogram_freq=1,
-                                 batch_size=100, write_graph=True, write_grads=True, write_images=True))
+    callbacks.append(TensorBoard(log_dir='./logs',
+                                 histogram_freq=1, write_graph=True, write_images=True))
     callbacks.append(
-        ModelCheckpoint(path_model, save_best_only=True, verbose=1))
+        ModelCheckpoint(filepath="fold{}_multiclass_model.h5".format(args.fold), save_best_only=True, verbose=1))
     if args.early_stopping:
         callbacks.append(EarlyStopping(monitor='val_loss',
                                        min_delta=0,
