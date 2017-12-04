@@ -1,68 +1,52 @@
 #!/usr/bin/env python
 
-import ROOT
-# disable ROOT internal argument parser
-ROOT.PyConfig.IgnoreCommandLineOptions = True
-
-import argparse
-from array import array
-import yaml
-import pickle
 import numpy as np
+import matplotlib.pyplot as plt
+import json
 import os
 
-import matplotlib as mpl
-mpl.use('Agg')
-mpl.rcParams['font.size'] = 16
-import matplotlib.pyplot as plt
-from matplotlib import cm
 
-from keras.models import load_model
+def plot_confusion(yp, y, classes=None, fname=None):
+    """Plot confusion matrix for given true and predicted class labels
+    Args:
+        yp (1D array): predicted class labels
+        y (1D array): true class labels
+        classes (1D array): class names
+        fname (str, optional): filename for saving the plot
+    """
+    if classes is None:
+        n = max(max(yp), max(y)) + 1
+        classes = np.arange(n)
+    else:
+        n = len(classes)
 
-parser = argparse.ArgumentParser(description="Perform multiclassification NN training with kPyKeras (TMVA).",
-                                 fromfile_prefix_chars="@", conflict_handler="resolve")
-parser.add_argument("model", help="Path to modelfile (XY.h5)")
-parser.add_argument("config", help="Path to training config")
+    bins = np.linspace(-0.5, n - 0.5, n + 1)
+    C = np.histogram2d(y, yp, bins=bins)[0]
+    C = C / np.sum(C, axis=0) * 100
 
-args = parser.parse_args()
+    fig = plt.figure(figsize=(8, 8))
+    plt.imshow(C, interpolation='nearest', vmin=0,
+               vmax=100, cmap=plt.cm.YlGnBu)
+    plt.gca().set_aspect('equal')
+    cbar = plt.colorbar(shrink=0.8)
+    cbar.set_label('Frequency %')
+    plt.xlabel('Prediction')
+    plt.ylabel('Truth')
+    plt.xticks(range(n), classes, rotation='vertical')
+    plt.yticks(range(n), classes)
+    for x in range(n):
+        for y in range(n):
+            if np.isnan(C[x, y]):
+                continue
+            color = 'white' if x == y else 'black'
+            plt.annotate('%.1f' % (C[x, y]), xy=(
+                y, x), color=color, ha='center', va='center')
 
-
-def confusionplot(confusion, classes, output):
-    plt.figure(figsize=(2.5 * confusion.shape[0], 2.0 * confusion.shape[1]))
-    axis = plt.gca()
-    for i in range(confusion.shape[0]):
-        for j in range(confusion.shape[1]):
-            axis.text(
-                i + 0.5,
-                j + 0.5,
-                markup.format(confusion[-1 - j, i]),
-                ha='center',
-                va='center')
-    q = plt.pcolormesh(confusion[::-1], cmap='Wistia')
-    cbar = plt.colorbar(q)
-    cbar.set_label("Sum of event weights", rotation=270, labelpad=50)
-    plt.xticks(
-        np.array(range(len(classes))) + 0.5, classes, rotation='vertical')
-    plt.yticks(
-        np.array(range(len(classes))) + 0.5,
-        classes[::-1],
-        rotation='horizontal')
-    plt.xlim(0, len(classes))
-    plt.ylim(0, len(classes))
-    plt.ylabel('True class')
-    plt.xlabel('Predicted class')
-    plt.savefig(filename, bbox_inches='tight')
+    maybe_savefig(fig, fname)
 
 
-# load keras model
-model = load_model(args.model)
-
-# load yaml training config
-config = yaml.load(open(args.config, "r"))
-
-# create empty confusion matrix
-confusion = np.zeros(
-    (len(config_train["classes"]), len(config_train["classes"])),
-    dtype=np.float)
-
-# WORK IN PROGRESS
+def maybe_savefig(fig, fname):
+    """Save figure if filename is given."""
+    if fname is not None:
+        fig.savefig(fname, bbox_inches='tight')
+        plt.close()
