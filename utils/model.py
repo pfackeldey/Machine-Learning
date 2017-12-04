@@ -5,13 +5,12 @@ from keras.layers import Dense, Dropout, BatchNormalization, Activation
 from keras.optimizers import Adam
 
 
-
 __all__ = [
     "KerasModels"
 ]
 
 
-class KerasModels:
+class KerasModels():
 
     # Class for a model using Keras backend Tensorflow
 
@@ -22,10 +21,6 @@ class KerasModels:
         self.learning_rate = learning_rate
         self.plot_model = plot_model
         self.modelname = modelname
-
-    @static_method
-    def keras_fit(**kwargs):
-	fit(**kwargs)
 
     def example_model(self):
         """
@@ -38,7 +33,7 @@ class KerasModels:
         """
 
         model = Sequential()
-        model.add(Dense(128, init='glorot_normal',
+        model.add(Dense(128, kernel_initializer='glorot_normal',
                         activation='relu', input_dim=self.n_features))
         model.add(Dropout(0.1))
         model.add(Dense(64, activation='relu', input_dim=128))
@@ -61,12 +56,14 @@ class KerasModels:
             except:
                 print('[INFO] Failed to make model plot')
 
+        return model
+
     def binary_MSSM_HWW_model(self):
         """
         Binary classification model Signal vs. Background
         """
         model = Sequential()
-        model.add(Dense(128, init='glorot_normal',
+        model.add(Dense(128, kernel_initializer='glorot_normal',
                         activation='relu', input_dim=self.n_features))
         model.add(Dropout(0.1))
         model.add(Dense(32, activation='relu', input_dim=128))
@@ -89,19 +86,22 @@ class KerasModels:
             except:
                 print('[INFO] Failed to make model plot')
 
-    def multiclass_MSSM_HWW_model(self, fit):
+        return model
+
+    def multiclass_MSSM_HWW_model(self):
         """
         Multiclassification model
         """
         model = Sequential()
-        model.add(Dense(300, init='glorot_normal', input_dim=self.n_features))
+        model.add(Dense(300, kernel_initializer='glorot_normal',
+                        input_dim=self.n_features))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
-        model.add(Dense(300, init='glorot_normal'))
+        model.add(Dense(300, kernel_initializer='glorot_normal'))
         model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(Dropout(0.3))
-        model.add(Dense(300, init='glorot_normal', activation='relu'))
+        model.add(Dense(300, kernel_initializer='glorot_normal', activation='selu'))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
@@ -118,19 +118,21 @@ class KerasModels:
                 plot(model, to_file='model.png', show_shapes=True)
             except:
                 print('[INFO] Failed to make model plot')
-       fit()
+
+        return model
 
     def multiclass_MSSM_HWW_testmodel(self):
         """
         Multiclassification model
         """
         model = Sequential()
-        model.add(Dense(300, init='glorot_normal', input_dim=self.n_features))
+        model.add(Dense(300, kernel_initializer='glorot_normal',
+                        input_dim=self.n_features))
         model.add(Activation('relu'))
-        model.add(Dense(300, init='glorot_normal'))
+        model.add(Dense(300, kernel_initializer='glorot_normal'))
         model.add(Activation('relu'))
         model.add(Dropout(0.5))
-        model.add(Dense(300, init='glorot_normal', activation='relu'))
+        model.add(Dense(300, kernel_initializer='glorot_normal', activation='selu'))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
@@ -140,3 +142,5 @@ class KerasModels:
 
         model.summary()
         model.save(self.modelname)
+
+        return model

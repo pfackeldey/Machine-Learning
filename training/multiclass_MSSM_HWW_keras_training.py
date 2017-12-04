@@ -38,12 +38,12 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     config = yaml.load(open(args.config, "r"))
 
-    folder = 'arrays/'
+    folder = '/home/peter/mount/data/arrays/'
 
     # load trainings data and weights
-    x = np.load(folder+'x_fold{}.npy'.format(args.fold))
-    y = np.load(folder+'y_fold{}.npy'.format(args.fold))
-    w = np.load(folder+'weights_fold{}.npy'.format(args.fold))
+    x = np.load(folder + 'x_fold{}.npy'.format(args.fold))
+    y = np.load(folder + 'y_fold{}.npy'.format(args.fold))
+    w = np.load(folder + 'weights_fold{}.npy'.format(args.fold))
 
     # Split data in training and testing
     x_train, x_test, y_train, y_test, w_train, w_test = model_selection.train_test_split(
@@ -63,16 +63,16 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     model = KerasModels(n_features=len(config["features"]), n_classes=len(
         config["classes"]), learning_rate=args.learning_rate, plot_model=False, modelname="multiclass_model_fold{}.h5".format(args.fold))
-    model.multiclass_MSSM_HWW_model()
+    keras_model = model.multiclass_MSSM_HWW_model()
     #multiclass_model = getattr(model, "multiclass_MSSM_HWW_model")
 
-    model.keras_fit(
+    keras_model.fit(
         x_train,
         y_train,
         sample_weight=w_train,
         validation_data=(x_test, y_test, w_test),
         batch_size=args.batch_size,
-        nb_epoch=args.epochs,
+        epochs=args.epochs,
         shuffle=True,
         callbacks=callbacks)
 
