@@ -1,9 +1,5 @@
 #!/usr/bin/env python
 
-import ROOT
-# disable ROOT internal argument parser
-ROOT.PyConfig.IgnoreCommandLineOptions = True
-import root_numpy
 import numpy as np
 np.random.seed(1234)
 
@@ -18,6 +14,7 @@ base = os.path.normpath(os.path.join(os.path.abspath(__file__), "../.."))
 sys.path.append(base)
 
 from utils.model import KerasModels
+import utils.confusionmatrix
 
 from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
 
@@ -41,46 +38,10 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     config = yaml.load(open(args.config, "r"))
 
-    features = config["features"]
-
-    filename = config["trainingssets"][args.fold]
-
-    x = []
-    y = []
-    w = []
-    rfile = ROOT.TFile(filename, "READ")
-    classes = config["classes"]
-    for i_class, class_ in enumerate(classes):
-        tree = rfile.Get(class_)
-        if tree == None:
-            print "Tree %s not found in file %s.", class_, filename
-            raise Exception
-
-        # Get inputs for this class
-        x_class = np.zeros((tree.GetEntries(), len(features)))
-        x_conv = root_numpy.tree2array(tree, branches=features)
-        for i_feature, feature in enumerate(features):
-            x_class[:, i_feature] = x_conv[feature]
-        x.append(x_class)
-
-        # Get weights
-        w_class = np.zeros((tree.GetEntries(), 1))
-        w_conv = root_numpy.tree2array(
-            tree, branches=[config["event_weights"]])
-        w_class[:, 0] = w_conv[config["event_weights"]] * config[
-            "class_weights"][class_]
-        w.append(w_class)
-
-        # Get targets for this class
-        y_class = np.zeros((tree.GetEntries(), len(classes)))
-        y_class[:, i_class] = np.ones((tree.GetEntries()))
-        y.append(y_class)
-
-    # Stack inputs, targets and weights to a Keras-readable dataset
-    x = np.vstack(x)  # inputs
-    y = np.vstack(y)  # targets
-    w = np.vstack(w) * config["global_weight"]  # weights
-    w = np.squeeze(w)  # needed to get weights into keras
+    # load trainings data and weights
+    x = np.load('x.npy')
+    y = np.load('y.npy')
+    w = np.load('weights.npy')
 
     # Split data in training and testing
     x_train, x_test, y_train, y_test, w_train, w_test = model_selection.train_test_split(
@@ -100,7 +61,7 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     model = KerasModels(n_features=len(config["features"]), n_classes=len(
         config["classes"]), learning_rate=args.learning_rate, plot_model=False, modelname="multiclass_model_fold{}.h5".format(args.fold))
-    multiclass_model = getattr(model.multiclass_MSSM_HWW_model())
+    multiclass_model = getattr(model, "multiclass_MSSM_HWW_model")
 
     multiclass_model.fit(
         x_train,
@@ -111,6 +72,42 @@ def multiclassNeuralNetwork(args_from_script=None):
         nb_epoch=args.epochs,
         shuffle=True,
         callbacks=callbacks)
+
+    # plot loss
+    f = plt.figure()
+    plt.plot(fit.history["loss"])
+    plt.plot(fit.history["val_loss"])
+    plt.xlabel("epochs")
+    plt.ylabel("loss")
+    plt.legend(["training loss", "validation loss"], loc="best")
+    f.savefig("loss.png")
+
+    # plot accuracy
+    f = plt.figure()
+    plt.plot(fit.history["acc"])
+    plt.plot(fit.history["val_acc"])
+    plt.xlabel("epochs")
+    plt.ylabel("accuracy")
+    plt.legend(["training accuracy", "validation accuracy"], loc="best")
+    f.savefig("accuracy.png")
+
+    # testing
+    [loss, accuracy] = model.evaluate(x_test, y_test, verbose=0)
+
+    val_loss = fit.history["val_loss"][-1]
+    val_accuracy = fit.history["val_acc"][-1]
+
+    # predicted probabilities for the test set
+    Yp = model.predict(x_test)
+    yp = np.argmax(Yp, axis=1)
+
+    folder = 'results/'
+    if not os.path.exists(folder):
+        os.makedirs(folder)
+
+    # plot confusion matrix
+    plot_confusion(yp, y_test, config["classes"],
+                   fname=folder + 'confusion.png')
 
 
 if __name__ == "__main__" and len(sys.argv) > 1:
