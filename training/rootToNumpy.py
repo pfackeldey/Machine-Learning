@@ -16,58 +16,58 @@ def rootToNumpy(args_from_script=None):
 
     parser = argparse.ArgumentParser(description="Dump trees to numpy arrays.",
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
-    parser.add_argument("--fold", default=0, choices=[0, 1],
-                        help="Training fold. [Default: %(default)s]")
     parser.add_argument("config", help="Path to training config")
     args = parser.parse_args()
 
     config = yaml.load(open(args.config, "r"))
 
-    features = config["features"]
+    for fold in range(2):
 
-    filename = config["trainingssets"][args.fold]
+	    features = config["features"]
 
-    x = []
-    y = []
-    w = []
-    rfile = ROOT.TFile(filename, "READ")
-    classes = config["classes"]
-    for i_class, class_ in enumerate(classes):
-        tree = rfile.Get(class_)
-        if tree == None:
-            print "Tree %s not found in file %s.", class_, filename
-            raise Exception
+	    filename = config["trainingssets"][fold]
 
-        # Get inputs for this class
-        x_class = np.zeros((tree.GetEntries(), len(features)))
-        x_conv = root_numpy.tree2array(tree, branches=features)
-        for i_feature, feature in enumerate(features):
-            x_class[:, i_feature] = x_conv[feature]
-        x.append(x_class)
+	    x = []
+	    y = []
+	    w = []
+	    rfile = ROOT.TFile(filename, "READ")
+	    classes = config["classes"]
+	    for i_class, class_ in enumerate(classes):
+		tree = rfile.Get(class_)
+		if tree == None:
+		    print "Tree %s not found in file %s.", class_, filename
+		    raise Exception
 
-        # Get weights
-        w_class = np.zeros((tree.GetEntries(), 1))
-        w_conv = root_numpy.tree2array(
-            tree, branches=[config["event_weights"]])
-        w_class[:, 0] = w_conv[config["event_weights"]] * config[
-            "class_weights"][class_]
-        w.append(w_class)
+		# Get inputs for this class
+		x_class = np.zeros((tree.GetEntries(), len(features)))
+		x_conv = root_numpy.tree2array(tree, branches=features)
+		for i_feature, feature in enumerate(features):
+		    x_class[:, i_feature] = x_conv[feature]
+		x.append(x_class)
 
-        # Get targets for this class
-        y_class = np.zeros((tree.GetEntries(), len(classes)))
-        y_class[:, i_class] = np.ones((tree.GetEntries()))
-        y.append(y_class)
+		# Get weights
+		w_class = np.zeros((tree.GetEntries(), 1))
+		w_conv = root_numpy.tree2array(
+		    tree, branches=[config["event_weights"]])
+		w_class[:, 0] = w_conv[config["event_weights"]] * config[
+		    "class_weights"][class_]
+		w.append(w_class)
 
-    # Stack inputs, targets and weights to a Keras-readable dataset
-    x = np.vstack(x)  # inputs
-    y = np.vstack(y)  # targets
-    w = np.vstack(w) * config["global_weight"]  # weights
-    w = np.squeeze(w)  # needed to get weights into keras
+		# Get targets for this class
+		y_class = np.zeros((tree.GetEntries(), len(classes)))
+		y_class[:, i_class] = np.ones((tree.GetEntries()))
+		y.append(y_class)
 
-    # Dump numpy arrays
-    np.save('x.npy', x)
-    np.save('y.npy', y)
-    np.save('weights.npy', w)
+	    # Stack inputs, targets and weights to a Keras-readable dataset
+	    x = np.vstack(x)  # inputs
+	    y = np.vstack(y)  # targets
+	    w = np.vstack(w) * config["global_weight"]  # weights
+	    w = np.squeeze(w)  # needed to get weights into keras
+
+	    # Dump numpy arrays
+	    np.save('x_fold{}.npy'.format(fold), x)
+	    np.save('y_fold{}.npy'.format(fold), y)
+	    np.save('weights_fold{}.npy'.format(fold), w)
 
 if __name__ == "__main__" and len(sys.argv) > 1:
     rootToNumpy()

@@ -1,6 +1,6 @@
 trainingssets:
-    - /home/peter/mount/data/fold0_MSSM_HWW_trainingsset.root
-    - /home/peter/mount/data/fold1_MSSM_HWW_trainingsset.root
+    - /net/scratch_cms3b/fackeldey/trainingssets/fold0_MSSM_HWW_trainingsset.root
+    - /net/scratch_cms3b/fackeldey/trainingssets/fold1_MSSM_HWW_trainingsset.root
 
 class_weights:
     hww120_300: 1.0
