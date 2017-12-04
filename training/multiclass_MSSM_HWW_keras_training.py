@@ -63,9 +63,10 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     model = KerasModels(n_features=len(config["features"]), n_classes=len(
         config["classes"]), learning_rate=args.learning_rate, plot_model=False, modelname="multiclass_model_fold{}.h5".format(args.fold))
-    multiclass_model = getattr(model, "multiclass_MSSM_HWW_model")
+    model.multiclass_MSSM_HWW_model()
+    #multiclass_model = getattr(model, "multiclass_MSSM_HWW_model")
 
-    multiclass_model.fit(
+    model.keras_fit(
         x_train,
         y_train,
         sample_weight=w_train,

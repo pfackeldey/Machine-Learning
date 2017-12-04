@@ -4,6 +4,8 @@ from keras.models import Sequential
 from keras.layers import Dense, Dropout, BatchNormalization, Activation
 from keras.optimizers import Adam
 
+
+
 __all__ = [
     "KerasModels"
 ]
@@ -20,6 +22,10 @@ class KerasModels:
         self.learning_rate = learning_rate
         self.plot_model = plot_model
         self.modelname = modelname
+
+    @static_method
+    def keras_fit(**kwargs):
+	fit(**kwargs)
 
     def example_model(self):
         """
@@ -83,7 +89,7 @@ class KerasModels:
             except:
                 print('[INFO] Failed to make model plot')
 
-    def multiclass_MSSM_HWW_model(self):
+    def multiclass_MSSM_HWW_model(self, fit):
         """
         Multiclassification model
         """
@@ -112,6 +118,7 @@ class KerasModels:
                 plot(model, to_file='model.png', show_shapes=True)
             except:
                 print('[INFO] Failed to make model plot')
+       fit()
 
     def multiclass_MSSM_HWW_testmodel(self):
         """
