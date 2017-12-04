@@ -38,10 +38,12 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     config = yaml.load(open(args.config, "r"))
 
+    folder = 'arrays/'
+
     # load trainings data and weights
-    x = np.load('x.npy')
-    y = np.load('y.npy')
-    w = np.load('weights.npy')
+    x = np.load(folder+'x_fold{}.npy'.format(args.fold))
+    y = np.load(folder+'y_fold{}.npy'.format(args.fold))
+    w = np.load(folder+'weights_fold{}.npy'.format(args.fold))
 
     # Split data in training and testing
     x_train, x_test, y_train, y_test, w_train, w_test = model_selection.train_test_split(

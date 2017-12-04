@@ -64,10 +64,14 @@ def rootToNumpy(args_from_script=None):
 	    w = np.vstack(w) * config["global_weight"]  # weights
 	    w = np.squeeze(w)  # needed to get weights into keras
 
+	    folder = 'arrays/'
+	    if not os.path.exists(folder):
+		os.makedirs(folder)
+
 	    # Dump numpy arrays
-	    np.save('x_fold{}.npy'.format(fold), x)
-	    np.save('y_fold{}.npy'.format(fold), y)
-	    np.save('weights_fold{}.npy'.format(fold), w)
+	    np.save(folder+'x_fold{}.npy'.format(fold), x)
+	    np.save(folder+'y_fold{}.npy'.format(fold), y)
+	    np.save(folder+'weights_fold{}.npy'.format(fold), w)
 
 if __name__ == "__main__" and len(sys.argv) > 1:
     rootToNumpy()
