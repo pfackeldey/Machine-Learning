@@ -41,7 +41,7 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_M270.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M300.root
         cut_string: "trigger==1"
-        weight_string: "1.0"
+        weight_string: "XSWeight"
         class: hww120_300
 
     hww350_750:
@@ -56,7 +56,7 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M700.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M750.root
         cut_string: "trigger==1"
-        weight_string: "1.0"
+        weight_string: "XSWeight"
         class: hww350_750
 
     hww800_3000:
@@ -69,7 +69,7 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2500.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M3000.root
         cut_string: "trigger==1"
-        weight_string: "1.0"
+        weight_string: "XSWeight"
         class: hww800_3000
 
     DY:
@@ -78,7 +78,7 @@ processes:
             - latino/latino_DYJetsToTT_MuEle_M-50__part0.root
             - latino/latino_DYJetsToTT_MuEle_M-50__part1.root
         cut_string: "trigger==1"
-        weight_string: "1.0"
+        weight_string: "XSWeight"
         class: DY
 
     WW:
@@ -86,7 +86,7 @@ processes:
             - latino/latino_GluGluWWTo2L2Nu_MCFM.root
             - latino/latino_WWTo2L2Nu.root
         cut_string: "trigger==1"
-        weight_string: "1.0"
+        weight_string: "XSWeight"
         class: WW
 
     VVV:
@@ -96,7 +96,7 @@ processes:
             - latino/latino_WZZ.root
             - latino/latino_ZZZ.root
         cut_string: "trigger==1"
-        weight_string: "1.0"
+        weight_string: "XSWeight"
         class: VVV
 
     DiBoson:
@@ -119,7 +119,7 @@ processes:
             - latino/latino_ZZTo2L2Q__part1.root
             - latino/latino_ZZTo2L2Q__part2.root
         cut_string: "trigger==1"
-        weight_string: "1.0"
+        weight_string: "XSWeight"
         class: DiBoson
 
     WJets:
@@ -202,8 +202,8 @@ processes:
             - wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
             - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
             - wjets_data/latino_MuonEG_Run2016E-03Feb2017-v1.root
-        cut_string: "trigger==1"
-        weight_string: "(fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(METFilter_DATA)"
+        cut_string: "(trigger==1)&&((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(METFilter_DATA)>0)"
+        weight_string: "1.0"
         class: WJets
 
     Top:
@@ -234,5 +234,5 @@ processes:
             - latino/latino_TTTo2L2Nu__part19.root
             - latino/latino_TTTo2L2Nu__part20.root
         cut_string: "trigger==1"
-        weight_string: "1.0"
+        weight_string: "XSWeight"
         class: Top
