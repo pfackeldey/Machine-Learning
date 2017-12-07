@@ -3,6 +3,7 @@
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, BatchNormalization, Activation
 from keras.optimizers import Adam, Nadam, SGD
+from keras import regularizers
 
 
 __all__ = [
@@ -93,20 +94,23 @@ class KerasModels():
         Multiclassification model
         """
         model = Sequential()
-        model.add(Dense(300, kernel_initializer='glorot_normal',
-                        input_dim=self.n_features))
-        model.add(Activation('selu'))
-	model.add(Dropout(0.5))
-        model.add(Dense(300, kernel_initializer='glorot_normal'))
-        model.add(Activation('selu'))
-        model.add(Dropout(0.5))
-        model.add(Dense(300, kernel_initializer='glorot_normal', activation='selu'))
-        model.add(Dense(self.n_classes, activation='softmax'))
+        model.add(Dense(512, input_dim=self.n_features, kernel_regularizer=regularizers.l2(0.001)))
+	model.add(BatchNormalization())
+        model.add(Activation('relu'))
+	model.add(Dropout(0.2))
+        model.add(Dense(512, kernel_regularizer=regularizers.l2(0.001)))
+	model.add(BatchNormalization())
+        model.add(Activation('relu'))
+	model.add(Dropout(0.2))
+        model.add(Dense(512, kernel_regularizer=regularizers.l2(0.001)))
+	model.add(BatchNormalization())
+        model.add(Activation('relu'))
+        model.add(Dense(self.n_classes, activation='sigmoid'))
 
         # Compile the model:
 
-        nadam = Nadam(lr=self.learning_rate)
-	model.compile(loss='binary_crossentropy', optimizer=nadam, metrics=['accuracy']) 
+        sgd = SGD(lr=self.learning_rate, decay=1e-6, momentum=0.95, nesterov=True)
+	model.compile(loss='binary_crossentropy', optimizer=sgd, metrics=['accuracy']) 
 
         model.summary()
 	"""
@@ -128,11 +132,13 @@ class KerasModels():
         model = Sequential()
         model.add(Dense(300, kernel_initializer='glorot_normal',
                         input_dim=self.n_features))
+	model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(Dense(300, kernel_initializer='glorot_normal'))
+	model.add(BatchNormalization())
         model.add(Activation('relu'))
-        model.add(Dropout(0.5))
-        model.add(Dense(300, kernel_initializer='glorot_normal', activation='selu'))
+        model.add(BatchNormalization())
+        model.add(Dense(300, kernel_initializer='glorot_normal', activation='relu'))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
