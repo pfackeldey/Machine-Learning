@@ -18,6 +18,7 @@ import utils.confusionmatrix
 
 from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
 
+
 def multiclassNeuralNetwork(args_from_script=None):
 
     parser = argparse.ArgumentParser(description="Perform multiclassification NN training with Keras.",
@@ -51,7 +52,7 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     # Add callbacks
     callbacks = []
-    #callbacks.append(TensorBoard(log_dir='/home/mf278754/master/logs',
+    # callbacks.append(TensorBoard(log_dir='/home/mf278754/master/logs',
     #                             histogram_freq=1, write_graph=True, write_images=True))
     callbacks.append(
         ModelCheckpoint(filepath="fold{}_multiclass_model.h5".format(args.fold), save_best_only=True, verbose=1))
@@ -78,24 +79,13 @@ def multiclassNeuralNetwork(args_from_script=None):
     if not os.path.exists(folder_result):
         os.makedirs(folder_result)
 
-    # plot loss
-    f = plt.figure()
-    plt.plot(fit.history["loss"])
-    plt.plot(fit.history["val_loss"])
-    plt.xlabel("epochs")
-    plt.ylabel("loss")
-    plt.legend(["training loss", "validation loss"], loc="best")
-    f.savefig(folder_result+"loss.png")
+    # dump loss and accuracy to numpy arrays
+    np.save(folder_result + 'loss.npy', fit.history["loss"])
+    np.save(folder_result + 'val_loss.npy', fit.history["val_loss"])
+    np.save(folder_result + 'acc.npy', fit.history["acc"])
+    np.save(folder_result + 'val_acc.npy', fit.history["val_acc"])
 
-    # plot accuracy
-    f = plt.figure()
-    plt.plot(fit.history["acc"])
-    plt.plot(fit.history["val_acc"])
-    plt.xlabel("epochs")
-    plt.ylabel("accuracy")
-    plt.legend(["training accuracy", "validation accuracy"], loc="best")
-    f.savefig(folder_result+"accuracy.png")
-
+    """
     # testing
     [loss, accuracy] = model.evaluate(x_test, y_test, verbose=0)
 
@@ -106,10 +96,11 @@ def multiclassNeuralNetwork(args_from_script=None):
     Yp = model.predict(x_test)
     yp = np.argmax(Yp, axis=1)
 
-    # plot confusion matrix
-    #plot_confusion(yp, y_test, config["classes"],
-     #              fname=folder_result + 'confusion.png')
+    plot confusion matrix
+    plot_confusion(yp, y_test, config["classes"],
+                  fname=folder_result + 'confusion.png')
+    """
 
 
 if __name__ == "__main__" and len(sys.argv) > 1:
-        multiclassNeuralNetwork()
+    multiclassNeuralNetwork()
