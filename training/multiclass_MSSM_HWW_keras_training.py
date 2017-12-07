@@ -18,18 +18,17 @@ import utils.confusionmatrix
 
 from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
 
-
 def multiclassNeuralNetwork(args_from_script=None):
 
     parser = argparse.ArgumentParser(description="Perform multiclassification NN training with Keras.",
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
     parser.add_argument("--fold", default=0, choices=[0, 1],
                         help="Training fold. [Default: %(default)s]")
-    parser.add_argument("--epochs", default=150,
+    parser.add_argument("--epochs", default=50,
                         help="Number of training epochs. [Default: %(default)s]")
-    parser.add_argument("--learning-rate", default=0.00005,
+    parser.add_argument("--learning-rate", default=0.001,
                         help="Learning rate of NN. [Default: %(default)s]")
-    parser.add_argument("--batch-size", default=7500,
+    parser.add_argument("--batch-size", default=10000,
                         help="Batch size for training. [Default: %(default)s]")
     parser.add_argument("--early-stopping", default=False, action='store_true',
                         help="Stop training if loss increases again. [Default: %(default)s]")
@@ -38,12 +37,13 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     config = yaml.load(open(args.config, "r"))
 
-    folder = '/home/peter/mount/data/arrays/'
+    folder = '/home/mf278754/master/arrays/'
 
     # load trainings data and weights
     x = np.load(folder + 'x_fold{}.npy'.format(args.fold))
     y = np.load(folder + 'y_fold{}.npy'.format(args.fold))
     w = np.load(folder + 'weights_fold{}.npy'.format(args.fold))
+    w = w * config["global_weight"]
 
     # Split data in training and testing
     x_train, x_test, y_train, y_test, w_train, w_test = model_selection.train_test_split(
@@ -51,8 +51,8 @@ def multiclassNeuralNetwork(args_from_script=None):
 
     # Add callbacks
     callbacks = []
-    callbacks.append(TensorBoard(log_dir='./logs',
-                                 histogram_freq=1, write_graph=True, write_images=True))
+    #callbacks.append(TensorBoard(log_dir='/home/mf278754/master/logs',
+    #                             histogram_freq=1, write_graph=True, write_images=True))
     callbacks.append(
         ModelCheckpoint(filepath="fold{}_multiclass_model.h5".format(args.fold), save_best_only=True, verbose=1))
     if args.early_stopping:
@@ -74,6 +74,10 @@ def multiclassNeuralNetwork(args_from_script=None):
         shuffle=True,
         callbacks=callbacks)
 
+    folder_result = '/home/mf278754/master/results/'
+    if not os.path.exists(folder_result):
+        os.makedirs(folder_result)
+
     # plot loss
     f = plt.figure()
     plt.plot(fit.history["loss"])
@@ -81,7 +85,7 @@ def multiclassNeuralNetwork(args_from_script=None):
     plt.xlabel("epochs")
     plt.ylabel("loss")
     plt.legend(["training loss", "validation loss"], loc="best")
-    f.savefig("loss.png")
+    f.savefig(folder_result+"loss.png")
 
     # plot accuracy
     f = plt.figure()
@@ -90,7 +94,7 @@ def multiclassNeuralNetwork(args_from_script=None):
     plt.xlabel("epochs")
     plt.ylabel("accuracy")
     plt.legend(["training accuracy", "validation accuracy"], loc="best")
-    f.savefig("accuracy.png")
+    f.savefig(folder_result+"accuracy.png")
 
     # testing
     [loss, accuracy] = model.evaluate(x_test, y_test, verbose=0)
@@ -102,19 +106,10 @@ def multiclassNeuralNetwork(args_from_script=None):
     Yp = model.predict(x_test)
     yp = np.argmax(Yp, axis=1)
 
-    folder = 'results/'
-    if not os.path.exists(folder):
-        os.makedirs(folder)
-
     # plot confusion matrix
-    plot_confusion(yp, y_test, config["classes"],
-                   fname=folder + 'confusion.png')
+    #plot_confusion(yp, y_test, config["classes"],
+     #              fname=folder_result + 'confusion.png')
 
 
 if __name__ == "__main__" and len(sys.argv) > 1:
-    try:
-        import tensorflow as tf
-        tf.python.control_flow_ops = tf
-        multiclassNeuralNetwork()
-    except AttributeError:
         multiclassNeuralNetwork()

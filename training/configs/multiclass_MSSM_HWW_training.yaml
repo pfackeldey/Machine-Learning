@@ -26,7 +26,7 @@ classes:
 
 output_path: /home/peter/mount/data
 
-global_weight: 1.
+global_weight: 100.
 
 event_weights: training_weight
 
