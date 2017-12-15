@@ -1,0 +1,60 @@
+#!/usr/bin/env zsh
+
+### Give the job a name, will be displayed in bjobs  default: Job_with_no_name
+#BSUB -J test_theano_env_setup.job
+
+### Max execution time in   hour:minutes   default: 00:15
+#BSUB -W 24:00
+
+### Max memory per core (RAM) in MB default: 512
+### the product of numbers of cores and max memory has to be < 126000
+#BSUB -M 5000
+
+### number of cores [1-24] default: 1
+#BSUB -n 12
+# give a path for log and error file. %J is Job number %I is Job index
+#BSUB -o /home/mf278754/master/output/out.out
+#BSUB -e /home/mf278754/master/output/out.err
+
+### these options are needed to run on our mashine
+### use -a gpu if -n = 1 or default
+### use -a "gpu openmp" if -n > 1
+#BSUB -a "gpu openmp"
+#BSUB -R pascal
+#BSUB -P phys3b
+
+### set up stuff
+
+##source /cvmfs/sft.cern.ch/lcg/views/LCG_91/x86_64-slc6-gcc62-opt/setup.sh
+##. /cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.10.08/x86_64-centos7-gcc48-opt/root/bin/thisroot.sh
+source /home/phys3b/Envs/keras_tf_sharedUsers/bin/activate
+##source /cvmfs/sft.cern.ch/lcg/views/LCG_91/x86_64-slc6-gcc62-opt/setup.sh
+##. /cvmfs/sft.cern.ch/lcg/app/releases/ROOT/6.08.06/x86_64-centos7-gcc48-opt/root/bin/thisroot.sh
+
+# If you want to use your own .theanorc
+#export THEANORC=~/.theanorc
+
+export CUDA_VISIBLE_DEVICES=`/home/phys3b/etc/check_gpu.py  2`
+if [ '$CUDA_VISIBLE_DEVICES' = '-1' ];
+then
+echo '##### GPUs busy. Restart job later.' exit 1
+else
+echo 'Found free GPU devices :'
+echo 'CUDA_VISIBLE_DEVICES =  $CUDA_VISIBLE_DEVICES '
+fi
+
+##echo ""
+##echo "\n\nDeviceQuery:\n"
+##/home/phys3b/test/test_cuda_examples/NVIDIA_CUDA-8.0_Samples/bin/x86_64/linux/release/deviceQuery
+echo "\n\nnvidia-smi\n"
+nvidia-smi
+
+#echo "\n\nyour pygpu installation:"
+
+
+#echo "\n\nTest pygpu\n"
+#export DEVICE="cuda1"
+
+#export CUDA_VISIBLE_DEVICES="0"
+
+python /home/mf278754/master/Machine-Learning/training/multiclass_MSSM_HWW_keras_training.py /home/mf278754/master/Machine-Learning/training/configs/multiclass_MSSM_HWW_training.yaml
