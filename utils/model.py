@@ -97,7 +97,7 @@ class KerasModels():
         model.add(Dense(128, input_dim=self.n_features, kernel_regularizer=regularizers.l2(0.0001)))
 	    #model.add(BatchNormalization())
         model.add(Activation('selu'))
-	    model.add(Dropout(0.3))
+        model.add(Dropout(0.3))
         model.add(Dense(128, kernel_regularizer=regularizers.l2(0.0001)))
 	    #model.add(BatchNormalization())
         model.add(Activation('selu'))
