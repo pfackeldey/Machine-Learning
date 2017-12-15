@@ -6,31 +6,21 @@ import json
 import os
 import yaml
 
+FOLD = 0
+
 config = yaml.load(open(
     "/home/peter/Machine-Learning/training/configs/multiclass_MSSM_HWW_training.yaml", "r"))
 
-# load acc and loss
-#loss = np.load('loss.npy')
-#val_loss = np.load('val_loss.npy')
-#acc = np.load('acc.npy')
-#val_acc = np.load('val_acc.npy')
-
-FOLD = 0
 # load testing data
 x_test = np.load(
     '/home/peter/Machine-Learning/arrays/x_test_fold{}.npy'.format(FOLD))
 y_test = np.load(
     '/home/peter/Machine-Learning/arrays/y_test_fold{}.npy'.format(FOLD))
 
-
+# load model
 from keras.models import load_model
 model = load_model(
     '/home/peter/Machine-Learning/fold{}_multiclass_model.h5'.format(FOLD))
-# testing
-#[loss, accuracy] = model.evaluate(x_test, y_test, verbose=1)
-
-#val_loss = val_loss[-1]
-#val_accuracy = val_acc[-1]
 
 # predicted probabilities for the test set
 Yp = model.predict(x_test, verbose=1)
@@ -47,7 +37,7 @@ from sklearn.metrics import confusion_matrix
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
                           title='Confusion matrix',
-                          cmap=plt.cm.Blues):
+                          cmap=plt.cm.gist_heat):
     """
     This function prints and plots the confusion matrix.
     Normalization can be applied by setting `normalize=True`.
