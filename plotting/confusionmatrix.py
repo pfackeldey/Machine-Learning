@@ -22,8 +22,14 @@ from keras.models import load_model
 model = load_model(
     '/home/peter/Machine-Learning/fold{}_multiclass_model.h5'.format(FOLD))
 
+
+# preprocessing
+from sklearn import preprocessing
+scaler = preprocessing.StandardScaler().fit(x_test)
+x_test_scaled = scaler.transform(x_test)
+
 # predicted probabilities for the test set
-Yp = model.predict(x_test, verbose=1)
+Yp = model.predict(x_test_scaled, verbose=1)
 
 # to label
 yp = np.argmax(Yp, axis=-1)
@@ -37,7 +43,7 @@ from sklearn.metrics import confusion_matrix
 def plot_confusion_matrix(cm, classes,
                           normalize=False,
                           title='Confusion matrix',
-                          cmap=plt.cm.gist_heat):
+                          cmap=plt.cm.viridis):
     """
     This function prints and plots the confusion matrix.
     Normalization can be applied by setting `normalize=True`.
