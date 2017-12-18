@@ -113,7 +113,7 @@ class KerasModels():
 	    model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
         model.summary()
-	"""
+	    """
         model.save(self.modelname)
         if self.plot_model:
             # Visualize model as graph
@@ -122,7 +122,7 @@ class KerasModels():
                 plot(model, to_file='model.png', show_shapes=True)
             except:
                 print('[INFO] Failed to make model plot')
-	"""
+	    """
         return model
 
     def multiclass_MSSM_HWW_testmodel(self):
