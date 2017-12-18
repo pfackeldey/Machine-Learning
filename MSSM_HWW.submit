@@ -57,4 +57,4 @@ nvidia-smi
 
 #export CUDA_VISIBLE_DEVICES="0"
 
-python /home/mf278754/master/Machine-Learning/training/multiclass_MSSM_HWW_keras_training.py /home/mf278754/master/Machine-Learning/training/configs/multiclass_MSSM_HWW_training.yaml
+python /home/mf278754/master/Machine-Learning/training/train.py /home/mf278754/master/Machine-Learning/config/MSSM_HWW.yaml
