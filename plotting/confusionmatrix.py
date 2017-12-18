@@ -9,18 +9,18 @@ import yaml
 FOLD = 0
 
 config = yaml.load(open(
-    "/home/peter/Machine-Learning/training/configs/multiclass_MSSM_HWW_training.yaml", "r"))
+    "~/Machine-Learning/config/MSSM_HWW.yaml", "r"))
 
 # load testing data
 x_test = np.load(
-    '/home/peter/Machine-Learning/arrays/x_test_fold{}.npy'.format(FOLD))
+    '~/Machine-Learning/arrays/x_test_fold{}.npy'.format(FOLD))
 y_test = np.load(
-    '/home/peter/Machine-Learning/arrays/y_test_fold{}.npy'.format(FOLD))
+    '~/Machine-Learning/arrays/y_test_fold{}.npy'.format(FOLD))
 
 # load model
 from keras.models import load_model
 model = load_model(
-    '/home/peter/Machine-Learning/fold{}_multiclass_model.h5'.format(FOLD))
+    '~/Machine-Learning/fold{}_multiclass_model.h5'.format(FOLD))
 
 
 # preprocessing

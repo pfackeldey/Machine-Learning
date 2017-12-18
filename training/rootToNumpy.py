@@ -64,7 +64,7 @@ def rootToNumpy(args_from_script=None):
 	    w = np.vstack(w) * config["global_weight"]  # weights
 	    w = np.squeeze(w)  # needed to get weights into keras
 
-	    folder = 'arrays/'
+	    folder = '~/Machine-Learning/arrays/'
 	    if not os.path.exists(folder):
 		os.makedirs(folder)
 
@@ -75,4 +75,3 @@ def rootToNumpy(args_from_script=None):
 
 if __name__ == "__main__" and len(sys.argv) > 1:
     rootToNumpy()
-    

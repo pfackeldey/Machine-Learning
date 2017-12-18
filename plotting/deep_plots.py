@@ -6,10 +6,10 @@ import json
 import os
 
 # load acc and loss
-loss = np.load('loss.npy')
-val_loss = np.load('val_loss.npy')
-acc = np.load('acc.npy')
-val_acc = np.load('val_acc.npy'])
+loss = np.load('~/Machine-Learning/results/loss.npy')
+val_loss = np.load('~/Machine-Learning/results/val_loss.npy')
+acc = np.load('~/Machine-Learning/results/acc.npy')
+val_acc = np.load('~/Machine-Learning/results/val_acc.npy'])
 
 # plot loss
 f = plt.figure()
