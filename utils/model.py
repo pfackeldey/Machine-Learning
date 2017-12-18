@@ -95,25 +95,25 @@ class KerasModels():
         """
         model = Sequential()
         model.add(Dense(128, input_dim=self.n_features, kernel_regularizer=regularizers.l2(0.0001)))
-	    #model.add(BatchNormalization())
+        #model.add(BatchNormalization())
         model.add(Activation('selu'))
         model.add(Dropout(0.3))
         model.add(Dense(128, kernel_regularizer=regularizers.l2(0.0001)))
-	    #model.add(BatchNormalization())
+        #model.add(BatchNormalization())
         model.add(Activation('selu'))
         model.add(Dropout(0.3))
         model.add(Dense(128, kernel_regularizer=regularizers.l2(0.0001)))
-    	#model.add(BatchNormalization())
+        #model.add(BatchNormalization())
         model.add(Activation('selu'))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
 
         sgd = SGD(lr=self.learning_rate, momentum=0.95, decay=1e-5, nesterov=True)
-	    model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
+        model.compile(loss='categorical_crossentropy', optimizer=sgd, metrics=['accuracy'])
 
         model.summary()
-	    """
+        """
         model.save(self.modelname)
         if self.plot_model:
             # Visualize model as graph
@@ -122,7 +122,7 @@ class KerasModels():
                 plot(model, to_file='model.png', show_shapes=True)
             except:
                 print('[INFO] Failed to make model plot')
-	    """
+        """
         return model
 
     def multiclass_MSSM_HWW_testmodel(self):
@@ -132,10 +132,10 @@ class KerasModels():
         model = Sequential()
         model.add(Dense(300, kernel_initializer='glorot_normal',
                         input_dim=self.n_features))
-	    model.add(BatchNormalization())
+        model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(Dense(300, kernel_initializer='glorot_normal'))
-	    model.add(BatchNormalization())
+        model.add(BatchNormalization())
         model.add(Activation('relu'))
         model.add(BatchNormalization())
         model.add(Dense(300, kernel_initializer='glorot_normal', activation='relu'))
