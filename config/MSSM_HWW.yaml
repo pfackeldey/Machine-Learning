@@ -24,7 +24,7 @@ training_weight_branch: "training_weight"
 
 # Define the processes and the according files
 processes:
-    hww120_300:
+    hww120_200:
         files:
             - latino/latino_GluGluHToWWTo2L2Nu_M120.root
             - latino/latino_GluGluHToWWTo2L2Nu_M125.root
@@ -41,32 +41,32 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_M180.root
             - latino/latino_GluGluHToWWTo2L2Nu_M190.root
             - latino/latino_GluGluHToWWTo2L2Nu_M200.root
+        cut_string: "trigger==1"
+        weight_string: "1.0"
+        class: hww120_200
+
+    hww210_500:
+        files:
             - latino/latino_GluGluHToWWTo2L2Nu_M210.root
             - latino/latino_GluGluHToWWTo2L2Nu_M230.root
             - latino/latino_GluGluHToWWTo2L2Nu_M250.root
             - latino/latino_GluGluHToWWTo2L2Nu_M270.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M300.root
-        cut_string: "trigger==1"
-        weight_string: "XSWeight"
-        class: hww120_300
-
-    hww350_750:
-        files:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M350.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M400.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M450.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M500.root
+        cut_string: "trigger==1"
+        weight_string: "1.0"
+        class: hww210_500
+
+    hww550_3000:
+        files:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M550.root
             #- latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M600.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M650.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M700.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M750.root
-        cut_string: "trigger==1"
-        weight_string: "XSWeight"
-        class: hww350_750
-
-    hww800_3000:
-        files:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M800.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M900.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M1000.root
@@ -75,8 +75,8 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2500.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M3000.root
         cut_string: "trigger==1"
-        weight_string: "XSWeight"
-        class: hww800_3000
+        weight_string: "1.0"
+        class: hww550_3000
 
     DY:
         files:
@@ -84,7 +84,7 @@ processes:
             - latino/latino_DYJetsToTT_MuEle_M-50__part0.root
             - latino/latino_DYJetsToTT_MuEle_M-50__part1.root
         cut_string: "trigger==1"
-        weight_string: "XSWeight"
+        weight_string: "1.0"
         class: DY
 
     WW:
@@ -92,7 +92,7 @@ processes:
             - latino/latino_GluGluWWTo2L2Nu_MCFM.root
             - latino/latino_WWTo2L2Nu.root
         cut_string: "trigger==1"
-        weight_string: "XSWeight"
+        weight_string: "1.0"
         class: WW
 
     VVV:
@@ -102,7 +102,7 @@ processes:
             - latino/latino_WZZ.root
             - latino/latino_ZZZ.root
         cut_string: "trigger==1"
-        weight_string: "XSWeight"
+        weight_string: "1.0"
         class: VVV
 
     DiBoson:
@@ -125,7 +125,7 @@ processes:
             - latino/latino_ZZTo2L2Q__part1.root
             - latino/latino_ZZTo2L2Q__part2.root
         cut_string: "trigger==1"
-        weight_string: "XSWeight"
+        weight_string: "1.0"
         class: DiBoson
 
     WJets:
@@ -208,7 +208,7 @@ processes:
             - wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
             - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
             - wjets_data/latino_MuonEG_Run2016E-03Feb2017-v1.root
-        cut_string: "(trigger==1)&&((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(METFilter_DATA)>0)"
+        cut_string: "(trigger==1)&&((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA)>0)"
         weight_string: "1.0"
         class: WJets
 
@@ -240,8 +240,92 @@ processes:
             - latino/latino_TTTo2L2Nu__part19.root
             - latino/latino_TTTo2L2Nu__part20.root
         cut_string: "trigger==1"
-        weight_string: "XSWeight"
+        weight_string: "1.0"
         class: Top
+
+    WJets:
+        files:
+            - data/latino_SingleElectron_Run2016F-03Feb2017-v1.root
+            - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
+            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
+            - data/latino_MET_Run2016H-03Feb2017_ver2-v1.root
+            - data/latino_SingleElectron_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
+            - data/latino_MET_Run2016D-03Feb2017-v1.root
+            - data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_SingleElectron_Run2016D-03Feb2017-v1.root
+            - data/latino_DoubleEG_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
+            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
+            - data/latino_SingleMuon_Run2016C-03Feb2017-v1__part0.root
+            - data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_SingleMuon_Run2016D-03Feb2017-v1__part1.root
+            - data/latino_SingleMuon_Run2016E-03Feb2017-v1__part0.root
+            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part2.root
+            - data/latino_DoubleEG_Run2016E-03Feb2017-v1.root
+            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
+            - data/latino_SingleElectron_Run2016E-03Feb2017-v1.root
+            - data/latino_MET_Run2016E-03Feb2017-v1.root
+            - data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part1.root
+            - data/latino_MET_Run2016B-03Feb2017_ver2-v2.root
+            - data/latino_MET_Run2016G-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016G-03Feb2017-v1__part1.root
+            - data/latino_MET_Run2016C-03Feb2017-v1.root
+            - data/latino_DoubleEG_Run2016F-03Feb2017-v1.root
+            - data/latino_MuonEG_Run2016H-03Feb2017_ver2-v1.root
+            - data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part0.root
+            - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
+            - data/latino_SingleMuon_Run2016F-03Feb2017-v1__part1.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
+            - data/latino_MuonEG_Run2016F-03Feb2017-v1.root
+            - data/latino_MET_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
+            - data/latino_MuonEG_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_DoubleEG_Run2016C-03Feb2017-v1.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part3.root
+            - data/latino_MuonEG_Run2016C-03Feb2017-v1.root
+            - data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part1.root
+            - data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2__part0.root
+            - data/latino_SingleElectron_Run2016C-03Feb2017-v1.root
+            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part1.root
+            - data/latino_SingleMuon_Run2016E-03Feb2017-v1__part1.root
+            - data/latino_DoubleEG_Run2016G-03Feb2017-v1__part1.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
+            - data/latino_MuonEG_Run2016G-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_MuonEG_Run2016B-03Feb2017_ver2-v2.root
+            - data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part1.root
+            - data/latino_DoubleEG_Run2016D-03Feb2017-v1.root
+            - data/latino_DoubleEG_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part0.root
+            - data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part1.root
+            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part3.root
+            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part1.root
+            - data/latino_MuonEG_Run2016D-03Feb2017-v1.root
+            - data/latino_SingleMuon_Run2016F-03Feb2017-v1__part0.root
+            - data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2__part1.root
+            - data/latino_MET_Run2016F-03Feb2017-v1.root
+            - data/latino_SingleMuon_Run2016D-03Feb2017-v1__part0.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part0.root
+            - data/latino_SingleElectron_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part1.root
+            - data/latino_SingleMuon_Run2016C-03Feb2017-v1__part1.root
+            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part2.root
+            - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
+            - data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
+            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_MuonEG_Run2016E-03Feb2017-v1.root
+        cut_string: "(trigger==1)"
+        weight_string: "1.0"
+        class: WJets
 
 #################################################################
 #                                                               #
