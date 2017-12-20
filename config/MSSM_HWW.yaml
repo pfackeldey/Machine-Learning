@@ -42,7 +42,7 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_M190.root
             - latino/latino_GluGluHToWWTo2L2Nu_M200.root
         cut_string:     "trigger==1"
-        weight_string:  "1.0"
+        weight_string:  "XSweight*SFweight2l*GenLepMatch2l*METFilter_MC"
         class:          hww120_200
 
     hww210_500:
@@ -57,7 +57,7 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M450.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M500.root
         cut_string:     "trigger==1"
-        weight_string:  "1.0"
+        weight_string:  "XSweight*SFweight2l*GenLepMatch2l*METFilter_MC"
         class:          hww210_500
 
     hww550_3000:
@@ -75,7 +75,7 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2500.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M3000.root
         cut_string:     "trigger==1"
-        weight_string:  "1.0"
+        weight_string:  "XSweight*SFweight2l*GenLepMatch2l*METFilter_MC"
         class:          hww550_3000
 
     DY:
@@ -84,7 +84,7 @@ processes:
             - latino/latino_DYJetsToTT_MuEle_M-50__part0.root
             - latino/latino_DYJetsToTT_MuEle_M-50__part1.root
         cut_string:     "trigger==1"
-        weight_string:  "1.0"
+        weight_string:  "XSweight*SFweight2l*GenLepMatch2l*METFilter_MC"
         class:          DY
 
     WW:
@@ -92,7 +92,7 @@ processes:
             - latino/latino_GluGluWWTo2L2Nu_MCFM.root
             - latino/latino_WWTo2L2Nu.root
         cut_string:     "trigger==1"
-        weight_string:  "1.0"
+        weight_string:  "XSweight*SFweight2l*GenLepMatch2l*METFilter_MC*nllW"
         class:          WW
 
     VVV:
@@ -102,7 +102,7 @@ processes:
             - latino/latino_WZZ.root
             - latino/latino_ZZZ.root
         cut_string:     "trigger==1"
-        weight_string:  "1.0"
+        weight_string:  "XSweight*SFweight2l*GenLepMatch2l*METFilter_MC"
         class:          VVV
 
     DiBoson:
@@ -125,7 +125,7 @@ processes:
             - latino/latino_ZZTo2L2Q__part1.root
             - latino/latino_ZZTo2L2Q__part2.root
         cut_string:     "trigger==1"
-        weight_string:  "1.0"
+        weight_string:  "XSweight*SFweight2l*GenLepMatch2l*METFilter_MC*1.11"
         class:          DiBoson
 
     WJets:
@@ -240,7 +240,7 @@ processes:
             - latino/latino_TTTo2L2Nu__part19.root
             - latino/latino_TTTo2L2Nu__part20.root
         cut_string:     "trigger==1"
-        weight_string:  "1.0"
+        weight_string:  "XSweight*SFweight2l*GenLepMatch2l*METFilter_MC"
         class:          Top
 
     data:
@@ -324,7 +324,7 @@ processes:
             - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
             - data/latino_MuonEG_Run2016E-03Feb2017-v1.root
         cut_string:     "(trigger==1)"
-        weight_string:  "1.0"
+        weight_string:  "veto_EMTFBug*METFilter_DATA*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x"
         class:          data
 
 #################################################################
@@ -340,7 +340,7 @@ trainingssets:
 class_weights:
     hww120_300:         1.0
     hww350_750:         1.0
-    hww800_3000:        10.0
+    hww800_3000:        1.0
     DY:                 1.0
     WW:                 1.0
     VVV:                1.0
