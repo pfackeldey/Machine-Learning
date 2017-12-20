@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 
 import ROOT
-ROOT.PyConfig.IgnoreCommandLineOptions = True  # disable ROOT internal argument parser
+# disable ROOT internal argument parser
+ROOT.PyConfig.IgnoreCommandLineOptions = True
 
 import argparse
 from array import array
@@ -19,7 +20,6 @@ def keras_evaluation(args_from_script=None):
     parser.add_argument("--tree", help="Name of tree.")
     args = parser.parse_args()
 
-
     # Load keras model and preprocessing
     classifiers = []
     for c in config["classifiers"]:
@@ -29,9 +29,10 @@ def keras_evaluation(args_from_script=None):
     FOLD = 0
     input_files = config["trainingssets"]
     # Open input file and register branches with input and output variables
-    file_ = ROOT.TFile(input_files[0 if FOLD==1 else 1], "UPDATE")
+    file_ = ROOT.TFile(input_files[0 if FOLD == 1 else 1], "UPDATE")
     if file_ == None:
-        raise Exception("File is not existent: {}".format(config["input_file"]))
+        raise Exception(
+            "File is not existent: {}".format(config["input_file"]))
 
     tree = file_.Get(args.tree)
     if tree == None:

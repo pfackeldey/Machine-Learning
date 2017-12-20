@@ -11,3 +11,4 @@ MSSM_training/
 arrays/
 results/
 plotting/.ipynb_checkpoints/
+*.txt

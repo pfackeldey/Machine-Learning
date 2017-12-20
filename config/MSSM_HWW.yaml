@@ -5,19 +5,19 @@
 #####################################################
 
 # Path to output directory
-output_path: /net/scratch_cms3b/fackeldey/trainingssets/
+output_path_creation:   /net/scratch_cms3b/fackeldey/trainingssets/
 
 # Filename postfix of merged training dataset
-output_filename: "MSSM_HWW_trainingsset.root"
+output_filename:        "MSSM_HWW_trainingsset.root"
 
 # Path to nominal ntuple in files
-tree_path: "latino"
+tree_path:              "latino"
 
 # Base path prefix for processes files
-base_path: /net/scratch_cms3b/fackeldey/artus/HWW/
+base_path:              /net/scratch_cms3b/fackeldey/artus/HWW/
 
 # Branch in all files holding the event number used for creating the folds
-event_branch: "event"
+event_branch:           "event"
 
 # Branch to be added with training weights generated from formula using the weight string
 training_weight_branch: "training_weight"
@@ -41,9 +41,9 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_M180.root
             - latino/latino_GluGluHToWWTo2L2Nu_M190.root
             - latino/latino_GluGluHToWWTo2L2Nu_M200.root
-        cut_string: "trigger==1"
-        weight_string: "1.0"
-        class: hww120_200
+        cut_string:     "trigger==1"
+        weight_string:  "1.0"
+        class:          hww120_200
 
     hww210_500:
         files:
@@ -56,9 +56,9 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M400.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M450.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M500.root
-        cut_string: "trigger==1"
-        weight_string: "1.0"
-        class: hww210_500
+        cut_string:     "trigger==1"
+        weight_string:  "1.0"
+        class:          hww210_500
 
     hww550_3000:
         files:
@@ -74,26 +74,26 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2000.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2500.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M3000.root
-        cut_string: "trigger==1"
-        weight_string: "1.0"
-        class: hww550_3000
+        cut_string:     "trigger==1"
+        weight_string:  "1.0"
+        class:          hww550_3000
 
     DY:
         files:
             - latino/latino_DYJetsToLL_M-10to50.root
             - latino/latino_DYJetsToTT_MuEle_M-50__part0.root
             - latino/latino_DYJetsToTT_MuEle_M-50__part1.root
-        cut_string: "trigger==1"
-        weight_string: "1.0"
-        class: DY
+        cut_string:     "trigger==1"
+        weight_string:  "1.0"
+        class:          DY
 
     WW:
         files:
             - latino/latino_GluGluWWTo2L2Nu_MCFM.root
             - latino/latino_WWTo2L2Nu.root
-        cut_string: "trigger==1"
-        weight_string: "1.0"
-        class: WW
+        cut_string:     "trigger==1"
+        weight_string:  "1.0"
+        class:          WW
 
     VVV:
         files:
@@ -101,9 +101,9 @@ processes:
             - latino/latino_WWZ.root
             - latino/latino_WZZ.root
             - latino/latino_ZZZ.root
-        cut_string: "trigger==1"
-        weight_string: "1.0"
-        class: VVV
+        cut_string:     "trigger==1"
+        weight_string:  "1.0"
+        class:          VVV
 
     DiBoson:
         files:
@@ -124,9 +124,9 @@ processes:
             - latino/latino_ZZTo2L2Q__part0.root
             - latino/latino_ZZTo2L2Q__part1.root
             - latino/latino_ZZTo2L2Q__part2.root
-        cut_string: "trigger==1"
-        weight_string: "1.0"
-        class: DiBoson
+        cut_string:     "trigger==1"
+        weight_string:  "1.0"
+        class:          DiBoson
 
     WJets:
         files:
@@ -208,9 +208,9 @@ processes:
             - wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
             - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
             - wjets_data/latino_MuonEG_Run2016E-03Feb2017-v1.root
-        cut_string: "(trigger==1)&&((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA)>0)"
-        weight_string: "1.0"
-        class: WJets
+        cut_string:     "(trigger==1)&&((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA)>0)"
+        weight_string:  "1.0"
+        class:          WJets
 
     Top:
         files:
@@ -239,11 +239,11 @@ processes:
             - latino/latino_TTTo2L2Nu__part18.root
             - latino/latino_TTTo2L2Nu__part19.root
             - latino/latino_TTTo2L2Nu__part20.root
-        cut_string: "trigger==1"
-        weight_string: "1.0"
-        class: Top
+        cut_string:     "trigger==1"
+        weight_string:  "1.0"
+        class:          Top
 
-    WJets:
+    data:
         files:
             - data/latino_SingleElectron_Run2016F-03Feb2017-v1.root
             - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
@@ -323,9 +323,9 @@ processes:
             - data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
             - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
             - data/latino_MuonEG_Run2016E-03Feb2017-v1.root
-        cut_string: "(trigger==1)"
-        weight_string: "1.0"
-        class: WJets
+        cut_string:     "(trigger==1)"
+        weight_string:  "1.0"
+        class:          data
 
 #################################################################
 #                                                               #
@@ -338,15 +338,15 @@ trainingssets:
     - /net/scratch_cms3b/fackeldey/trainingssets/fold1_MSSM_HWW_trainingsset.root
 
 class_weights:
-    hww120_300: 1.0
-    hww350_750: 1.0
-    hww800_3000: 10.0
-    DY: 1.0
-    WW: 1.0
-    VVV: 1.0
-    DiBoson: 1.0
-    WJets: 1.0
-    Top: 1.0
+    hww120_300:         1.0
+    hww350_750:         1.0
+    hww800_3000:        10.0
+    DY:                 1.0
+    WW:                 1.0
+    VVV:                1.0
+    DiBoson:            1.0
+    WJets:              1.0
+    Top:                1.0
 
 classes:
     - hww120_300
@@ -359,11 +359,11 @@ classes:
     - WJets
     - Top
 
-output_path: /home/peter/mount/data
+output_path:            /home/peter/mount/data
 
-global_weight: 100.
+global_weight:          100.
 
-event_weights: training_weight
+event_weights:          training_weight
 
 #features = training variables
 features:
@@ -394,7 +394,7 @@ features:
     - jetpt1
     - jetpt2
 
-train_test_split: 0.75
+train_test_split:       0.75
 
 
 
@@ -410,4 +410,4 @@ classifiers:
     - fold0_multiclass_model.h5
 
 # Prefix of new branches with method's responses
-branch_prefix: "ml_score_"
+branch_prefix:          "ml_score_"

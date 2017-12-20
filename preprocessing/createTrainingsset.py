@@ -22,7 +22,7 @@ logger.addHandler(handler)
 
 def createTrainingsset(args_from_script=None):
 
-    parser = argparse.ArgumentParser(description="Perform multiclassification NN training with kPyKeras (TMVA).",
+    parser = argparse.ArgumentParser(description="Create a trainingsset.",
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
     parser.add_argument("config", help="Path to createTrainingsset config")
     args = parser.parse_args()
@@ -39,7 +39,7 @@ def createTrainingsset(args_from_script=None):
 
             # Create output file
             created_files.append(
-                os.path.join(config["output_path"],
+                os.path.join(config["output_path_creation"],
                              "merge_fold{}_{}.root".format(num_fold, process)))
             file_ = ROOT.TFile(created_files[-1], "RECREATE")
 
@@ -99,7 +99,7 @@ def createTrainingsset(args_from_script=None):
         # Combine all skimmed files using `hadd`
         logger.debug("Call `hadd` to combine files of processes for fold {}.".
                      format(num_fold))
-        output_file = os.path.join(config["output_path"], "fold{}_{}".format(
+        output_file = os.path.join(config["output_path_creation"], "fold{}_{}".format(
             num_fold, config["output_filename"]))
         subprocess.call(["hadd", "-f", output_file] + created_files)
         logger.info("Created output file: {}".format(output_file))

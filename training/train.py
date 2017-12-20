@@ -46,16 +46,14 @@ def multiclassNeuralNetwork(args_from_script=None):
     w = np.load(folder + 'weights_fold{}.npy'.format(args.fold))
     w = w * config["global_weight"]
 
-
-
     # Split data in training and testing
     x_train, x_test, y_train, y_test, w_train, w_test = model_selection.train_test_split(
         x, y, w, test_size=1.0 - config["train_test_split"], random_state=1234)
 
     def get_class_weights(y):
         counter = Counter(y)
-        majority = 1. #max(counter.values())
-        return  {cls: float(majority/count) for cls, count in counter.items()}
+        majority = 1.  # max(counter.values())
+        return {cls: float(majority / count) for cls, count in counter.items()}
 
     # Add callbacks
     callbacks = []
@@ -99,6 +97,7 @@ def multiclassNeuralNetwork(args_from_script=None):
     np.save(folder_result + 'val_loss.npy', fit.history["val_loss"])
     np.save(folder_result + 'acc.npy', fit.history["acc"])
     np.save(folder_result + 'val_acc.npy', fit.history["val_acc"])
+
 
 if __name__ == "__main__" and len(sys.argv) > 1:
     multiclassNeuralNetwork()

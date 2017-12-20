@@ -5,7 +5,8 @@ import time
 import threading
 from functools import wraps
 
-def progressbar(function=None, char='.', pause=0.2, bar_len = 60):
+
+def progressbar(function=None, char='.', pause=0.2, bar_len=60):
     """
     This function is a decorator for a progess bar.
     Use it as follows:
