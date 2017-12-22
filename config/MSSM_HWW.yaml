@@ -78,18 +78,30 @@ processes:
         weight_string:  "XSWeight*SFweight2l*GenLepMatch2l*METFilter_MC"
         class:          hww550_3000
 
-    DY:
+    DYM50:
         files:
-            - latino/latino_DYJetsToLL_M-10to50.root
             - latino/latino_DYJetsToTT_MuEle_M-50__part0.root
             - latino/latino_DYJetsToTT_MuEle_M-50__part1.root
         cut_string:     "trigger==1"
         weight_string:  "XSWeight*SFweight2l*GenLepMatch2l*METFilter_MC"
         class:          DY
 
-    WW:
+    DYM10_50:
+        files:
+            - latino/latino_DYJetsToLL_M-10to50.root
+        cut_string:     "trigger==1"
+        weight_string:  "XSWeight*SFweight2l*GenLepMatch2l*METFilter_MC*(0.876979+gen_ptll*(4.11598e-03)-(2.35520e-05)*gen_ptll*gen_ptll)*(1.10211 * (0.958512 - 0.131835*TMath::Erf((gen_ptll-14.1972)/10.1525)))*(gen_ptll<140)+0.891188*(gen_ptll>=140)"
+        class:          DY
+
+    ggWW:
         files:
             - latino/latino_GluGluWWTo2L2Nu_MCFM.root
+        cut_string:     "trigger==1"
+        weight_string:  "XSWeight*SFweight2l*GenLepMatch2l*METFilter_MC"
+        class:          WW
+
+    WW:
+        files:
             - latino/latino_WWTo2L2Nu.root
         cut_string:     "trigger==1"
         weight_string:  "XSWeight*SFweight2l*GenLepMatch2l*METFilter_MC*nllW"
@@ -105,19 +117,31 @@ processes:
         weight_string:  "XSWeight*SFweight2l*GenLepMatch2l*METFilter_MC"
         class:          VVV
 
-    DiBoson:
+    Vg:
         files:
             - latino/latino_Wg_MADGRAPHMLM.root
+            - latino/latino_Zg__part0.root
+            - latino/latino_Zg__part1.root
+            - latino/latino_Zg__part2.root
+        cut_string:     "trigger==1"
+        weight_string:  "XSWeight*SFweight2l*METFilter_MC* !(Gen_ZGstar_mass > 0 && Gen_ZGstar_MomId == 22 )"
+        class:          DiBoson
+
+    VgS:
+        files:
             - latino/latino_WgStarLNuEE.root
             - latino/latino_WgStarLNuMuMu.root
+        cut_string:     "trigger==1"
+        weight_string:  "XSWeight*SFweight2l*GenLepMatch2l*METFilter_MC*1.4"
+        class:          DiBoson
+
+    VZ:
+        files:
             - latino/latino_WZTo2L2Q__part0.root
             - latino/latino_WZTo2L2Q__part1.root
             - latino/latino_WZTo2L2Q__part2.root
             - latino/latino_WZTo2L2Q__part3.root
             - latino/latino_WZTo3LNu.root
-            - latino/latino_Zg__part0.root
-            - latino/latino_Zg__part1.root
-            - latino/latino_Zg__part2.root
             - latino/latino_ZZTo2L2Nu__part0.root
             - latino/latino_ZZTo2L2Nu__part1.root
             - latino/latino_ZZTo2L2Nu__part2.root
@@ -212,13 +236,19 @@ processes:
         weight_string:  "1.0"
         class:          WJets
 
-    Top:
+    SingleTop:
         files:
             - latino/latino_ST_s-channel.root
             - latino/latino_ST_t-channel_antitop.root
             - latino/latino_ST_t-channel_top.root
             - latino/latino_ST_tW_antitop.root
             - latino/latino_ST_tW_top.root
+        cut_string:     "trigger==1"
+        weight_string:  "XSWeight*SFweight2l*GenLepMatch2l*METFilter_MC"
+        class:          Top
+
+    TTBar:
+        files:
             - latino/latino_TTTo2L2Nu__part0.root
             - latino/latino_TTTo2L2Nu__part1.root
             - latino/latino_TTTo2L2Nu__part2.root
@@ -240,89 +270,82 @@ processes:
             - latino/latino_TTTo2L2Nu__part19.root
             - latino/latino_TTTo2L2Nu__part20.root
         cut_string:     "trigger==1"
-        weight_string:  "XSWeight*SFweight2l*GenLepMatch2l*METFilter_MC"
+        weight_string:  "XSWeight*SFweight2l*GenLepMatch2l*METFilter_MC*(TMath::Sqrt( TMath::Exp(0.0615-0.0005*topLHEpt) * TMath::Exp(0.0615-0.0005*antitopLHEpt) ) )"
         class:          Top
 
     data:
         files:
-            - data/latino_SingleElectron_Run2016F-03Feb2017-v1.root
-            - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
-            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
-            - data/latino_MET_Run2016H-03Feb2017_ver2-v1.root
-            - data/latino_SingleElectron_Run2016H-03Feb2017_ver3-v1.root
-            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
-            - data/latino_MET_Run2016D-03Feb2017-v1.root
-            - data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part0.root
-            - data/latino_SingleElectron_Run2016D-03Feb2017-v1.root
-            - data/latino_DoubleEG_Run2016H-03Feb2017_ver3-v1.root
-            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
-            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part0.root
-            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
-            - data/latino_SingleMuon_Run2016C-03Feb2017-v1__part0.root
-            - data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part1.root
-            - data/latino_SingleMuon_Run2016D-03Feb2017-v1__part1.root
-            - data/latino_SingleMuon_Run2016E-03Feb2017-v1__part0.root
-            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part2.root
-            - data/latino_DoubleEG_Run2016E-03Feb2017-v1.root
-            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
-            - data/latino_SingleElectron_Run2016E-03Feb2017-v1.root
-            - data/latino_MET_Run2016E-03Feb2017-v1.root
-            - data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part1.root
-            - data/latino_MET_Run2016B-03Feb2017_ver2-v2.root
-            - data/latino_MET_Run2016G-03Feb2017-v1.root
-            - data/latino_SingleElectron_Run2016G-03Feb2017-v1__part1.root
-            - data/latino_MET_Run2016C-03Feb2017-v1.root
-            - data/latino_DoubleEG_Run2016F-03Feb2017-v1.root
-            - data/latino_MuonEG_Run2016H-03Feb2017_ver2-v1.root
-            - data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part0.root
+            - data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2.root
+            - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
             - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
-            - data/latino_SingleMuon_Run2016F-03Feb2017-v1__part1.root
-            - data/latino_SingleMuon_Run2016H-03Feb2017_ver3-v1.root
-            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
-            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
-            - data/latino_MuonEG_Run2016F-03Feb2017-v1.root
-            - data/latino_MET_Run2016H-03Feb2017_ver3-v1.root
-            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
-            - data/latino_MuonEG_Run2016H-03Feb2017_ver3-v1.root
-            - data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part0.root
-            - data/latino_DoubleEG_Run2016C-03Feb2017-v1.root
-            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
-            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
-            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part3.root
-            - data/latino_MuonEG_Run2016C-03Feb2017-v1.root
-            - data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part1.root
-            - data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2__part0.root
-            - data/latino_SingleElectron_Run2016C-03Feb2017-v1.root
-            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part1.root
-            - data/latino_SingleMuon_Run2016E-03Feb2017-v1__part1.root
-            - data/latino_DoubleEG_Run2016G-03Feb2017-v1__part1.root
-            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
-            - data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
-            - data/latino_MuonEG_Run2016G-03Feb2017-v1.root
-            - data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
+            - data/latino_MET_Run2016B-03Feb2017_ver2-v2.root
             - data/latino_MuonEG_Run2016B-03Feb2017_ver2-v2.root
-            - data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part1.root
+            - data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2.root
+            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
+            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
+            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
+            - data/latino_DoubleEG_Run2016C-03Feb2017-v1.root
+            - data/latino_DoubleMuon_Run2016C-03Feb2017-v1.root
+            - data/latino_MET_Run2016C-03Feb2017-v1.root
+            - data/latino_MuonEG_Run2016C-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016C-03Feb2017-v1.root
+            - data/latino_SingleMuon_Run2016C-03Feb2017-v1.root
             - data/latino_DoubleEG_Run2016D-03Feb2017-v1.root
-            - data/latino_DoubleEG_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part0.root
+            - data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part1.root
+            - data/latino_MET_Run2016D-03Feb2017-v1.root
+            - data/latino_MuonEG_Run2016D-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016D-03Feb2017-v1.root
+            - data/latino_SingleMuon_Run2016D-03Feb2017-v1__part0.root
+            - data/latino_SingleMuon_Run2016D-03Feb2017-v1__part1.root
+            - data/latino_DoubleEG_Run2016E-03Feb2017-v1.root
+            - data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
+            - data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part1.root
+            - data/latino_MET_Run2016E-03Feb2017-v1.root
+            - data/latino_MuonEG_Run2016E-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016E-03Feb2017-v1.root
+            - data/latino_SingleMuon_Run2016E-03Feb2017-v1__part0.root
+            - data/latino_SingleMuon_Run2016E-03Feb2017-v1__part1.root
+            - data/latino_DoubleEG_Run2016F-03Feb2017-v1.root
             - data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part0.root
             - data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part1.root
-            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part3.root
-            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part1.root
-            - data/latino_MuonEG_Run2016D-03Feb2017-v1.root
-            - data/latino_SingleMuon_Run2016F-03Feb2017-v1__part0.root
-            - data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2__part1.root
             - data/latino_MET_Run2016F-03Feb2017-v1.root
-            - data/latino_SingleMuon_Run2016D-03Feb2017-v1__part0.root
-            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver3-v1.root
-            - data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part0.root
-            - data/latino_SingleElectron_Run2016G-03Feb2017-v1__part0.root
-            - data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part1.root
-            - data/latino_SingleMuon_Run2016C-03Feb2017-v1__part1.root
+            - data/latino_MuonEG_Run2016F-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016F-03Feb2017-v1.root
+            - data/latino_SingleMuon_Run2016F-03Feb2017-v1__part0.root
+            - data/latino_SingleMuon_Run2016F-03Feb2017-v1__part1.root
+            - data/latino_DoubleEG_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_DoubleEG_Run2016G-03Feb2017-v1__part1.root
+            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part1.root
             - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part2.root
-            - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
-            - data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
+            - data/latino_MET_Run2016G-03Feb2017-v1.root
+            - data/latino_MuonEG_Run2016G-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_SingleElectron_Run2016G-03Feb2017-v1__part1.root
             - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
-            - data/latino_MuonEG_Run2016E-03Feb2017-v1.root
+            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part1.root
+            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part2.root
+            - data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_DoubleEG_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_MET_Run2016H-03Feb2017_ver2-v1.root
+            - data/latino_MET_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_MuonEG_Run2016H-03Feb2017_ver2-v1.root
+            - data/latino_MuonEG_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_SingleElectron_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver3-v1.root
         cut_string:     "(trigger==1)"
         weight_string:  "veto_EMTFBug*METFilter_DATA*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x"
         class:          data
