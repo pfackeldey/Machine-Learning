@@ -5,7 +5,7 @@
 Modules and tools for a multivariate analysis
 
 Get all necessary libraries with: `source
-/cvmfs/sft.cern.ch/lcg/views/LCG_91/x86_64-slc6-gcc62-opt/setup.sh`
+/cvmfs/sft.cern.ch/lcg/views/LCG_92/x86_64-slc6-gcc62-opt/setup.sh`
 
 More information on usage of the scripts with argument "-h" or "--help"!
 
