@@ -41,7 +41,7 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_M180.root
             - latino/latino_GluGluHToWWTo2L2Nu_M190.root
             - latino/latino_GluGluHToWWTo2L2Nu_M200.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC"
         class:          hww120_200
 
@@ -56,7 +56,7 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M400.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M450.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M500.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC"
         class:          hww210_500
 
@@ -74,7 +74,7 @@ processes:
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2000.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2500.root
             - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M3000.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC"
         class:          hww550_3000
 
@@ -82,28 +82,28 @@ processes:
         files:
             - latino/latino_DYJetsToTT_MuEle_M-50__part0.root
             - latino/latino_DYJetsToTT_MuEle_M-50__part1.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC"
         class:          DY
 
     DYM10_50:
         files:
             - latino/latino_DYJetsToLL_M-10to50.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*(0.876979+gen_ptll*(4.11598e-03)-(2.35520e-05)*gen_ptll*gen_ptll)*(1.10211 * (0.958512 - 0.131835*TMath::Erf((gen_ptll-14.1972)/10.1525)))*(gen_ptll<140)+0.891188*(gen_ptll>=140)"
         class:          DY
 
     ggWW:
         files:
             - latino/latino_GluGluWWTo2L2Nu_MCFM.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC"
         class:          WW
 
     WW:
         files:
             - latino/latino_WWTo2L2Nu.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*nllW"
         class:          WW
 
@@ -113,7 +113,7 @@ processes:
             - latino/latino_WWZ.root
             - latino/latino_WZZ.root
             - latino/latino_ZZZ.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC"
         class:          VVV
 
@@ -123,7 +123,7 @@ processes:
             - latino/latino_Zg__part0.root
             - latino/latino_Zg__part1.root
             - latino/latino_Zg__part2.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC* !(Gen_ZGstar_mass > 0 && Gen_ZGstar_MomId == 22 )"
         class:          DiBoson
 
@@ -131,7 +131,7 @@ processes:
         files:
             - latino/latino_WgStarLNuEE.root
             - latino/latino_WgStarLNuMuMu.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*1.4"
         class:          DiBoson
 
@@ -148,7 +148,7 @@ processes:
             - latino/latino_ZZTo2L2Q__part0.root
             - latino/latino_ZZTo2L2Q__part1.root
             - latino/latino_ZZTo2L2Q__part2.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*1.11"
         class:          DiBoson
 
@@ -187,7 +187,7 @@ processes:
             - wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part2.root
             - wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
             - wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
-        cut_string:     "(trig_EleMu==0)&&(trig_DbleMu==1)"
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==1)"
         weight_string:  "((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
         class:          WJets
 
@@ -212,7 +212,7 @@ processes:
             - wjets_data/latino_SingleMuon_Run2016D-03Feb2017-v1__part0.root
             - wjets_data/latino_SingleMuon_Run2016C-03Feb2017-v1__part1.root
             - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
-        cut_string:     "(trig_EleMu==0)&&(trig_DbleMu==0)&&(trig_SnglMu==1)"
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==1)"
         weight_string:  "((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
         class:          WJets
 
@@ -229,7 +229,7 @@ processes:
             - wjets_data/latino_DoubleEG_Run2016D-03Feb2017-v1.root
             - wjets_data/latino_DoubleEG_Run2016G-03Feb2017-v1__part0.root
             - wjets_data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part1.root
-        cut_string:     "(trig_EleMu==0)&&(trig_DbleMu==0)&&(trig_SnglMu==0)&&(trig_DbleEle==1)"
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==1)"
         weight_string:  "((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
         class:          WJets
 
@@ -254,7 +254,7 @@ processes:
             - wjets_data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2__part1.root
             #- wjets_data/latino_MET_Run2016F-03Feb2017-v1.root
             - wjets_data/latino_SingleElectron_Run2016G-03Feb2017-v1__part0.root  
-        cut_string:     "(trig_EleMu==0)&&(trig_DbleMu==0)&&(trig_SnglMu==0)&&(trig_DbleEle==0)&&(trig_SnglEle==1)"
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==0)*(trig_SnglEle==1)"
         weight_string:  "((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
         class:          WJets
 
@@ -265,7 +265,7 @@ processes:
             - latino/latino_ST_t-channel_top.root
             - latino/latino_ST_tW_antitop.root
             - latino/latino_ST_tW_top.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC"
         class:          Top
 
@@ -291,7 +291,7 @@ processes:
             - latino/latino_TTTo2L2Nu__part18.root
             - latino/latino_TTTo2L2Nu__part19.root
             - latino/latino_TTTo2L2Nu__part20.root
-        cut_string:     "trigger==1"
+        cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*(TMath::Sqrt( TMath::Exp(0.0615-0.0005*topLHEpt) * TMath::Exp(0.0615-0.0005*antitopLHEpt) ) )"
         class:          Top
 
@@ -331,7 +331,7 @@ processes:
             - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
             - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
             - data/latino_DoubleMuon_Run2016H-03Feb2017_ver3-v1.root
-        cut_string:     "(trig_EleMu==0)&&(trig_DbleMu==1)"
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==1)"
         weight_string:  "veto_EMTFBug*METFilter_DATA*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x"
         class:          data
 
@@ -354,7 +354,7 @@ processes:
             - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
             - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
             - data/latino_SingleMuon_Run2016H-03Feb2017_ver3-v1.root
-        cut_string:     "(trig_EleMu==0)&&(trig_DbleMu==0)&&(trig_SnglMu==1)"
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==1)"
         weight_string:  "veto_EMTFBug*METFilter_DATA*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x"
         class:          data
 
@@ -370,7 +370,7 @@ processes:
             - data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part0.root
             - data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part1.root
             - data/latino_DoubleEG_Run2016H-03Feb2017_ver3-v1.root
-        cut_string:     "(trig_EleMu==0)&&(trig_DbleMu==0)&&(trig_SnglMu==0)&&(trig_DbleEle==1)"
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==1)"
         weight_string:  "veto_EMTFBug*METFilter_DATA*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x"
         class:          data
 
@@ -394,7 +394,7 @@ processes:
             - data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part0.root
             - data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part1.root
             - data/latino_SingleElectron_Run2016H-03Feb2017_ver3-v1.root
-        cut_string:     "(trig_EleMu==0)&&(trig_DbleMu==0)&&(trig_SnglMu==0)&&(trig_DbleEle==0)&&(trig_SnglEle==1)"
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==0)*(trig_SnglEle==1)"
         weight_string:  "veto_EMTFBug*METFilter_DATA*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x"
         class:          data
 
