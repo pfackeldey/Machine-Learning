@@ -60,7 +60,7 @@ def createTrainingsset(args_from_script=None):
                 chain_numentries, process))
 
             # Skim the events with the cut string
-            cut_string = "({EVENT_BRANCH}%2=={NUM_FOLD})&&({CUT_STRING})".format(
+            cut_string = "({CUT_STRING}*({EVENT_BRANCH}%2=={NUM_FOLD}))".format(
                 EVENT_BRANCH=config["event_branch"],
                 NUM_FOLD=num_fold,
                 CUT_STRING=config["processes"][process]["cut_string"])
