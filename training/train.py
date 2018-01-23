@@ -29,7 +29,7 @@ def multiclassNeuralNetwork(args_from_script=None):
                         help="Number of training epochs. [Default: %(default)s]")
     parser.add_argument("--learning-rate", default=0.0001,
                         help="Learning rate of NN. [Default: %(default)s]")
-    parser.add_argument("--batch-size", default=100000,
+    parser.add_argument("--batch-size", default=10000,
                         help="Batch size for training. [Default: %(default)s]")
     parser.add_argument("--early-stopping", default=False, action='store_true',
                         help="Stop training if loss increases again. [Default: %(default)s]")
@@ -81,7 +81,7 @@ def multiclassNeuralNetwork(args_from_script=None):
     fit = keras_model.fit(
         x_train_scaled,
         y_train,
-        class_weight=get_class_weights(np.argmax(y_train, axis=-1)),
+        sample_weight=w_train,
         validation_data=(x_test_scaled, y_test),
         batch_size=args.batch_size,
         epochs=args.epochs,
