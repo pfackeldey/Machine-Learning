@@ -412,20 +412,20 @@ trainingssets:
     - /net/scratch_cms3b/fackeldey/trainingssets/fold1_MSSM_HWW_trainingsset.root
 
 class_weights:
-    hww120_300:         1.0
-    hww350_750:         1.0
-    hww800_3000:        1.0
-    DY:                 1.0
-    WW:                 1.0
-    VVV:                1.0
-    DiBoson:            1.0
-    WJets:              1.0
-    Top:                1.0
+    hww120_200:         180.
+    hww210_500:         450.
+    hww550_3000:        35000.
+    DY:                 10.
+    WW:                 240
+    VVV:                35000.
+    DiBoson:            3500.
+    WJets:              20.
+    Top:                50.
 
 classes:
-    - hww120_300
-    - hww350_750
-    - hww800_3000
+    - hww120_200
+    - hww210_500
+    - hww550_3000
     - DY
     - WW
     - VVV
@@ -442,31 +442,33 @@ event_weights:          training_weight
 #features = training variables
 features:
     - detajj
-    - dphilep1jet1
+    #- dphilep1jet1
     - dphilep1jet2
-    - dphilep2jet1
+    #- dphilep2jet1
     - dphilep2jet2
-    - dphill
-    - dphilmet
-    - dphilmet1
-    - dphilmet2
+    #- dphill
+    #- dphilmet
+    #- dphilmet1
+    #- dphilmet2
     - jeteta1
     - jeteta2
-    - jetmass1
-    - jetmass2
-    - mjj
+    #- jetmass1
+    #- jetmass2
+    #- mjj
     - mll
-    - mth
-    - mtw1
-    - mtw2
+    #- mth
+    - mTi
+    #- mtw1
+    #- mtw2
     - nbjet
-    - njet
-    - pTWW
+    #- njet
+    #- pTWW
     - ptll
-    - dphijet1met
+    #- dphijet1met
     - dphijet2met
-    - jetpt1
+    #- jetpt1
     - jetpt2
+    - metPuppi
 
 train_test_split:       0.75
 
