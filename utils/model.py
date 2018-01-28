@@ -94,26 +94,25 @@ class KerasModels():
         Multiclassification model
         """
         model = Sequential()
-        model.add(Dense(128, input_dim=self.n_features,
-                        kernel_regularizer=regularizers.l2(0.0001)))
+        model.add(Dense(256, input_dim=self.n_features, kernel_initializer='lecun_normal'))
         # model.add(BatchNormalization())
         model.add(Activation('selu'))
-        model.add(Dropout(0.3))
-        model.add(Dense(128, kernel_regularizer=regularizers.l2(0.0001)))
+        model.add(AlphaDropout(0.5))
+        model.add(Dense(256, kernel_initializer='lecun_normal'))
         # model.add(BatchNormalization())
         model.add(Activation('selu'))
-        model.add(Dropout(0.3))
-        model.add(Dense(128, kernel_regularizer=regularizers.l2(0.0001)))
+        model.add(AlphaDropout(0.5))
+        model.add(Dense(256, kernel_initializer='lecun_normal'))
         # model.add(BatchNormalization())
         model.add(Activation('selu'))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
 
-        sgd = SGD(lr=self.learning_rate, momentum=0.95,
-                  decay=1e-5, nesterov=True)
+        # sgd = SGD(lr=self.learning_rate, momentum=0.95,
+        #           decay=1e-5, nesterov=True)
         model.compile(loss='categorical_crossentropy',
-                      optimizer=sgd, metrics=['accuracy'])
+                      optimizer=Adam(lr=self.learning_rate), metrics=['accuracy'])
 
         model.summary()
         """
