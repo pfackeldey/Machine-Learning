@@ -22,7 +22,7 @@ def keras_evaluation(args_from_script=None):
 
 	config = yaml.load(open(args.config, "r"))
 
-	print "Currently processing tree: {}".format(args.tree)
+
 
 	# Load keras model and preprocessing
 	classifiers = []
