@@ -27,9 +27,9 @@ def multiclassNeuralNetwork(args_from_script=None):
                         help="Training fold. [Default: %(default)s]")
     parser.add_argument("--epochs", default=20,
                         help="Number of training epochs. [Default: %(default)s]")
-    parser.add_argument("--learning-rate", default=0.0001,
+    parser.add_argument("--learning-rate", default=0.001,
                         help="Learning rate of NN. [Default: %(default)s]")
-    parser.add_argument("--batch-size", default=10000,
+    parser.add_argument("--batch-size", default=1000,
                         help="Batch size for training. [Default: %(default)s]")
     parser.add_argument("--early-stopping", default=False, action='store_true',
                         help="Stop training if loss increases again. [Default: %(default)s]")
@@ -68,21 +68,23 @@ def multiclassNeuralNetwork(args_from_script=None):
                                        verbose=0, mode='auto'))
 
     # preprocessing
+    """
     from sklearn import preprocessing
     scaler = preprocessing.StandardScaler().fit(x_train)
     x_train_scaled = scaler.transform(x_train)
 
     scaler = preprocessing.StandardScaler().fit(x_test)
     x_test_scaled = scaler.transform(x_test)
+    """
 
     model = KerasModels(n_features=len(config["features"]), n_classes=len(
         config["classes"]), learning_rate=args.learning_rate, plot_model=False, modelname="multiclass_model_fold{}.h5".format(args.fold))
     keras_model = model.multiclass_MSSM_HWW_model()
     fit = keras_model.fit(
-        x_train_scaled,
+        x_train,
         y_train,
         sample_weight=w_train,
-        validation_data=(x_test_scaled, y_test),
+        validation_data=(x_test, y_test),
         batch_size=args.batch_size,
         epochs=args.epochs,
         shuffle=True,
