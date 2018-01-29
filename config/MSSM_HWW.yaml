@@ -24,6 +24,54 @@ training_weight_branch: "training_weight"
 
 # Define the processes and the according files
 processes:
+
+    H_htt:
+        files:
+            - latino/latino_GluGluHToTauTau_M125.root
+            - latino/latino_VBFHToTauTau_M125.root
+            - latino/latino_HZJ_HToTauTau_M125.root
+            - latino/latino_HWplusJ_HToTauTau_M125.root
+            - latino/latino_HWminusJ_HToTauTau_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: SM125
+
+    ZH_hww:
+        files:
+            - latino/latino_HZJ_HToWW_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: SM125
+
+    ggZH_hww:
+        files:
+            - latino/latino_ggZH_HToWW_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: SM125
+
+    WH_hww:
+        files:
+            - latino/latino_HWminusJ_HToWW_M125.root
+            - latino/latino_HWplusJ_HToWW_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: SM125
+
+    qqH_hww:
+        files:
+            - latino/latino_VBFHToWWTo2L2Nu_alternative_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: SM125
+
+    ggH_hww:
+        files:
+            - latino/latino_GluGluHToWWTo2L2NuPowheg_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: SM125
+
     hww120_200:
         files:
             - latino/latino_GluGluHToWWTo2L2Nu_M120.root
@@ -91,7 +139,7 @@ processes:
     DYM10_50:
         files:
             - latino/latino_DYJetsToLL_M-10to50.root
-            - latino/latino_DYJetsToLL_M-10to50-LO.root
+            #- latino/latino_DYJetsToLL_M-10to50-LO.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*(0.876979+gen_ptll*(4.11598e-03)-(2.35520e-05)*gen_ptll*gen_ptll)*(1.10211 * (0.958512 - 0.131835*TMath::Erf((gen_ptll-14.1972)/10.1525)))*(gen_ptll<140)+0.891188*(gen_ptll>=140)*35.9"
         class:          DY
@@ -166,7 +214,7 @@ processes:
             - wjets_data/latino_MuonEG_Run2016D-03Feb2017-v1.root
             - wjets_data/latino_MuonEG_Run2016E-03Feb2017-v1.root
         cut_string:     "(trig_EleMu==1)"
-        weight_string:  "((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
+        weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
         class:          WJets
 
 
@@ -191,7 +239,7 @@ processes:
             - wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
             - wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==1)"
-        weight_string:  "((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
+        weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
         class:          WJets
 
     SingleMuon_WJets:
@@ -215,8 +263,11 @@ processes:
             - wjets_data/latino_SingleMuon_Run2016D-03Feb2017-v1__part0.root
             - wjets_data/latino_SingleMuon_Run2016C-03Feb2017-v1__part1.root
             - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
+            - wjets_data/latino_SingleMuon_Run2016F-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==1)"
-        weight_string:  "((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
+        weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
         class:          WJets
 
     DoubleEG_WJets:
@@ -233,7 +284,7 @@ processes:
             - wjets_data/latino_DoubleEG_Run2016G-03Feb2017-v1__part0.root
             - wjets_data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part1.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==1)"
-        weight_string:  "((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
+        weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
         class:          WJets
 
     SingleElectron_WJets:
@@ -258,7 +309,7 @@ processes:
             #- wjets_data/latino_MET_Run2016F-03Feb2017-v1.root
             - wjets_data/latino_SingleElectron_Run2016G-03Feb2017-v1__part0.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==0)*(trig_SnglEle==1)"
-        weight_string:  "((fakeW2l_ele_mva_90p_Iso2016_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
+        weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
         class:          WJets
 
     SingleTop:
@@ -412,15 +463,15 @@ trainingssets:
     - /net/scratch_cms3b/fackeldey/trainingssets/fold1_MSSM_HWW_trainingsset.root
 
 class_weights:
-    hww120_200:         180.
-    hww210_500:         450.
-    hww550_3000:        35000.
-    DY:                 10.
-    WW:                 240
-    VVV:                35000.
-    DiBoson:            3500.
-    WJets:              20.
-    Top:                50.
+    hww120_200:         1.
+    hww210_500:         5.
+    hww550_3000:        10.
+    DY:                 1.
+    WW:                 1
+    VVV:                1.
+    DiBoson:            1.
+    WJets:              1.
+    Top:                0.1
 
 classes:
     - hww120_200
@@ -435,7 +486,7 @@ classes:
 
 output_path:            /home/peter/mount/data
 
-global_weight:          0.01
+global_weight:          0.1
 
 event_weights:          training_weight
 
@@ -463,7 +514,7 @@ features:
     - nbjet
     #- njet
     #- pTWW
-    - ptll
+    #- ptll
     #- dphijet1met
     - dphijet2met
     #- jetpt1
