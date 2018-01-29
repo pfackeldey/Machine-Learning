@@ -238,6 +238,8 @@ processes:
             - wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part2.root
             - wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
             - wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
         class:          WJets
@@ -264,8 +266,6 @@ processes:
             - wjets_data/latino_SingleMuon_Run2016C-03Feb2017-v1__part1.root
             - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
             - wjets_data/latino_SingleMuon_Run2016F-03Feb2017-v1__part0.root
-            - wjets_data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part1.root
-            - wjets_data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
         class:          WJets
