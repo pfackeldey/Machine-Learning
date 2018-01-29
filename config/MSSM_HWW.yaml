@@ -134,7 +134,7 @@ processes:
             - latino/latino_DYJetsToTT_MuEle_M-50_ext1__part1.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*(0.876979+gen_ptll*(4.11598e-03)-(2.35520e-05)*gen_ptll*gen_ptll)*(1.10211 * (0.958512 - 0.131835*TMath::Erf((gen_ptll-14.1972)/10.1525)))*(gen_ptll<140)+0.891188*(gen_ptll>=140)*(0.00725432292044/baseW)"
-        class:          DY
+        class:          DYM50
 
     DYM10_50:
         files:
@@ -142,14 +142,14 @@ processes:
             #- latino/latino_DYJetsToLL_M-10to50-LO.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*(0.876979+gen_ptll*(4.11598e-03)-(2.35520e-05)*gen_ptll*gen_ptll)*(1.10211 * (0.958512 - 0.131835*TMath::Erf((gen_ptll-14.1972)/10.1525)))*(gen_ptll<140)+0.891188*(gen_ptll>=140)*35.9"
-        class:          DY
+        class:          DY10_50
 
     ggWW:
         files:
             - latino/latino_GluGluWWTo2L2Nu_MCFM.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
-        class:          WW
+        class:          ggWW
 
     WW:
         files:
@@ -176,7 +176,7 @@ processes:
             - latino/latino_Zg__part2.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC* !(Gen_ZGstar_mass > 0 && Gen_ZGstar_MomId == 22 )*35.9"
-        class:          DiBoson
+        class:          Vg
 
     VgS:
         files:
@@ -184,7 +184,7 @@ processes:
             - latino/latino_WgStarLNuMuMu.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*1.4*35.9"
-        class:          DiBoson
+        class:          VgS
 
     VZ:
         files:
@@ -201,7 +201,7 @@ processes:
             - latino/latino_ZZTo2L2Q__part2.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*1.11*35.9"
-        class:          DiBoson
+        class:          VZ
 
     MuonEG_WJets:
         files:
@@ -321,7 +321,7 @@ processes:
             - latino/latino_ST_tW_top.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
-        class:          Top
+        class:          SingleTop
 
     TTBar:
         files:
@@ -347,7 +347,7 @@ processes:
             - latino/latino_TTTo2L2Nu__part20.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*(TMath::Sqrt( TMath::Exp(0.0615-0.0005*topLHEpt) * TMath::Exp(0.0615-0.0005*antitopLHEpt) ) )*35.9"
-        class:          Top
+        class:          TTBar
 
 
 
@@ -462,17 +462,6 @@ trainingssets:
     - /net/scratch_cms3b/fackeldey/trainingssets/fold0_MSSM_HWW_trainingsset.root
     - /net/scratch_cms3b/fackeldey/trainingssets/fold1_MSSM_HWW_trainingsset.root
 
-class_weights:
-    hww120_200:         1.
-    hww210_500:         5.
-    hww550_3000:        10.
-    DY:                 1.
-    WW:                 1
-    VVV:                1.
-    DiBoson:            1.
-    WJets:              1.
-    Top:                0.1
-
 classes:
     - hww120_200
     - hww210_500
@@ -483,6 +472,17 @@ classes:
     - DiBoson
     - WJets
     - Top
+
+class_weights:
+    hww120_200:         1.
+    hww210_500:         5.
+    hww550_3000:        10.
+    DY:                 1.
+    WW:                 1
+    VVV:                1.
+    DiBoson:            1.
+    WJets:              1.
+    Top:                0.1
 
 output_path:            /home/peter/mount/data
 
