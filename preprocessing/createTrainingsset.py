@@ -101,7 +101,7 @@ def createTrainingsset(args_from_script=None):
                      format(num_fold))
         output_file = os.path.join(config["output_path_creation"], "fold{}_{}".format(
             num_fold, config["output_filename"]))
-        subprocess.call(["hadd", "-f", output_file] + created_files)
+        subprocess.call(["hadd", "-f0", output_file] + created_files)
         logger.info("Created output file: {}".format(output_file))
 
 
