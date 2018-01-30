@@ -132,7 +132,7 @@ processes:
             - latino/latino_DYJetsToTT_MuEle_M-50_ext1__part0.root
             - latino/latino_DYJetsToTT_MuEle_M-50_ext1__part1.root
         cut_string:     "(trigger==1)"
-        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*((0.876979+gen_ptll*(4.11598e-03)-(2.35520e-05)*gen_ptll*gen_ptll)*(1.10211 * (0.958512 - 0.131835*TMath::Erf((gen_ptll-14.1972)/10.1525)))*(gen_ptll<140)+0.891188*(gen_ptll>=140))*(0.00725432292044/baseW)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*((0.876979+gen_ptll*(4.11598e-03)-(2.35520e-05)*gen_ptll*gen_ptll)*(1.10211 * (0.958512 - 0.131835*TMath::Erf((gen_ptll-14.1972)/10.1525)))*(gen_ptll<140)+0.891188*(gen_ptll>=140))*(0.00725432292044/baseW)*35.9"
         class:          DY
 
     DYM10_50:
