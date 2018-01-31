@@ -474,52 +474,55 @@ classes:
     - WJets
     - Top
 
+# normalized to VVV:
 class_weights:
-    hww120_200:         1.
-    hww210_500:         5.
-    hww550_3000:        10.
-    DY:                 1.
-    WW:                 1
+    hww120_200:         0.01 #estimated
+    hww210_500:         0.1 #estimated
+    hww550_3000:        0.1 #estimated
+    DY:                 0.0078
+    WW:                 0.0066
     VVV:                1.
-    DiBoson:            1.
-    WJets:              1.
-    Top:                0.1
+    DiBoson:            0.0434
+    WJets:              0.0097
+    Top:                0.00058
 
 output_path:            /home/peter/mount/data
 
-global_weight:          0.1
+global_weight:          1.
 
 event_weights:          training_weight
 
 #features = training variables
 features:
-    - detajj
+    #- detajj
     #- dphilep1jet1
-    - dphilep1jet2
+    #- dphilep1jet2
     #- dphilep2jet1
-    - dphilep2jet2
-    #- dphill
+    #- dphilep2jet2
+    - dphill
     #- dphilmet
-    #- dphilmet1
-    #- dphilmet2
+    - dphilmet1
+    - dphilmet2
     - jeteta1
     - jeteta2
     #- jetmass1
     #- jetmass2
     #- mjj
     - mll
-    #- mth
+    - mth
     - mTi
     #- mtw1
     #- mtw2
     - nbjet
-    #- njet
-    #- pTWW
-    #- ptll
-    #- dphijet1met
+    - njet
+    - pTWW
+    - ptll
+    - dphijet1met
     - dphijet2met
     #- jetpt1
-    - jetpt2
+    #- jetpt2
+    - std_vector_lepton_pt[0]
+    - std_vector_lepton_pt[1]
     - metPuppi
 
 train_test_split:       0.75
