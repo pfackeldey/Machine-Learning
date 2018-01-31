@@ -62,7 +62,7 @@ def rootToNumpy(args_from_script=None):
         # Stack inputs, targets and weights to a Keras-readable dataset
         x = np.vstack(x)  # inputs
         y = np.vstack(y)  # targets
-        w = np.vstack(w) * config["global_weight"]  # weights
+        w = np.vstack(w)  # weights
         w = np.squeeze(w)  # needed to get weights into keras
 
         folder = './arrays/'
