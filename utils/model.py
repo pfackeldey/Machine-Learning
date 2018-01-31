@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from keras.models import Sequential
-from keras.layers import Dense, Dropout, BatchNormalization, Activation
+from keras.layers import Dense, Dropout, AlphaDropout, BatchNormalization, Activation
 from keras.optimizers import Adam, Nadam, SGD
 from keras import regularizers
 
