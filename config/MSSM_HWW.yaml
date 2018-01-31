@@ -513,7 +513,7 @@ features:
     - mTi
     #- mtw1
     #- mtw2
-    - nbjet
+    #- nbjet
     - njet
     - pTWW
     - ptll
@@ -523,6 +523,8 @@ features:
     #- jetpt2
     - std_vector_lepton_pt[0]
     - std_vector_lepton_pt[1]
+    - std_vector_jet_cmvav2[0]
+    - std_vector_jet_cmvav2[1]
     - metPuppi
 
 train_test_split:       0.75
