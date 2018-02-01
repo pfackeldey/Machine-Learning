@@ -4,12 +4,14 @@
 
 Modules and tools for a multivariate analysis
 
-Get all necessary libraries with: `source
-/cvmfs/sft.cern.ch/lcg/views/LCG_92/x86_64-slc6-gcc62-opt/setup.sh`
+Get started with:  
+`bash checkout_script.sh` (only once)  
+`bash setup.sh` (for every new terminal)
 
-More information on usage of the scripts with argument "-h" or "--help"!
+The preprocessing workflow is controlled by luigi! 
 
-## More information
+Run preprocessing to get numpy arrays from ntuple:  
+`python -m luigi --module run_luigi RootToNumpy --config-path config/MSSM_HWW.yaml --local-scheduler`
 
 For a more detailed overview about the code and how to use it, take a look into
 the wiki!
