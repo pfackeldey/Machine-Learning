@@ -20,15 +20,10 @@ handler.setFormatter(formatter)
 logger.addHandler(handler)
 
 
-def createTrainingsset(args_from_script=None):
+def createTrainingsset(path_to_config = None):
 
-    parser = argparse.ArgumentParser(description="Create a trainingsset.",
-                                     fromfile_prefix_chars="@", conflict_handler="resolve")
-    parser.add_argument("config", help="Path to createTrainingsset config")
-    args = parser.parse_args()
-
-    # load yaml training config
-    config = yaml.load(open(args.config, "r"))
+    # load yaml config
+    config = yaml.load(open(path_to_config, "r"))
 
     for num_fold in range(2):
         logger.info("Merge input files for fold {}.".format(num_fold))
@@ -103,7 +98,3 @@ def createTrainingsset(args_from_script=None):
             num_fold, config["output_filename"]))
         subprocess.call(["hadd", "-f0", output_file] + created_files)
         logger.info("Created output file: {}".format(output_file))
-
-
-if __name__ == "__main__" and len(sys.argv) > 1:
-    createTrainingsset()
