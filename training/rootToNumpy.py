@@ -13,14 +13,10 @@ import os
 import sys
 
 
-def rootToNumpy(args_from_script=None):
+def rootToNumpy(path_to_config):
 
-    parser = argparse.ArgumentParser(description="Dump trees to numpy arrays.",
-                                     fromfile_prefix_chars="@", conflict_handler="resolve")
-    parser.add_argument("config", help="Path to training config")
-    args = parser.parse_args()
-
-    config = yaml.load(open(args.config, "r"))
+    # load yaml config
+    config = yaml.load(open(path_to_config, "r"))
 
     for fold in range(2):
 
@@ -73,7 +69,3 @@ def rootToNumpy(args_from_script=None):
         np.save(folder + 'x_fold{}.npy'.format(fold), x)
         np.save(folder + 'y_fold{}.npy'.format(fold), y)
         np.save(folder + 'weights_fold{}.npy'.format(fold), w)
-
-
-if __name__ == "__main__" and len(sys.argv) > 1:
-    rootToNumpy()
