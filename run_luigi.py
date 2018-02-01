@@ -5,7 +5,7 @@ import subprocess
 import yaml
 
 from preprocessing.createTrainingsset import createTrainingsset
-from training.rootToNumpy import rootToNumpy
+from preprocessing.rootToNumpy import rootToNumpy
 
 class CreateTrainingsset(luigi.Task):
     config_path = luigi.Parameter()
