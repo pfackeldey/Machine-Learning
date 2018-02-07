@@ -33,21 +33,21 @@ processes:
             - latino/latino_HWminusJ_HToTauTau_M125.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
-        class: SM125
+        class: misc
 
     ZH_hww:
         files:
             - latino/latino_HZJ_HToWW_M125.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
-        class: SM125
+        class: misc
 
     ggZH_hww:
         files:
             - latino/latino_ggZH_HToWW_M125.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
-        class: SM125
+        class: misc
 
     WH_hww:
         files:
@@ -55,21 +55,21 @@ processes:
             - latino/latino_HWplusJ_HToWW_M125.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
-        class: SM125
+        class: misc
 
     qqH_hww:
         files:
             - latino/latino_VBFHToWWTo2L2Nu_alternative_M125.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
-        class: SM125
+        class: misc
 
     ggH_hww:
         files:
             - latino/latino_GluGluHToWWTo2L2NuPowheg_M125.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
-        class: SM125
+        class: misc
 
     hww120_200:
         files:
@@ -165,7 +165,7 @@ processes:
             - latino/latino_ZZZ.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
-        class:          VVV
+        class:          misc
 
     Vg:
         files:
@@ -175,7 +175,7 @@ processes:
             - latino/latino_Zg__part2.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC* !(Gen_ZGstar_mass > 0 && Gen_ZGstar_MomId == 22 )*35.9"
-        class:          DiBoson
+        class:          misc
 
     VgS:
         files:
@@ -183,7 +183,7 @@ processes:
             - latino/latino_WgStarLNuMuMu.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*1.4*35.9"
-        class:          DiBoson
+        class:          misc
 
     VZ:
         files:
@@ -200,7 +200,7 @@ processes:
             - latino/latino_ZZTo2L2Q__part2.root
         cut_string:     "(trigger==1)"
         weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*1.11*35.9"
-        class:          DiBoson
+        class:          misc
 
     MuonEG_WJets:
         files:
@@ -214,7 +214,7 @@ processes:
             - wjets_data/latino_MuonEG_Run2016E-03Feb2017-v1.root
         cut_string:     "(trig_EleMu==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
-        class:          WJets
+        class:          misc
 
 
     DoubleMuon_WJets:
@@ -241,7 +241,7 @@ processes:
             - wjets_data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
-        class:          WJets
+        class:          misc
 
     SingleMuon_WJets:
         files:
@@ -267,7 +267,7 @@ processes:
             - wjets_data/latino_SingleMuon_Run2016F-03Feb2017-v1__part0.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
-        class:          WJets
+        class:          misc
 
     DoubleEG_WJets:
         files:
@@ -284,7 +284,7 @@ processes:
             - wjets_data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part1.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
-        class:          WJets
+        class:          misc
 
     SingleElectron_WJets:
         files:
@@ -309,7 +309,7 @@ processes:
             - wjets_data/latino_SingleElectron_Run2016G-03Feb2017-v1__part0.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==0)*(trig_SnglEle==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
-        class:          WJets
+        class:          misc
 
     SingleTop:
         files:
@@ -469,10 +469,8 @@ classes:
     - hww550_3000
     - DY
     - WW
-    - VVV
-    - DiBoson
-    - WJets
     - Top
+    - misc
 
 # normalized to VVV:
 class_weights:
@@ -481,10 +479,8 @@ class_weights:
     hww550_3000:        0.1 #estimated
     DY:                 0.0078
     WW:                 0.0066
-    VVV:                1.
-    DiBoson:            0.0434
-    WJets:              0.0097
     Top:                0.00058
+    misc:               0.5
 
 output_path:            /home/peter/mount/data
 
@@ -513,21 +509,21 @@ features:
     - mTi
     #- mtw1
     #- mtw2
-    #- nbjet
+    - nbjet
     - njet
     - pTWW
     - ptll
     - dphijet1met
     - dphijet2met
-    #- jetpt1
-    #- jetpt2
-    - std_vector_lepton_pt[0]
-    - std_vector_lepton_pt[1]
-    - std_vector_jet_cmvav2[0]
-    - std_vector_jet_cmvav2[1]
+    - jetpt1
+    - jetpt2
+    #- std_vector_lepton_pt[0]
+    #- std_vector_lepton_pt[1]
+    #- std_vector_jet_cmvav2[0]
+    #- std_vector_jet_cmvav2[1]
     - metPuppi
 
-train_test_split:       0.75
+train_test_split:       0.5
 
 
 
