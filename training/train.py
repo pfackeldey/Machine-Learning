@@ -25,11 +25,11 @@ def multiclassNeuralNetwork(args_from_script=None):
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
     parser.add_argument("--fold", default=0, choices=[0, 1],
                         help="Training fold. [Default: %(default)s]")
-    parser.add_argument("--epochs", default=20,
+    parser.add_argument("--epochs", default=75,
                         help="Number of training epochs. [Default: %(default)s]")
-    parser.add_argument("--learning-rate", default=0.001,
+    parser.add_argument("--learning-rate", default=0.0001,
                         help="Learning rate of NN. [Default: %(default)s]")
-    parser.add_argument("--batch-size", default=1000,
+    parser.add_argument("--batch-size", default=2500,
                         help="Batch size for training. [Default: %(default)s]")
     parser.add_argument("--early-stopping", default=False, action='store_true',
                         help="Stop training if loss increases again. [Default: %(default)s]")
@@ -54,10 +54,11 @@ def multiclassNeuralNetwork(args_from_script=None):
         counter = Counter(y)
         majority = 1.  # max(counter.values())
         return {cls: float(majority / count) for cls, count in counter.items()}
-
+    
+    print y_test.shape
     # Add callbacks
     callbacks = []
-    # callbacks.append(TensorBoard(log_dir='/home/mf278754/master/logs',
+    #callbacks.append(TensorBoard(log_dir='/home/mf278754/master/logs',
     #                             histogram_freq=1, write_graph=True, write_images=True))
     callbacks.append(
         ModelCheckpoint(filepath="/home/mf278754/master/fold{}_multiclass_model.h5".format(args.fold), save_best_only=True, verbose=1))
@@ -68,27 +69,30 @@ def multiclassNeuralNetwork(args_from_script=None):
                                        verbose=0, mode='auto'))
 
     # preprocessing
-    """
+    import pickle
     from sklearn import preprocessing
     scaler = preprocessing.StandardScaler().fit(x_train)
     x_train_scaled = scaler.transform(x_train)
-
-    scaler = preprocessing.StandardScaler().fit(x_test)
     x_test_scaled = scaler.transform(x_test)
-    """
+    path_preprocessing = os.path.join(
+        "/home/mf278754/master/", "fold{}_keras_preprocessing.pickle".format(
+            args.fold))
+    pickle.dump(scaler, open(path_preprocessing, 'wb'))
+    
 
     model = KerasModels(n_features=len(config["features"]), n_classes=len(
         config["classes"]), learning_rate=args.learning_rate, plot_model=False, modelname="multiclass_model_fold{}.h5".format(args.fold))
     keras_model = model.multiclass_MSSM_HWW_model()
     fit = keras_model.fit(
-        x_train,
+        x_train_scaled,
         y_train,
-        sample_weight=w_train,
-        validation_data=(x_test, y_test),
+	sample_weight=w_train,
+        validation_data=(x_test_scaled, y_test, w_test),
         batch_size=args.batch_size,
         epochs=args.epochs,
         shuffle=True,
-        callbacks=callbacks)
+        callbacks=callbacks,
+	verbose=2)
 
     folder_result = '/home/mf278754/master/results/'
     if not os.path.exists(folder_result):
