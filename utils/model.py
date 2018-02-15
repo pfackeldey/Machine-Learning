@@ -2,7 +2,7 @@
 
 from keras.models import Sequential
 from keras.layers import Dense, Dropout, AlphaDropout, BatchNormalization, Activation
-from keras.optimizers import Adam, Nadam, SGD
+from keras.optimizers import Adam, Nadam, SGD, RMSprop
 from keras import regularizers
 
 
@@ -94,25 +94,24 @@ class KerasModels():
         Multiclassification model
         """
         model = Sequential()
-        model.add(Dense(256, input_dim=self.n_features, kernel_initializer='lecun_normal'))
-        # model.add(BatchNormalization())
-        model.add(Activation('selu'))
-        model.add(AlphaDropout(0.5))
-        model.add(Dense(256, kernel_initializer='lecun_normal'))
-        # model.add(BatchNormalization())
-        model.add(Activation('selu'))
-        model.add(AlphaDropout(0.5))
-        model.add(Dense(256, kernel_initializer='lecun_normal'))
-        # model.add(BatchNormalization())
-        model.add(Activation('selu'))
-        model.add(Dense(self.n_classes, activation='softmax'))
+        model.add(Dense(35, input_dim=self.n_features, kernel_initializer='lecun_normal'))
+	#model.add(BatchNormalization())
+	model.add(Activation('selu'))
+	model.add(BatchNormalization())
+        model.add(AlphaDropout(0.1))
+	for i in range(1):
+		model.add(Dense(35, kernel_initializer='lecun_normal'))
+                model.add(Activation('selu'))
+                model.add(BatchNormalization())
+		model.add(AlphaDropout(0.1))
+	model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
 
-        # sgd = SGD(lr=self.learning_rate, momentum=0.95,
-        #           decay=1e-5, nesterov=True)
+        #sgd = SGD(lr=self.learning_rate, momentum=0.5,
+        #           decay=1e-7, nesterov=True)
         model.compile(loss='categorical_crossentropy',
-                      optimizer=Adam(lr=self.learning_rate), metrics=['accuracy'])
+                      optimizer=RMSprop(lr=self.learning_rate), metrics=['acc'])
 
         model.summary()
         """
@@ -133,19 +132,17 @@ class KerasModels():
         """
         model = Sequential()
         model.add(Dense(300, kernel_initializer='glorot_normal',
-                        input_dim=self.n_features))
+                        input_dim=self.n_features, kernel_regularizer=regularizers.l2(0.001), activation = 'relu'))
         model.add(BatchNormalization())
-        model.add(Activation('relu'))
-        model.add(Dense(300, kernel_initializer='glorot_normal'))
+	model.add(Dropout(0.25))
+        model.add(Dense(400, kernel_initializer='glorot_normal', kernel_regularizer=regularizers.l2(0.001), activation = 'relu'))
         model.add(BatchNormalization())
-        model.add(Activation('relu'))
-        model.add(BatchNormalization())
-        model.add(Dense(300, kernel_initializer='glorot_normal', activation='relu'))
+	model.add(Dropout(0.25))
         model.add(Dense(self.n_classes, activation='softmax'))
 
         # Compile the model:
 
-        model.compile(loss='categorical_crossentropy', optimizer=Adam(
+        model.compile(loss='categorical_crossentropy', optimizer=SGD(
             lr=self.learning_rate), metrics=['accuracy'])
 
         model.summary()
