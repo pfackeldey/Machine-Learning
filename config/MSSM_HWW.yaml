@@ -480,7 +480,7 @@ class_weights:
     DY:                 0.0078
     WW:                 0.0066
     Top:                0.00058
-    misc:               0.5
+    misc:               0.005
 
 output_path:            /home/peter/mount/data
 
@@ -495,26 +495,26 @@ features:
     #- dphilep1jet2
     #- dphilep2jet1
     #- dphilep2jet2
-    - dphill
+    #- dphill
     #- dphilmet
-    - dphilmet1
-    - dphilmet2
-    - jeteta1
-    - jeteta2
-    #- jetmass1
-    #- jetmass2
-    #- mjj
+    #- dphilmet1
+    #- dphilmet2
+    #- jeteta1
+    #- jeteta2
+    - jetmass1
+    - jetmass2
+    - mjj
     - mll
     - mth
     - mTi
-    #- mtw1
-    #- mtw2
+    - mtw1
+    - mtw2
     - nbjet
     - njet
     - pTWW
     - ptll
-    - dphijet1met
-    - dphijet2met
+    #- dphijet1met
+    #- dphijet2met
     - jetpt1
     - jetpt2
     #- std_vector_lepton_pt[0]
@@ -537,6 +537,10 @@ train_test_split:       0.5
 classifiers:
     - fold1_multiclass_model.h5
     - fold0_multiclass_model.h5
+
+preprocessing:
+    - fold0_keras_preprocessing.pickle
+    - fold1_keras_preprocessing.pickle
 
 # Prefix of new branches with method's responses
 branch_prefix:          "ml_score_"
