@@ -6,15 +6,15 @@ import json
 import os
 
 # load acc and loss
-loss = np.load('~/Machine-Learning/results/loss.npy')
-val_loss = np.load('~/Machine-Learning/results/val_loss.npy')
-acc = np.load('~/Machine-Learning/results/acc.npy')
-val_acc = np.load('~/Machine-Learning/results/val_acc.npy'])
+loss = np.load('/home/home2/institut_3b/fackeldey/master/Machine-Learning/results/loss.npy')
+val_loss = np.load('/home/home2/institut_3b/fackeldey/master/Machine-Learning/results/val_loss.npy')
+acc = np.load('/home/home2/institut_3b/fackeldey/master/Machine-Learning/results/acc.npy')
+val_acc = np.load('/home/home2/institut_3b/fackeldey/master/Machine-Learning/results/val_acc.npy')
 
 # plot loss
 f = plt.figure()
 plt.plot(loss)
-plt.plot("val_loss")
+plt.plot(val_loss)
 plt.xlabel("epochs")
 plt.ylabel("loss")
 plt.legend(["training loss", "validation loss"], loc="best")
