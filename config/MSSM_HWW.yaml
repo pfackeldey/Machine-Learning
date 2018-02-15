@@ -484,7 +484,7 @@ class_weights:
 
 output_path:            /home/peter/mount/data
 
-global_weight:          1.
+global_weight:          1000.
 
 event_weights:          training_weight
 
@@ -523,7 +523,7 @@ features:
     #- std_vector_jet_cmvav2[1]
     - metPuppi
 
-train_test_split:       0.5
+train_test_split:       0.75
 
 
 
