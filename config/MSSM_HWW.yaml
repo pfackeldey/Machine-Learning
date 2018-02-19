@@ -474,13 +474,13 @@ classes:
 
 # normalized to VVV:
 class_weights:
-    hww120_200:         0.01 #estimated
-    hww210_500:         0.1 #estimated
-    hww550_3000:        0.1 #estimated
-    DY:                 0.0078
-    WW:                 0.0066
-    Top:                0.00058
-    misc:               0.005
+    hww120_200:         0.5 #estimated
+    hww210_500:         1.0 #estimated
+    hww550_3000:        10.0 #estimated
+    DY:                 1.0
+    WW:                 1.0
+    Top:                0.15
+    misc:               1.0
 
 output_path:            /home/peter/mount/data
 
@@ -490,21 +490,22 @@ event_weights:          training_weight
 
 #features = training variables
 features:
-    #- detajj
-    #- dphilep1jet1
-    #- dphilep1jet2
-    #- dphilep2jet1
-    #- dphilep2jet2
-    #- dphill
-    #- dphilmet
-    #- dphilmet1
-    #- dphilmet2
-    #- jeteta1
-    #- jeteta2
+    - detajj
+    - dphilep1jet1
+    - dphilep1jet2
+    - dphilep2jet1
+    - dphilep2jet2
+    - dphill
+    - dphillmet
+    - drll
+    - dphilmet    
+    - dphilmet1
+    - dphilmet2
     - jetmass1
     - jetmass2
     - mjj
     - mll
+    - mcoll
     - mth
     - mTi
     - mtw1
@@ -513,14 +514,12 @@ features:
     - njet
     - pTWW
     - ptll
-    #- dphijet1met
-    #- dphijet2met
+    - dphijet1met
+    - dphijet2met
     - jetpt1
     - jetpt2
-    #- std_vector_lepton_pt[0]
-    #- std_vector_lepton_pt[1]
-    #- std_vector_jet_cmvav2[0]
-    #- std_vector_jet_cmvav2[1]
+    - jetcmvav21
+    - jetcmvav22
     - metPuppi
 
 train_test_split:       0.75
