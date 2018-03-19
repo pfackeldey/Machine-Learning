@@ -14,5 +14,7 @@ action() {
     export ANALYSIS_PARENT="$parent"
     export ANALYSIS_LOCAL_STORE="$ANALYSIS_BASE/data"
     export ANALYSIS_BASE_CONFIG="$ANALYSIS_BASE/analysis/MSSM_HWW.yaml"
+
+    source "$( law completion )"
 }
 action

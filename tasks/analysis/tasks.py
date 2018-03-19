@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 """
 Status: WIP!!!
 
@@ -13,15 +14,20 @@ import luigi
 
 law.contrib.load("numpy", "root")
 
+from analysis.base import Task
+
 import sys
 sys.path.insert(0, os.getenv("ANALYSIS_PARENT"))
 
 from preprocessing.createTrainingsset import createTrainingsset
 from preprocessing.rootToNumpy import rootToNumpy
 
-class FetchData(law.SandboxTask):
+class FetchData(Task):
 
     def output(self):
+        """
+        TODO: see run method: env has to be updated
+        """
         return self.local_target("data.root")
 
     @law.decorator.log
