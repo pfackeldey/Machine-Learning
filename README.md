@@ -4,7 +4,7 @@
 
 Modules and tools for a multivariate analysis
 
-Get started with:  
+Get standalone tools with:  
 
 virtualenv (with python 3.6):
 * `. ./checkout_script.sh` (only once)  
@@ -13,6 +13,11 @@ virtualenv (with python 3.6):
 general (recommended for lxplus and lx3b, but does not support luigi... :/):
 * `source /cvmfs/sft.cern.ch/lcg/views/LCG_92/x86_64-slc6-gcc62-opt/setup.sh`
 
+The MSSM HWW analysis is handled with law (based on luigi):
+
+"""
+TODO
+"""
 
 
 The preprocessing workflow is controlled by luigi! 

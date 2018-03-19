@@ -1,0 +1,545 @@
+#####################################################
+#                                                   #
+#   This part is for the creation of trainingsset   #
+#                                                   #
+#####################################################
+
+# Path to output directory
+output_path_creation:   /net/scratch_cms3b/fackeldey/trainingssets/
+
+# Filename postfix of merged training dataset
+output_filename:        "MSSM_HWW_trainingsset.root"
+
+# Path to nominal ntuple in files
+tree_path:              "latino"
+
+# Base path prefix for processes files
+base_path:              /net/scratch_cms3b/fackeldey/artus/HWW/
+
+# Branch in all files holding the event number used for creating the folds
+event_branch:           "event"
+
+# Branch to be added with training weights generated from formula using the weight string
+training_weight_branch: "training_weight"
+
+# Define the processes and the according files
+processes:
+    H_htt:
+        files:
+            - latino/latino_GluGluHToTauTau_M125.root
+            - latino/latino_VBFHToTauTau_M125.root
+            - latino/latino_HZJ_HToTauTau_M125.root
+            - latino/latino_HWplusJ_HToTauTau_M125.root
+            - latino/latino_HWminusJ_HToTauTau_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: misc
+
+    ZH_hww:
+        files:
+            - latino/latino_HZJ_HToWW_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: misc
+
+    ggZH_hww:
+        files:
+            - latino/latino_ggZH_HToWW_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: misc
+
+    WH_hww:
+        files:
+            - latino/latino_HWminusJ_HToWW_M125.root
+            - latino/latino_HWplusJ_HToWW_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: misc
+
+    qqH_hww:
+        files:
+            - latino/latino_VBFHToWWTo2L2Nu_alternative_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: misc
+
+    ggH_hww:
+        files:
+            - latino/latino_GluGluHToWWTo2L2NuPowheg_M125.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class: misc
+
+    hww120_200:
+        files:
+            - latino/latino_GluGluHToWWTo2L2Nu_M120.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M125.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M130.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M135.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M140.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M145.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M150.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M155.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M160.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M165.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M170.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M175.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M180.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M190.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M200.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class:          hww120_200
+
+    hww210_500:
+        files:
+            - latino/latino_GluGluHToWWTo2L2Nu_M210.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M230.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M250.root
+            - latino/latino_GluGluHToWWTo2L2Nu_M270.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M300.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M350.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M400.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M450.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M500.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class:          hww210_500
+
+    hww550_3000:
+        files:
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M550.root
+            #- latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M600.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M650.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M700.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M750.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M800.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M900.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M1000.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M1500.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2000.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M2500.root
+            - latino/latino_GluGluHToWWTo2L2Nu_JHUGen698_M3000.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class:          hww550_3000
+
+    DYM50:
+        files:
+            - latino/latino_DYJetsToTT_MuEle_M-50__part0.root
+            - latino/latino_DYJetsToTT_MuEle_M-50__part1.root
+            - latino/latino_DYJetsToTT_MuEle_M-50_ext1__part0.root
+            - latino/latino_DYJetsToTT_MuEle_M-50_ext1__part1.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*((0.876979+gen_ptll*(4.11598e-03)-(2.35520e-05)*gen_ptll*gen_ptll)*(1.10211 * (0.958512 - 0.131835*TMath::Erf((gen_ptll-14.1972)/10.1525)))*(gen_ptll<140)+0.891188*(gen_ptll>=140))*(0.00725432292044/baseW)*35.9"
+        class:          DY
+
+    DYM10_50:
+        files:
+            - latino/latino_DYJetsToLL_M-10to50.root
+            #- latino/latino_DYJetsToLL_M-10to50-LO.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*((0.876979+gen_ptll*(4.11598e-03)-(2.35520e-05)*gen_ptll*gen_ptll)*(1.10211 * (0.958512 - 0.131835*TMath::Erf((gen_ptll-14.1972)/10.1525)))*(gen_ptll<140)+0.891188*(gen_ptll>=140))*35.9"
+        class:          DY
+
+    ggww:
+        files:
+            - latino/latino_GluGluWWTo2L2Nu_MCFM.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class:          WW
+
+    ww:
+        files:
+            - latino/latino_WWTo2L2Nu.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*nllW*35.9"
+        class:          WW
+
+    VVV:
+        files:
+            - latino/latino_WWW.root
+            - latino/latino_WWZ.root
+            - latino/latino_WZZ.root
+            - latino/latino_ZZZ.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class:          misc
+
+    Vg:
+        files:
+            - latino/latino_Wg_MADGRAPHMLM.root
+            - latino/latino_Zg__part0.root
+            - latino/latino_Zg__part1.root
+            - latino/latino_Zg__part2.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC* !(Gen_ZGstar_mass > 0 && Gen_ZGstar_MomId == 22 )*35.9"
+        class:          misc
+
+    VgS:
+        files:
+            - latino/latino_WgStarLNuEE.root
+            - latino/latino_WgStarLNuMuMu.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*1.4*35.9"
+        class:          misc
+
+    VZ:
+        files:
+            - latino/latino_WZTo2L2Q__part0.root
+            - latino/latino_WZTo2L2Q__part1.root
+            - latino/latino_WZTo2L2Q__part2.root
+            - latino/latino_WZTo2L2Q__part3.root
+            - latino/latino_WZTo3LNu.root
+            - latino/latino_ZZTo2L2Nu__part0.root
+            - latino/latino_ZZTo2L2Nu__part1.root
+            - latino/latino_ZZTo2L2Nu__part2.root
+            - latino/latino_ZZTo2L2Q__part0.root
+            - latino/latino_ZZTo2L2Q__part1.root
+            - latino/latino_ZZTo2L2Q__part2.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*1.11*35.9"
+        class:          misc
+
+    MuonEG_WJets:
+        files:
+            - wjets_data/latino_MuonEG_Run2016H-03Feb2017_ver2-v1.root
+            - wjets_data/latino_MuonEG_Run2016F-03Feb2017-v1.root
+            - wjets_data/latino_MuonEG_Run2016H-03Feb2017_ver3-v1.root
+            - wjets_data/latino_MuonEG_Run2016C-03Feb2017-v1.root
+            - wjets_data/latino_MuonEG_Run2016G-03Feb2017-v1.root
+            - wjets_data/latino_MuonEG_Run2016B-03Feb2017_ver2-v2.root
+            - wjets_data/latino_MuonEG_Run2016D-03Feb2017-v1.root
+            - wjets_data/latino_MuonEG_Run2016E-03Feb2017-v1.root
+        cut_string:     "(trig_EleMu==1)"
+        weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
+        class:          misc
+
+
+    DoubleMuon_WJets:
+        files:
+            - wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
+            - wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
+            - wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
+            - wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part3.root
+            - wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016H-03Feb2017_ver3-v1.root
+            - wjets_data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part2.root
+            - wjets_data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016C-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==1)"
+        weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
+        class:          misc
+
+    SingleMuon_WJets:
+        files:
+            - wjets_data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
+            - wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
+            - wjets_data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
+            - wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
+            - wjets_data/latino_SingleMuon_Run2016C-03Feb2017-v1__part0.root
+            - wjets_data/latino_SingleMuon_Run2016D-03Feb2017-v1__part1.root
+            - wjets_data/latino_SingleMuon_Run2016E-03Feb2017-v1__part0.root
+            - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part2.root
+            - wjets_data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
+            - wjets_data/latino_SingleMuon_Run2016F-03Feb2017-v1__part1.root
+            - wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver3-v1.root
+            - wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
+            - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part3.root
+            - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part1.root
+            - wjets_data/latino_SingleMuon_Run2016E-03Feb2017-v1__part1.root
+            - wjets_data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
+            - wjets_data/latino_SingleMuon_Run2016D-03Feb2017-v1__part0.root
+            - wjets_data/latino_SingleMuon_Run2016C-03Feb2017-v1__part1.root
+            - wjets_data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
+            - wjets_data/latino_SingleMuon_Run2016F-03Feb2017-v1__part0.root
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==1)"
+        weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
+        class:          misc
+
+    DoubleEG_WJets:
+        files:
+            - wjets_data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part0.root
+            - wjets_data/latino_DoubleEG_Run2016H-03Feb2017_ver3-v1.root
+            - wjets_data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part1.root
+            - wjets_data/latino_DoubleEG_Run2016E-03Feb2017-v1.root
+            - wjets_data/latino_DoubleEG_Run2016F-03Feb2017-v1.root
+            - wjets_data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part0.root
+            - wjets_data/latino_DoubleEG_Run2016C-03Feb2017-v1.root
+            - wjets_data/latino_DoubleEG_Run2016G-03Feb2017-v1__part1.root
+            - wjets_data/latino_DoubleEG_Run2016D-03Feb2017-v1.root
+            - wjets_data/latino_DoubleEG_Run2016G-03Feb2017-v1__part0.root
+            - wjets_data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part1.root
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==1)"
+        weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
+        class:          misc
+
+    SingleElectron_WJets:
+        files:
+            - wjets_data/latino_SingleElectron_Run2016F-03Feb2017-v1.root
+            #- wjets_data/latino_MET_Run2016H-03Feb2017_ver2-v1.root
+            - wjets_data/latino_SingleElectron_Run2016H-03Feb2017_ver3-v1.root
+            #- wjets_data/latino_MET_Run2016D-03Feb2017-v1.root
+            - wjets_data/latino_SingleElectron_Run2016D-03Feb2017-v1.root
+            - wjets_data/latino_SingleElectron_Run2016E-03Feb2017-v1.root
+            #- wjets_data/latino_MET_Run2016E-03Feb2017-v1.root
+            #- wjets_data/latino_MET_Run2016B-03Feb2017_ver2-v2.root
+            #- wjets_data/latino_MET_Run2016G-03Feb2017-v1.root
+            - wjets_data/latino_SingleElectron_Run2016G-03Feb2017-v1__part1.root
+            #- wjets_data/latino_MET_Run2016C-03Feb2017-v1.root
+            #- wjets_data/latino_MET_Run2016H-03Feb2017_ver3-v1.root
+            - wjets_data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part0.root
+            - wjets_data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2__part0.root
+            - wjets_data/latino_SingleElectron_Run2016C-03Feb2017-v1.root
+            - wjets_data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part1.root
+            - wjets_data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2__part1.root
+            #- wjets_data/latino_MET_Run2016F-03Feb2017-v1.root
+            - wjets_data/latino_SingleElectron_Run2016G-03Feb2017-v1__part0.root
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==0)*(trig_SnglEle==1)"
+        weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
+        class:          misc
+
+    SingleTop:
+        files:
+            - latino/latino_ST_s-channel.root
+            - latino/latino_ST_t-channel_antitop.root
+            - latino/latino_ST_t-channel_top.root
+            - latino/latino_ST_tW_antitop.root
+            - latino/latino_ST_tW_top.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*35.9"
+        class:          Top
+
+    TTBar:
+        files:
+            - latino/latino_TTTo2L2Nu__part0.root
+            - latino/latino_TTTo2L2Nu__part1.root
+            - latino/latino_TTTo2L2Nu__part2.root
+            - latino/latino_TTTo2L2Nu__part3.root
+            - latino/latino_TTTo2L2Nu__part4.root
+            - latino/latino_TTTo2L2Nu__part5.root
+            - latino/latino_TTTo2L2Nu__part6.root
+            - latino/latino_TTTo2L2Nu__part7.root
+            - latino/latino_TTTo2L2Nu__part8.root
+            - latino/latino_TTTo2L2Nu__part9.root
+            - latino/latino_TTTo2L2Nu__part10.root
+            - latino/latino_TTTo2L2Nu__part11.root
+            - latino/latino_TTTo2L2Nu__part12.root
+            - latino/latino_TTTo2L2Nu__part13.root
+            - latino/latino_TTTo2L2Nu__part14.root
+            - latino/latino_TTTo2L2Nu__part15.root
+            - latino/latino_TTTo2L2Nu__part16.root
+            - latino/latino_TTTo2L2Nu__part17.root
+            - latino/latino_TTTo2L2Nu__part18.root
+            - latino/latino_TTTo2L2Nu__part19.root
+            - latino/latino_TTTo2L2Nu__part20.root
+        cut_string:     "(trigger==1)"
+        weight_string:  "XSWeight*SFweight2l*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*GenLepMatch2l*METFilter_MC*(TMath::Sqrt( TMath::Exp(0.0615-0.0005*topLHEpt) * TMath::Exp(0.0615-0.0005*antitopLHEpt) ) )*35.9"
+        class:          Top
+
+
+
+    MuonEG_data:
+        files:
+            - data/latino_MuonEG_Run2016B-03Feb2017_ver2-v2.root
+            - data/latino_MuonEG_Run2016C-03Feb2017-v1.root
+            - data/latino_MuonEG_Run2016D-03Feb2017-v1.root
+            - data/latino_MuonEG_Run2016E-03Feb2017-v1.root
+            - data/latino_MuonEG_Run2016F-03Feb2017-v1.root
+            - data/latino_MuonEG_Run2016G-03Feb2017-v1.root
+            - data/latino_MuonEG_Run2016H-03Feb2017_ver2-v1.root
+            - data/latino_MuonEG_Run2016H-03Feb2017_ver3-v1.root
+        cut_string:     "(trig_EleMu==1)"
+        weight_string:  "veto_EMTFBug*METFilter_DATA*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x"
+        class:          data
+
+    DoubleMuon_data:
+        files:
+            - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
+            - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
+            - data/latino_DoubleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
+            - data/latino_DoubleMuon_Run2016C-03Feb2017-v1.root
+            - data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part0.root
+            - data/latino_DoubleMuon_Run2016D-03Feb2017-v1__part1.root
+            - data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
+            - data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part1.root
+            - data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part0.root
+            - data/latino_DoubleMuon_Run2016F-03Feb2017-v1__part1.root
+            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part1.root
+            - data/latino_DoubleMuon_Run2016G-03Feb2017-v1__part2.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver2-v1__part3.root
+            - data/latino_DoubleMuon_Run2016H-03Feb2017_ver3-v1.root
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==1)"
+        weight_string:  "veto_EMTFBug*METFilter_DATA*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x"
+        class:          data
+
+    SingleMuon_data:
+        files:
+            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part0.root
+            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part1.root
+            - data/latino_SingleMuon_Run2016B-03Feb2017_ver2-v2__part2.root
+            - data/latino_SingleMuon_Run2016C-03Feb2017-v1.root
+            - data/latino_SingleMuon_Run2016D-03Feb2017-v1__part0.root
+            - data/latino_SingleMuon_Run2016D-03Feb2017-v1__part1.root
+            - data/latino_SingleMuon_Run2016E-03Feb2017-v1__part0.root
+            - data/latino_SingleMuon_Run2016E-03Feb2017-v1__part1.root
+            - data/latino_SingleMuon_Run2016F-03Feb2017-v1__part0.root
+            - data/latino_SingleMuon_Run2016F-03Feb2017-v1__part1.root
+            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part1.root
+            - data/latino_SingleMuon_Run2016G-03Feb2017-v1__part2.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver2-v1__part2.root
+            - data/latino_SingleMuon_Run2016H-03Feb2017_ver3-v1.root
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==1)"
+        weight_string:  "veto_EMTFBug*METFilter_DATA*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x"
+        class:          data
+
+    DoubleEG_data:
+        files:
+            - data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2.root
+            - data/latino_DoubleEG_Run2016C-03Feb2017-v1.root
+            - data/latino_DoubleEG_Run2016D-03Feb2017-v1.root
+            - data/latino_DoubleEG_Run2016E-03Feb2017-v1.root
+            - data/latino_DoubleEG_Run2016F-03Feb2017-v1.root
+            - data/latino_DoubleEG_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_DoubleEG_Run2016G-03Feb2017-v1__part1.root
+            - data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_DoubleEG_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_DoubleEG_Run2016H-03Feb2017_ver3-v1.root
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==1)"
+        weight_string:  "veto_EMTFBug*METFilter_DATA*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x"
+        class:          data
+
+    SingleElectron_data:
+        files:
+            #- data/latino_MET_Run2016B-03Feb2017_ver2-v2.root
+            - data/latino_SingleElectron_Run2016B-03Feb2017_ver2-v2.root
+            #- data/latino_MET_Run2016C-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016C-03Feb2017-v1.root
+            #- data/latino_MET_Run2016D-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016D-03Feb2017-v1.root
+            #- data/latino_MET_Run2016E-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016E-03Feb2017-v1.root
+            #- data/latino_MET_Run2016F-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016F-03Feb2017-v1.root
+            #- data/latino_MET_Run2016G-03Feb2017-v1.root
+            - data/latino_SingleElectron_Run2016G-03Feb2017-v1__part0.root
+            - data/latino_SingleElectron_Run2016G-03Feb2017-v1__part1.root
+            #- data/latino_MET_Run2016H-03Feb2017_ver2-v1.root
+            #- data/latino_MET_Run2016H-03Feb2017_ver3-v1.root
+            - data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part0.root
+            - data/latino_SingleElectron_Run2016H-03Feb2017_ver2-v1__part1.root
+            - data/latino_SingleElectron_Run2016H-03Feb2017_ver3-v1.root
+        cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==0)*(trig_SnglEle==1)"
+        weight_string:  "veto_EMTFBug*METFilter_DATA*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x"
+        class:          data
+
+#################################################################
+#                                                               #
+#   This part is for the .root->.npy conversion and training    #
+#                                                               #
+#################################################################
+
+trainingssets:
+    - /net/scratch_cms3b/fackeldey/trainingssets/fold0_MSSM_HWW_trainingsset.root
+    - /net/scratch_cms3b/fackeldey/trainingssets/fold1_MSSM_HWW_trainingsset.root
+
+
+classes:
+    - hww120_200
+    - hww210_500
+    - hww550_3000
+    - DY
+    - WW
+    - Top
+    - misc
+
+# normalized to VVV:
+class_weights:
+    hww120_200:         0.5 #estimated
+    hww210_500:         1.0 #estimated
+    hww550_3000:        10.0 #estimated
+    DY:                 1.0
+    WW:                 1.0
+    Top:                0.15
+    misc:               1.0
+
+output_path:            /home/peter/mount/data
+
+global_weight:          1000.
+
+event_weights:          training_weight
+
+#features = training variables
+features:
+    - detajj
+    - dphilep1jet1
+    - dphilep1jet2
+    - dphilep2jet1
+    - dphilep2jet2
+    - dphill
+    - dphillmet
+    - drll
+    - dphilmet    
+    - dphilmet1
+    - dphilmet2
+    - jetmass1
+    - jetmass2
+    - mjj
+    - mll
+    - mcoll
+    - mth
+    - mTi
+    - mtw1
+    - mtw2
+    - nbjet
+    - njet
+    - pTWW
+    - ptll
+    - dphijet1met
+    - dphijet2met
+    - jetpt1
+    - jetpt2
+    - jetcmvav21
+    - jetcmvav22
+    - metPuppi
+
+train_test_split:       0.75
+
+
+
+#######################################################
+#                                                     #
+#   This part is for the application to root files    #
+#                                                     #
+#######################################################
+
+# inverted hierarchy of the folds!!!
+classifiers:
+    - fold1_multiclass_model.h5
+    - fold0_multiclass_model.h5
+
+preprocessing:
+    - fold0_keras_preprocessing.pickle
+    - fold1_keras_preprocessing.pickle
+
+# Prefix of new branches with method's responses
+branch_prefix:          "ml_score_"
