@@ -14,7 +14,7 @@ import luigi
 law.contrib.load("numpy", "root")
 
 import sys
-sys.path.insert(0, os.getenv("GLOBAL_ENV_ML_DIR"))
+sys.path.insert(0, os.getenv("ANALYSIS_PARENT"))
 
 from preprocessing.createTrainingsset import createTrainingsset
 from preprocessing.rootToNumpy import rootToNumpy
@@ -34,10 +34,7 @@ class FetchData(law.SandboxTask):
         copyfile(src, dst)
 
 class CreateTrainingsset(law.SandboxTask):
-    """
-    define path to config in global env variable "GLOBAL_ENV" in setup.sh/hwwenv.sh
-    """
-    config_path = os.getenv("GLOBAL_ENV_CONFIG_PATH")
+    config_path = os.getenv("ANALYSIS_BASE_CONFIG")
     num_fold = 1
 
     sandbox = "docker::pfackeldey/hww"
@@ -61,10 +58,7 @@ class CreateTrainingsset(law.SandboxTask):
         createTrainingsset(self.config_path)
 
 class ConvertData(law.SandboxTask):
-    """
-    define path to config in global env variable "GLOBAL_ENV" in setup.sh/hwwenv.sh
-    """
-    config_path = os.getenv("GLOBAL_ENV_CONFIG_PATH")
+    config_path = os.getenv("ANALYSIS_BASE_CONFIG")
     num_fold = 1
 
     sandbox = "docker::pfackeldey/hww"
