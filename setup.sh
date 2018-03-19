@@ -1,7 +1,5 @@
-# setup cvmfs stack
+# setup virtualenv with all python tools
 
-setupcvmfsstack(){
-	source /cvmfs/sft.cern.ch/lcg/views/LCG_92/x86_64-slc6-gcc62-opt/setup.sh
-}
+cd ~/sw_base
 
-setupcvmfsstack
+source bin/activate

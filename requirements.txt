@@ -1,6 +1,12 @@
-numpy>=1.8.2
-scipy>=0.13.3
+numpy
+scipy
 seaborn
 tensorflow
 keras
 matplotlib
+scikit-learn
+pyyaml
+pandas
+six
+luigi
+law

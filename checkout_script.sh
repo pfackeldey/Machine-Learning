@@ -1,9 +1,20 @@
+# cd home
+cd ~
+
+python36 -m pip install virtualenv
+
+python36 -m virtualenv sw_base --distribute
+
+cd sw_base
+
 # clone repository
 git clone https://github.com/CMSAachen3B/Machine-Learning.git
 
-# export path for python packages
-export PYTHONPATH=$HOME/.local/lib/python2.7/site-packages:$PYTHONPATH
+# activate virtualenv
+source bin/activate
+
+cd Machine-Learning
 
 # install more python packages
-pip install luigi --user --upgrade
+pip install -r requirements.txt
 
