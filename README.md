@@ -5,8 +5,15 @@
 Modules and tools for a multivariate analysis
 
 Get started with:  
-`. ./checkout_script.sh` (only once)  
-`. ./setup.sh` (for every new terminal)
+
+virtualenv (with python 3.6):
+* `. ./checkout_script.sh` (only once)  
+* `. ./setup.sh` (for every new terminal)
+
+general (recommended for lxplus and lx3b, but does not support luigi... :/):
+* `source /cvmfs/sft.cern.ch/lcg/views/LCG_92/x86_64-slc6-gcc62-opt/setup.sh`
+
+
 
 The preprocessing workflow is controlled by luigi! 
 
