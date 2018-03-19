@@ -5,8 +5,8 @@
 Modules and tools for a multivariate analysis
 
 Get started with:  
-`bash checkout_script.sh` (only once)  
-`bash setup.sh` (for every new terminal)
+`. ./checkout_script.sh` (only once)  
+`. ./setup.sh` (for every new terminal)
 
 The preprocessing workflow is controlled by luigi! 
 
