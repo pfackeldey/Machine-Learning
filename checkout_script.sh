@@ -2,7 +2,7 @@
 # cd home
 cd ~
 
-python36 -m pip install virtualenv
+python36 -m pip install virtualenv --user --upgrade
 
 python36 -m virtualenv sw_base --distribute
 
