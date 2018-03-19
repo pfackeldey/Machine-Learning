@@ -1,25 +1,32 @@
 #!/usr/bin/env python
 
-import numpy as np
-np.random.seed(1234)
-
-from collections import Counter
-import argparse
-import yaml
-import os
-import sys
-
-from sklearn import model_selection
-
-base = os.path.normpath(os.path.join(os.path.abspath(__file__), "../.."))
-sys.path.append(base)
-
-from utils.model import KerasModels
-
-from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
-
-
 def multiclassNeuralNetwork(args_from_script=None):
+    """
+    Imports have to be inside function for the law run method
+    """
+
+    import numpy as np
+    np.random.seed(1234)
+
+    from collections import Counter
+    import argparse
+    import yaml
+    import os
+    import sys
+
+    from sklearn import model_selection
+
+    base = os.path.normpath(os.path.join(os.path.abspath(__file__), "../.."))
+    sys.path.append(base)
+
+    from utils.model import KerasModels
+
+    from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard
+
+    """
+    Argument Parser for the training step. Mainly modifying hyperparameter.
+    """
+
 
     parser = argparse.ArgumentParser(description="Perform multiclassification NN training with Keras.",
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
@@ -54,7 +61,7 @@ def multiclassNeuralNetwork(args_from_script=None):
         counter = Counter(y)
         majority = 1.  # max(counter.values())
         return {cls: float(majority / count) for cls, count in counter.items()}
-    
+
     print y_test.shape
     # Add callbacks
     callbacks = []
@@ -78,7 +85,7 @@ def multiclassNeuralNetwork(args_from_script=None):
         "/home/mf278754/master/", "fold{}_keras_preprocessing.pickle".format(
             args.fold))
     pickle.dump(scaler, open(path_preprocessing, 'wb'))
-    
+
 
     model = KerasModels(n_features=len(config["features"]), n_classes=len(
         config["classes"]), learning_rate=args.learning_rate, plot_model=False, modelname="multiclass_model_fold{}.h5".format(args.fold))

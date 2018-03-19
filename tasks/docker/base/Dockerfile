@@ -8,7 +8,7 @@ LABEL version="0.0.1"
 WORKDIR /root/law_example
 
 # basic environment variables
-ENV LAW_SANDBOX docker::mfackeld/base
+ENV LAW_SANDBOX docker::pfackeldey/base
 ENV PATH /usr/local/bin:/usr/local/sbin:/usr/sbin:/usr/bin:/sbin:/bin:$PATH
 ENV LD_LIBRARY_PATH /usr/local/lib:$LD_LIBRARY_PATH
 ENV LIBPATH /usr/local/lib:$LIBPATH

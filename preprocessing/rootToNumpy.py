@@ -1,20 +1,21 @@
 #!/usr/bin/env python
 
-import ROOT
-# disable ROOT internal argument parser
-ROOT.PyConfig.IgnoreCommandLineOptions = True
-import root_numpy
-import numpy as np
-np.random.seed(1234)
-
-import argparse
-import yaml
-import os
-import sys
-
-
 def rootToNumpy(path_to_config):
+    """
+    Imports have to be inside function for the law run method
+    """
+    import ROOT
+    # disable ROOT internal argument parser
+    ROOT.PyConfig.IgnoreCommandLineOptions = True
+    import root_numpy
+    import numpy as np
+    np.random.seed(1234)
 
+    import argparse
+    import yaml
+    import os
+    import sys
+    
     # load yaml config
     config = yaml.load(open(path_to_config, "r"))
 

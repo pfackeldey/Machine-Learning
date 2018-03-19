@@ -1,26 +1,27 @@
 #!/usr/bin/env python
 
-import ROOT
-# disable ROOT internal argument parser
-ROOT.PyConfig.IgnoreCommandLineOptions = True
-
-import argparse
-import yaml
-import os
-import subprocess
-from array import array
-import sys
-
-import logging
-logger = logging.getLogger("create_training_dataset")
-logger.setLevel(logging.DEBUG)
-handler = logging.StreamHandler()
-formatter = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
-handler.setFormatter(formatter)
-logger.addHandler(handler)
-
-
 def createTrainingsset(path_to_config = None):
+    """
+    Imports have to be inside function for the law run method
+    """
+    import ROOT
+    # disable ROOT internal argument parser
+    ROOT.PyConfig.IgnoreCommandLineOptions = True
+
+    import argparse
+    import yaml
+    import os
+    import subprocess
+    from array import array
+    import sys
+
+    import logging
+    logger = logging.getLogger("create_training_dataset")
+    logger.setLevel(logging.DEBUG)
+    handler = logging.StreamHandler()
+    formatter = logging.Formatter("%(name)s - %(levelname)s - %(message)s")
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
 
     # load yaml config
     config = yaml.load(open(path_to_config, "r"))
