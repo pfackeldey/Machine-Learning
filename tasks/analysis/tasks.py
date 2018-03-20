@@ -20,8 +20,8 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.getenv("ANALYSIS_BASE")))
 
-#from preprocessing.createTrainingsset import createTrainingsset
-#from sys.path.insert(0, os.getenv("ANALYSIS_PARENT")).preprocessing.rootToNumpy import rootToNumpy
+from preprocessing.createTrainingsset import createTrainingsset
+from preprocessing.rootToNumpy import rootToNumpy
 
 class FetchData(Task, law.LocalWorkflow):
 

@@ -7,7 +7,7 @@ import law
 
 import law.contrib.htcondor
 
-class DataSets():
+class DataSets:
     def __init__():
         self.datarun = ['B', 'C', 'D', 'E', 'F', 'G', 'H']
         self.selection = "__wwSel"
@@ -31,7 +31,7 @@ class DataSets():
             return self.create_data_directories + self.create_wjets_directories + self.create_mc_directories
 
 
-class Task(Datasets, law.Task):
+class Task(DataSets, law.Task):
     """
     Base task that we use to force a version parameter on all inheriting tasks, and that provides
     some convenience methods to create local file and directory targets at the default data path.
