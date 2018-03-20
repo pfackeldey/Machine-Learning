@@ -15,6 +15,12 @@ action() {
     export ANALYSIS_LOCAL_STORE="$ANALYSIS_BASE/data"
     export ANALYSIS_BASE_CONFIG="$ANALYSIS_BASE/analysis/MSSM_HWW.yaml"
 
-    source "$( law completion )"
+    # storage path variables (EOS,...)
+    # target path
+    export ANALYSIS_DATA_PATH_TARGET="/eos/user/m/mfackeld/summer16"
+    # source path
+    export ANALYSIS_DATA_PATH_SOURCE="/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016_Apr17/"
+
+
 }
 action

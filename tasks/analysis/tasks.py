@@ -14,32 +14,31 @@ import luigi
 
 law.contrib.load("numpy", "root")
 
-from analysis.base import Task
+from analysis.base import Task, HTCondorWorkflow
 
 import sys
-sys.path.insert(0, os.getenv("ANALYSIS_PARENT"))
 
-from preprocessing.createTrainingsset import createTrainingsset
-from preprocessing.rootToNumpy import rootToNumpy
+sys.path.insert(0, os.path.dirname(os.getenv("ANALYSIS_BASE")))
 
-class FetchData(Task):
+#from preprocessing.createTrainingsset import createTrainingsset
+#from sys.path.insert(0, os.getenv("ANALYSIS_PARENT")).preprocessing.rootToNumpy import rootToNumpy
+
+class FetchData(Task, law.LocalWorkflow):
+
+    def create_branch_map(self):
+        return {i: dir for i, dir in zip(len(self.directories()),self.directories())}
 
     def output(self):
-        """
-        TODO: see run method: env has to be updated
-        """
-        return self.local_target("data.root")
+        return self.local_target(os.getenv("ANALYSIS_DATA_PATH_TARGET") + self.branch_data)
 
     @law.decorator.log
     def run(self):
         from shutil import copyfile
-        """
-        TODO: global env variables in setup.sh/hwwenv.sh with paths to all files of latino trees
-              Set src, dst for MC, Data and all shifts...
-        """
+        src = os.getenv("ANALYSIS_DATA_PATH_SOURCE") + self.branch_data
+        dst = os.getenv("ANALYSIS_DATA_PATH_TARGET")
         copyfile(src, dst)
 
-class CreateTrainingsset(law.SandboxTask):
+class CreateTrainingsset(HTCondorWorkflow, law.SandboxTask):
     config_path = os.getenv("ANALYSIS_BASE_CONFIG")
     num_fold = 1
 
@@ -63,7 +62,7 @@ class CreateTrainingsset(law.SandboxTask):
     def run(self):
         createTrainingsset(self.config_path)
 
-class ConvertData(law.SandboxTask):
+class ConvertData(HTCondorWorkflow, law.SandboxTask):
     config_path = os.getenv("ANALYSIS_BASE_CONFIG")
     num_fold = 1
 
