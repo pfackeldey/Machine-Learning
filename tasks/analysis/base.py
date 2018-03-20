@@ -8,7 +8,11 @@ import law
 import law.contrib.htcondor
 
 class DataSets:
-    def __init__():
+    """
+    Class container providing the paths to all mc and data diretories of the HWW group. 
+    Additionally it provides functions to create branch maps in the main tasks.
+    """
+    def __init__(self):
         self.datarun = ['B', 'C', 'D', 'E', 'F', 'G', 'H']
         self.selection = "__wwSel"
         self.shifts = ["JESdo", "JESup", "LepElepTdo", "LepMupTdo", "METdo", "METup", "PS", "PUdo", "PUup", "UEdo", "UEup", ""]
@@ -25,7 +29,7 @@ class DataSets:
 
 
         def create_mc_directories(self):
-            return [self.base_path_mc + shift + self.selection for shit in self.shifts]
+            return [self.base_path_mc + shift + self.selection for shift in self.shifts]
 
         def directories(self):
             return self.create_data_directories + self.create_wjets_directories + self.create_mc_directories
