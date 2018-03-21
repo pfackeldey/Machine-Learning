@@ -33,8 +33,9 @@ class FetchData(DataSets2016, Task, law.LocalWorkflow):
         import subprocess
         # create all missing directories
         subprocess.call(["mkdir", "-p", self.local_path(self.branch_data)])
-        # copy to created cirectories
-        subprocess.call(["cp", "-r", self.src + self.branch_data, self.local_path(self.branch_data)])
+        # copy files to created cirectories
+        for item in os.listdir(self.src + self.branch_data):
+            subprocess.call(["cp", "-r", os.path.join(self.src + self.branch_data, item), self.local_path(self.branch_data)])
 
 
 class CreateTrainingsset(HTCondorWorkflow, law.SandboxTask):
