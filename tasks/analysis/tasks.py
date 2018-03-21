@@ -15,28 +15,22 @@ import luigi
 law.contrib.load("numpy", "root")
 
 from analysis.base import Task, HTCondorWorkflow
+from analysis.datasets2016 import DataSets2016
 
-import sys
-
-sys.path.insert(0, os.path.dirname(os.getenv("ANALYSIS_BASE")))
-
-from preprocessing.createTrainingsset import createTrainingsset
-from preprocessing.rootToNumpy import rootToNumpy
-
-class FetchData(Task, law.LocalWorkflow):
+class FetchData(DataSets2016, Task, law.LocalWorkflow):
 
     def create_branch_map(self):
-        return {i: dir for i, dir in zip(len(self.directories()),self.directories())}
+        return {i: dir for i, dir in zip(range(len(self.directories())),self.directories())}
 
     def output(self):
         return self.local_target(os.getenv("ANALYSIS_DATA_PATH_TARGET") + self.branch_data)
 
     @law.decorator.log
     def run(self):
-        from shutil import copyfile
+        from shutil import copytree
         src = os.getenv("ANALYSIS_DATA_PATH_SOURCE") + self.branch_data
         dst = os.getenv("ANALYSIS_DATA_PATH_TARGET")
-        copyfile(src, dst)
+        copytree(src, dst)
 
 class CreateTrainingsset(HTCondorWorkflow, law.SandboxTask):
     config_path = os.getenv("ANALYSIS_BASE_CONFIG")
@@ -60,6 +54,9 @@ class CreateTrainingsset(HTCondorWorkflow, law.SandboxTask):
         return local_target(output_file)
 
     def run(self):
+        import sys
+        sys.path.insert(0, os.path.dirname(os.getenv("ANALYSIS_BASE")))
+        from preprocessing.createTrainingsset import createTrainingsset
         createTrainingsset(self.config_path)
 
 class ConvertData(HTCondorWorkflow, law.SandboxTask):
@@ -82,4 +79,7 @@ class ConvertData(HTCondorWorkflow, law.SandboxTask):
         return local_target("./arrays/weights_fold{}.npy".format(self.num_fold))
 
     def run(self):
+        import sys
+        sys.path.insert(0, os.path.dirname(os.getenv("ANALYSIS_BASE")))
+        from preprocessing.rootToNumpy import rootToNumpy
         rootToNumpy(self.config_path)
