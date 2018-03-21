@@ -29,17 +29,13 @@ class FetchData(DataSets2016, Task, law.LocalWorkflow):
 
     @law.decorator.log
     def run(self):
-        import shutil
-        def copytree(src, dst, symlinks=False, ignore=None):
-            for item in os.listdir(src):
-                s = os.path.join(src, item)
-                d = os.path.join(dst, item)
-                if os.path.isdir(s):
-                    shutil.copytree(s, d, symlinks, ignore)
-                else:
-                    shutil.copy2(s, d)
+        # copy all dirs defined in DataSets2016
+        import subprocess
+        # create all missing directories
+        subprocess.call(["mkdir", "-p", self.local_path(self.branch_data)])
+        # copy to created cirectories
+        subprocess.call(["cp", "-r", self.src + self.branch_data, self.local_path(self.branch_data)])
 
-        copytree(self.src + self.branch_data, self.local_path())
 
 class CreateTrainingsset(HTCondorWorkflow, law.SandboxTask):
     config_path = os.getenv("ANALYSIS_BASE_CONFIG")
