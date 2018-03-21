@@ -19,18 +19,27 @@ from analysis.datasets2016 import DataSets2016
 
 class FetchData(DataSets2016, Task, law.LocalWorkflow):
 
+    src = os.getenv("ANALYSIS_DATA_PATH_SOURCE")
+
     def create_branch_map(self):
         return {i: dir for i, dir in zip(range(len(self.directories())),self.directories())}
 
     def output(self):
-        return self.local_target(os.getenv("ANALYSIS_DATA_PATH_TARGET") + self.branch_data)
+        return self.local_target(self.branch_data)
 
     @law.decorator.log
     def run(self):
-        from shutil import copytree
-        src = os.getenv("ANALYSIS_DATA_PATH_SOURCE") + self.branch_data
-        dst = os.getenv("ANALYSIS_DATA_PATH_TARGET")
-        copytree(src, dst)
+        import shutil
+        def copytree(src, dst, symlinks=False, ignore=None):
+            for item in os.listdir(src):
+                s = os.path.join(src, item)
+                d = os.path.join(dst, item)
+                if os.path.isdir(s):
+                    shutil.copytree(s, d, symlinks, ignore)
+                else:
+                    shutil.copy2(s, d)
+
+        copytree(self.src + self.branch_data, self.local_path())
 
 class CreateTrainingsset(HTCondorWorkflow, law.SandboxTask):
     config_path = os.getenv("ANALYSIS_BASE_CONFIG")
@@ -43,7 +52,7 @@ class CreateTrainingsset(HTCondorWorkflow, law.SandboxTask):
         super(CreateTrainingsset, self).__init__(*args, **kwargs)
 
     def requires(self):
-        return None
+        return FetchData()
 
     def output(self):
         """

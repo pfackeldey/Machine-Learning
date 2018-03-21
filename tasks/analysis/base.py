@@ -19,15 +19,12 @@ class Task(law.Task):
         return (self.__class__.__name__, self.version)
 
     def local_path(self, *path):
-        # ANALYSIS_DATA_PATH is defined in setup.sh
-        """
-        TODO: ENV has to be updated!!!
-        """
-        parts = (os.getenv("ANALYSIS_DATA_PATH_TARGET"),) + self.store_parts() + path
+        # ANALYSIS_DATA_PATH_TARGET is defined in hwwenv.sh
+        parts = (os.getenv("ANALYSIS_DATA_PATH_TARGET"),) + path
         return os.path.join(*parts)
 
     def local_target(self, *path):
-        return law.LocalFileTarget(self.local_path(*path))
+        return law.LocalDirectoryTarget(self.local_path(*path))
 
 class HTCondorWorkflow(law.contrib.htcondor.HTCondorWorkflow):
     """

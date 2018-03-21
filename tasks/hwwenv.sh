@@ -17,7 +17,7 @@ action() {
 
     # storage path variables (EOS,...)
     # target path
-    export ANALYSIS_DATA_PATH_TARGET="/eos/user/m/mfackeld/summer16"
+    export ANALYSIS_DATA_PATH_TARGET="/eos/user/m/mfackeld/summer16/"
     # source path
     export ANALYSIS_DATA_PATH_SOURCE="/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016_Apr17/"
 
