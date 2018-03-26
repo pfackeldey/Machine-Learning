@@ -4,8 +4,8 @@ import os
 
 import luigi
 import law
+law.contrib.load("htcondor")
 
-import law.contrib.htcondor
 
 class Task(law.Task):
     """
@@ -13,20 +13,55 @@ class Task(law.Task):
     some convenience methods to create local file and directory targets at the default data path.
     """
 
-    version = luigi.Parameter()
-
     def store_parts(self):
-        return (self.__class__.__name__, self.version)
+        return (self.__class__.__name__,)
 
     def local_path(self, *path):
-        # ANALYSIS_DATA_PATH_TARGET is defined in hwwenv.sh
-        parts = (os.getenv("ANALYSIS_DATA_PATH_TARGET"),) + path
+        parts = (os.getenv("ANALYSIS_DATA_PATH"),) + self.store_parts() + path
         return os.path.join(*parts)
 
     def local_target(self, *path):
-        return law.LocalDirectoryTarget(self.local_path(*path))
+        return law.LocalFileTarget(self.local_path(*path))
 
-class HTCondorWorkflow(law.contrib.htcondor.HTCondorWorkflow):
+    def wlcg_path(self, *path):
+        parts = self.store_parts() + path
+        return os.path.join(*parts)
+
+    def wlcg_target(self, *path):
+        return law.WLCGFileTarget(self.wlcg_path(*path))
+
+
+class ConfigTask(Task):
+
+    def __init__(self, *args, **kwargs):
+        super(ConfigTask, self).__init__(*args, **kwargs)
+
+        self.config = law.LocalFileTarget(law.util.rel_path(__file__, "MSSM_HWW.yaml")).load()
+
+
+class ProcessTask(ConfigTask):
+
+    process = luigi.Parameter(description="the process name")
+
+    def __init__(self, *args, **kwargs):
+        super(ProcessTask, self).__init__(*args, **kwargs)
+
+        # validate process
+        if self.process not in self.config["processes"]:
+            raise ValueError("unknown process: {}".format(self.process))
+
+        self.process_config = self.config["processes"][self.process]
+
+        # some flags
+        self.is_data = self.process.endswith("_data")
+        self.is_wjets = self.process.endswith("_WJets")
+        self.is_mc = not self.is_data and not self.is_wjets
+
+    def store_parts(self):
+        return super(ProcessTask, self).store_parts() + (self.process,)
+
+
+class HTCondorWorkflow(law.HTCondorWorkflow):
     """
     Batch systems are typically very heterogeneous by design, and so is HTCondor. Law does not aim
     to "magically" adapt to all possible HTCondor setups which would certainly end in a mess.
@@ -35,8 +70,12 @@ class HTCondorWorkflow(law.contrib.htcondor.HTCondorWorkflow):
     configuration is required.
     """
 
-    htcondor_gpus = luigi.IntParameter(default=law.NO_INT, significant=False, description="number "
-        "of GPUs to request on the VISPA cluster, leave empty to use only CPUs")
+    htcondor_logs = luigi.BoolParameter()
+
+    outputs_siblings = True
+
+    def __init__(self, *args, **kwargs):
+        super(HTCondorWorkflow, self).__init__(*args, **kwargs)
 
     def htcondor_output_directory(self):
         # the directory where submission meta data should be stored
@@ -52,14 +91,23 @@ class HTCondorWorkflow(law.contrib.htcondor.HTCondorWorkflow):
     def htcondor_bootstrap_file(self):
         # each job can define a bootstrap file that is executed prior to the actual job
         # in order to setup software and environment variables
-        return law.util.rel_path(__file__, "bootstrap.sh")
+        return law.util.rel_path(__file__, "..", "condor_bootstrap.sh")
 
     def htcondor_job_config(self, config, job_num, branches):
         # render_data is rendered into all files sent with a job
         config.render_variables["analysis_path"] = os.getenv("ANALYSIS_PATH")
-        # copy the entire environment
-        config.custom_content.append(("getenv", "true"))
-        # tell the job config if GPUs are requested
-        if not law.is_no_param(self.htcondor_gpus):
-            config.custom_content.append(("request_gpus", self.htcondor_gpus))
+
+        # condor logs
+        if self.htcondor_logs:
+            config.stdout = "out.txt"
+            config.stderr = "err.txt"
+            config.log = "log.txt"
+
         return config
+
+    def htcondor_output_postfix(self):
+        self.get_branch_map()
+        return "_{}To{}".format(self.start_branch, self.end_branch)
+
+    def htcondor_use_local_scheduler(self):
+        return True
