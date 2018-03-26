@@ -12,3 +12,4 @@ arrays/
 results/
 plotting/.ipynb_checkpoints/
 *.txt
+*/.law/
