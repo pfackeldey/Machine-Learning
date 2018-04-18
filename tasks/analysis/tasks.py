@@ -1,91 +1,370 @@
 # -*- coding: utf-8 -*-
-"""
-Status: WIP!!!
 
-Main missing parts: - submission of tasks to batch system
-                    - more tasks... especially for training and evaluation and copying stuff (maybe even plotting)
-                    - https://github.com/riga/law/blob/663448a34226f663c9a08a478aeee39227321172/law/sandbox/base.py for sandbox env variables
-"""
+import re
+from collections import OrderedDict
+from array import array
 
-
-import os
-import law
 import luigi
+import six
+import law
+law.contrib.load("numpy", "root", "wlcg", "tasks")
 
-law.contrib.load("numpy", "root")
+from analysis.base import Task, ConfigTask, ProcessTask, HTCondorWorkflow
 
-from analysis.base import Task, HTCondorWorkflow
-from analysis.datasets2016 import DataSets2016
 
-class FetchData(DataSets2016, Task, law.LocalWorkflow):
+class CopyFiles(ProcessTask):
 
-    src = os.getenv("ANALYSIS_DATA_PATH_SOURCE")
+    selection = "__wwSel"
+
+    shift = luigi.Parameter(default="")
+
+    def __init__(self, *args, **kwargs):
+        super(CopyFiles, self).__init__(*args, **kwargs)
+
+        if self.is_data:
+            self.base_path = "Apr2017_Run2016{}_RemAOD/lepSel__EpTCorr__TrigMakerData__cleanTauData__l2loose__hadd__l2tightOR__formulasDATA"
+        elif self.is_wjets:
+            self.base_path = "Apr2017_Run2016{}_RemAOD/lepSel__EpTCorr__TrigMakerData__cleanTauData__l2loose__multiFakeW__formulasFAKE__hadd"
+        else:
+            self.base_path = "Apr2017_summer16/lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__LepTrgFix__dorochester__formulasMC"
+            if self.shift:
+                self.base_path += "__{}".format(self.shift)
+
+    def store_parts(self):
+        # [:-1] skips the process name which is added by the ProcessTask
+        return super(CopyFiles, self).store_parts()[:-1] + ("orig", self.base_path + self.selection)
+
+    def output(self):
+        def target(path):
+            base = path.rsplit("/")[-1]
+            t = self.wlcg_target(base)
+            if not self.is_mc:
+                # extract the run period and re-format it into the target path (s.a.)
+                run = re.search("Run2016(\w)", base).group(1)
+                t.path = t.path.format(run)
+            return t
+
+        return law.SiblingFileCollection([
+            target(path)
+            for path in self.process_config["files"]
+        ])
+
+    def run(self):
+        coll = self.output()
+        coll.dir.touch()
+
+        progress_cb = self.create_progress_callback(len(coll))
+
+        for i, dst in enumerate(coll.targets):
+            if dst.exists():
+                continue
+
+            src = law.WLCGFileTarget("/".join(dst.path.rsplit("/", 3)[-3:]), fs="eos_phys_higgs_fs")
+            with self.publish_step("upload file {} ...".format(i)):
+                with dst.localize("w", cache=False) as dst_tmp:
+                    src.copy_to_local(dst_tmp, cache=False)
+
+            progress_cb(i)
+
+
+class CopyFilesWrapper(ConfigTask, law.WrapperTask):
+	"""
+    shifts = [
+        "JESdo", "JESup", "LepElepTdo", "LepMupTdo", "METdo", "METup", "PS", "PUdo", "PUup", "UEdo",
+        "UEup",
+    ]
+
+    def requires(self):
+        reqs = [CopyFiles.req(self, process=process) for process in self.config["processes"]]
+        for task in list(reqs):
+            if task.is_mc:
+                reqs += [CopyFiles.req(task, shift=shift) for shift in self.shifts]
+        return reqs
+    """
+	def requires(self):
+		return [CopyFiles.req(self, process=process) for process in self.config["processes"]]
+
+
+class CreateTrainingset(ProcessTask, HTCondorWorkflow, law.LocalWorkflow):
 
     def create_branch_map(self):
-        return {i: dir for i, dir in zip(range(len(self.directories())),self.directories())}
+        return self.process_config["files"]
 
-    def output(self):
-        return self.local_target(self.branch_data)
-
-    @law.decorator.log
-    def run(self):
-        # copy all dirs defined in DataSets2016
-        import subprocess
-        # create all missing directories
-        subprocess.call(["mkdir", "-p", self.local_path(self.branch_data)])
-        # copy files to created cirectories
-        for item in os.listdir(self.src + self.branch_data):
-            subprocess.call(["cp", "-r", os.path.join(self.src + self.branch_data, item), self.local_path(self.branch_data)])
-
-
-class CreateTrainingsset(HTCondorWorkflow, law.SandboxTask):
-    config_path = os.getenv("ANALYSIS_BASE_CONFIG")
-    num_fold = 1
-
-    sandbox = "docker::pfackeldey/hww"
-    force_sandbox = True
-
-    def __init__(self, *args, **kwargs):
-        super(CreateTrainingsset, self).__init__(*args, **kwargs)
+    def workflow_requires(self):
+        reqs = super(CreateTrainingset, self).workflow_requires()
+        reqs["data"] = CopyFiles.req(self)
+        return reqs
 
     def requires(self):
-        return FetchData()
+        return CopyFiles.req(self)
 
     def output(self):
-        """
-        Find a more convenient solution?
-        """
-        config = yaml.load(open(self.config_path, "r"))
-        output_file = os.path.join(config["output_path_creation"], "fold{}_{}".format(self.num_fold, config["output_filename"]))
-        return local_target(output_file)
+        return [self.wlcg_target("data_fold{}_{}.root".format(i, self.branch)) for i in range(2)]
 
     def run(self):
-        import sys
-        sys.path.insert(0, os.path.dirname(os.getenv("ANALYSIS_BASE")))
-        from preprocessing.createTrainingsset import createTrainingsset
-        createTrainingsset(self.config_path)
+        import ROOT
+        ROOT.PyConfig.IgnoreCommandLineOptions = True
+        ROOT.gROOT.SetBatch()
 
-class ConvertData(HTCondorWorkflow, law.SandboxTask):
-    config_path = os.getenv("ANALYSIS_BASE_CONFIG")
-    num_fold = 1
+        inp = self.input().targets[self.branch]
+        outputs = self.output()
+        outputs[0].parent.touch()
 
-    sandbox = "docker::pfackeldey/hww"
-    force_sandbox = True
+        with inp.load("READ", formatter="root") as tfile_in:
+            tree_in = tfile_in.Get("latino")
 
-    def __init__(self, *args, **kwargs):
-        super(ConvertData, self).__init__(*args, **kwargs)
+            for i, outp in enumerate(outputs):
+                cut_string = "({CUT_STRING}*({EVENT_BRANCH}%2=={NUM_FOLD}))".format(
+                    EVENT_BRANCH=self.config["event_branch"],
+                    NUM_FOLD=i,
+                    CUT_STRING=self.process_config["cut_string"]
+                )
+                with outp.localize("w") as outp_tmp:
+                    with outp_tmp.load("RECREATE", formatter="root") as tfile_out:
+                        tfile_out.cd()
+
+                        # skimming
+                        tree_out = tree_in.CopyTree(cut_string)
+                        tree_out.SetName(self.process_config["class"])
+
+                        # append a new branch
+                        formula = ROOT.TTreeFormula("training_weight",
+                            self.process_config["weight_string"], tree_out)
+                        training_weight = array("f", [-999.0])
+                        branch_training_weight = tree_out.Branch(
+                            self.config["training_weight_branch"], training_weight,
+                            self.config["training_weight_branch"] + "/F")
+                        for i_event in range(tree_out.GetEntries()):
+                            tree_out.GetEntry(i_event)
+                            training_weight[0] = formula.EvalInstance()
+                            branch_training_weight.Fill()
+
+                        tfile_out.cd()
+                        tree_out.Write()
+
+
+class MergeTrainingset(ConfigTask):
 
     def requires(self):
-        return CreateTrainingsset(self.config_path)
+        return {
+            process: CreateTrainingset.req(self, process=process)
+            for process in self.config["processes"]
+        }
 
     def output(self):
-        """
-        Find a more convenient solution...
-        """
-        return local_target("./arrays/weights_fold{}.npy".format(self.num_fold))
+        return [self.wlcg_target("data_fold{}.root".format(i)) for i in range(2)]
 
     def run(self):
-        import sys
-        sys.path.insert(0, os.path.dirname(os.getenv("ANALYSIS_BASE")))
-        from preprocessing.rootToNumpy import rootToNumpy
-        rootToNumpy(self.config_path)
+        inputs = self.input()
+        outputs = self.output()
+        outputs[0].parent.touch()
+
+        for i, outp in enumerate(outputs):
+            tmp_dir = law.LocalDirectoryTarget(is_tmp=True)
+            tmp_dir.touch()
+
+            names = []
+            for inps in six.itervalues(inputs):
+                for _inps in six.itervalues(inps["collection"].targets):
+                    name = _inps[i].unique_basename
+                    names.append(name)
+                    _inps[i].copy_to_local(tmp_dir.child(name, type="f"))
+
+            with outp.localize("w") as tmp:
+                cmd = ["hadd", "-f0", tmp.path] + names
+                with self.publish_step("hadding fold {} ...".format(i)):
+                    code = law.util.interruptable_popen(cmd, cwd=tmp_dir.path)[0]
+                    if code != 0:
+                        raise Exception("hadd failed")
+
+
+class NumpyConversion(ConfigTask):
+
+    def requires(self):
+        return MergeTrainingset.req(self)
+
+    def output(self):
+        return [self.local_target("data_fold{}.npz".format(i)) for i in range(2)]
+
+    def run(self):
+        import numpy as np
+        import root_numpy
+
+        inputs = self.input()
+        outputs = self.output()
+        outputs[0].parent.touch()
+
+        features = self.config["features"]
+        classes = self.config["classes"]
+
+        for i, (inp, outp) in enumerate(zip(inputs, outputs)):
+            x, y, w = [], [], []
+
+            with inp.load(formatter="root") as tfile:
+                for i_class, class_ in enumerate(classes):
+                    tree = tfile.Get(class_)
+                    if not tree:
+                        raise Exception("Tree %s not found" % class_)
+
+                    # Get inputs for this class
+                    x_class = np.zeros((tree.GetEntries(), len(features)))
+                    x_conv = root_numpy.tree2array(tree, branches=features)
+                    for i_feature, feature in enumerate(features):
+                        x_class[:, i_feature] = x_conv[feature]
+                    x.append(x_class)
+
+                    # Get weights
+                    w_class = np.zeros((tree.GetEntries(), 1))
+                    w_conv = root_numpy.tree2array(
+                        tree, branches=[self.config["event_weights"]])
+                    w_class[:, 0] = w_conv[self.config["event_weights"]] * \
+                        self.config["class_weights"][class_]
+                    w.append(w_class)
+
+                    # Get targets for this class
+                    y_class = np.zeros((tree.GetEntries(), len(classes)))
+                    y_class[:, i_class] = np.ones((tree.GetEntries()))
+                    y.append(y_class)
+
+                # Stack inputs, targets and weights to a Keras-readable dataset
+                x = np.vstack(x)  # inputs
+                y = np.vstack(y)  # targets
+                w = np.vstack(w)  # weights
+                w = np.squeeze(w)  # needed to get weights into keras
+
+                outp.dump(x=x, y=y, w=w, formatter="numpy")
+
+
+
+class Evaluate(ProcessTask, HTCondorWorkflow, law.LocalWorkflow):
+
+    selection = "__wwSel"
+
+    shift = luigi.Parameter(default="")
+
+    def __init__(self, *args, **kwargs):
+        super(Evaluate, self).__init__(*args, **kwargs)
+
+        if self.is_data:
+            self.base_path = "Apr2017_Run2016{}_RemAOD/lepSel__EpTCorr__TrigMakerData__cleanTauData__l2loose__hadd__l2tightOR__formulasDATA"
+        elif self.is_wjets:
+            self.base_path = "Apr2017_Run2016{}_RemAOD/lepSel__EpTCorr__TrigMakerData__cleanTauData__l2loose__multiFakeW__formulasFAKE__hadd"
+        else:
+            self.base_path = "Apr2017_summer16/lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__LepTrgFix__dorochester__formulasMC"
+            if self.shift:
+                self.base_path += "__{}".format(self.shift)
+
+
+    def create_branch_map(self):
+        return self.process_config["files"]
+
+    def workflow_requires(self):
+        reqs = super(Evaluate, self).workflow_requires()
+        reqs["data"] = NumpyConversion.req(self)
+        return reqs
+
+    def requires(self):
+        return NumpyConversion.req(self)
+
+    def store_parts(self):
+        # [:-1] skips the process name which is added by the ProcessTask
+        return super(Evaluate, self).store_parts()[:-1] + ("DNN", self.base_path + self.selection)
+
+    def output(self):
+        def target(path):
+            base = path.rsplit("/")[-1]
+            t = self.wlcg_target(base)
+            if not self.is_mc:
+                # extract the run period and re-format it into the target path (s.a.)
+                run = re.search("Run2016(\w)", base).group(1)
+                t.path = t.path.format(run)
+            return t
+
+        return law.SiblingFileCollection([
+            target(path)
+            for path in self.process_config["files"]
+        ])
+
+    def run(self):
+        import ROOT
+        ROOT.PyConfig.IgnoreCommandLineOptions = True
+        ROOT.gROOT.SetBatch()
+
+        coll = self.output()
+        coll.dir.touch()
+
+        progress_cb = self.create_progress_callback(len(coll))
+
+        for i, dst in enumerate(coll.targets):
+            if dst.exists():
+                continue
+
+            with self.publish_step("append NN score to file {} ...".format(dst)):
+                with dst.localize("w", cache=False) as dst_tmp:
+                    # Load keras model and preprocessing
+                	classifiers = []
+                	preprocessing = []
+                	for c, p in zip(self.config["classifiers"], self.config["preprocessing"]):
+                		classifiers.append(load_model(law.util.rel_path(__file__, "..", c)))
+                		preprocessing.append(pickle.load(open(law.util.rel_path(__file__, "..", p), "rb")))
+
+        			# Open input file and register branches with input and output variables
+        			file_ = ROOT.TFile(dst_tmp, "UPDATE")
+        			if file_ == None:
+        				raise Exception(
+        					"File is not existent: {}".format(dst_tmp))
+
+        			tree = file_.Get("latino")
+        			if tree == None:
+        				raise Exception("Tree {} is not existent in file: {}".format("latino", dst_tmp))
+
+        			values = []
+        			for feature in self.config["features"]:
+        				values.append(array("f", [-999]))
+        				tree.SetBranchAddress(feature, values[-1])
+
+        			response_branches = []
+            		prefix = self.config["branch_prefix"]
+
+            		response_max_score = array("f", [-999])
+            		response_branches.append(
+            		tree.Branch("{}max_score".format(prefix), response_max_score,
+            				    "{}max_score/F".format(prefix)))
+
+            		response_max_index = array("f", [-999])
+            		response_branches.append(
+            		tree.Branch("{}max_index".format(prefix), response_max_index,
+            				    "{}max_index/F".format(prefix)))
+
+            		# Loop over events and add method's response to tree
+            		for i_event in range(tree.GetEntries()):
+            			# Get current event
+            			tree.GetEntry(i_event)
+
+            			# Get event number and calculate method's response
+            			event = int(getattr(tree, self.config["event_branch"]))
+            			values_stacked = np.hstack(values).reshape(1, len(values))
+
+            			# preprocessing
+            			values_preprocessed = preprocessing[event % 2].transform(values_stacked)
+            			response = classifiers[event % 2].predict(values_preprocessed)
+            			response = np.squeeze(response)
+
+            			# Find max score and index
+            			response_max_score[0] = -999.0
+            			for i, r in enumerate(response):
+            				#response_single_scores[i][0] = r
+            				if r > response_max_score[0]:
+            					response_max_score[0] = r
+            					response_max_index[0] = i
+
+            			# Fill branches
+            			for branch in response_branches:
+            				branch.Fill()
+
+            		# Write new branches to input file
+            		tree.Write("", ROOT.TObject.kOverwrite)
+            		file_.Close()
+
+
+            progress_cb(i)

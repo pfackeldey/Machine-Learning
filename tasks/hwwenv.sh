@@ -20,6 +20,8 @@ action() {
     export ANALYSIS_DATA_PATH_TARGET="/eos/user/m/mfackeld/summer16/"
     # source path
     export ANALYSIS_DATA_PATH_SOURCE="/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016_Apr17/"
+    # tmp dir
+    export ANALYSIS_TMP_DIR="/user/fackeldey/ml_tmp/"
 
 
 }

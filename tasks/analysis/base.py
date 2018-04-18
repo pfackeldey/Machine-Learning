@@ -62,13 +62,6 @@ class ProcessTask(ConfigTask):
 
 
 class HTCondorWorkflow(law.HTCondorWorkflow):
-    """
-    Batch systems are typically very heterogeneous by design, and so is HTCondor. Law does not aim
-    to "magically" adapt to all possible HTCondor setups which would certainly end in a mess.
-    Therefore we have to configure the base HTCondor workflow in law.contrib.htcondor to work with
-    the VISPA environment. In most cases, like in this example, only a minimal amount of
-    configuration is required.
-    """
 
     htcondor_logs = luigi.BoolParameter()
 

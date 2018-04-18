@@ -4,26 +4,54 @@
 
 Modules and tools for a multivariate analysis
 
-Get standalone tools with:  
+## Setup
 
-virtualenv (with python 3.6):
-* `. ./checkout_script.sh` (only once)  
-* `. ./setup.sh` (for every new terminal)
+It is necessary to change `law.cfg`, `luigi.cfg`, `hwwenv.sh`, `setup.sh` and `MSSM_HWW.yaml` to your personal paths and
+environment variables!  
 
-general (recommended for lxplus and lx3b, but does not support luigi... :/):
-* `source /cvmfs/sft.cern.ch/lcg/views/LCG_92/x86_64-slc6-gcc62-opt/setup.sh`
+First setup software and environment variables for preprocessing up to the ROOT to numpy conversion:
 
-The MSSM HWW analysis is handled with law (based on luigi):
+1. `cd tasks`
+2. `bash install_lx3b.sh` (only once)
+3. `. setup.sh` (in every new shell)
+4. `. hwwenv.sh` (in every new shell)
+
+Now you are ready to go!
+
+## Preprocessing
+
+First you need to create the trainingset. This step is handled by law (based on luigi)
+For this you need to initialize all law tasks:
+
+1. `law db`
+
+Now you can check the status of the trainingset creation:
+
+2. `law run MergeTrainingset --CreateTrainingset-workflow local --print-status 1`
+
+Open a second shell, setup everything and start a central scheduler via: `luigid`  
+Now you can open your browser and open `localhost:8082`. Afterwards you can start the task in the previous shell:
+
+3. `law run MergeTrainingset --CreateTrainingset-workflow local --workers 4`
+
+The number of workers can also be changed during the running task in the central scheduler. If you omit the option
+`--CreateTrainingset-workflow local` the task `CreateTrainingset` will be submitted to the HTCondor batch system.
+Once the task is finished you can convert the merged trainingset to numpy arrays:
+
+4. `law run NumpyConversion --workers 4`
+
+Also here the number of workers can be changed with the central scheduler.
+
+## Training
+
+Once the preprocessing step is done, you can start the training. Here it is recommended to use a GPU (for RWTH see the wiki of this repo). More details in the wiki...
+
+## Evaluation
 
 """
 TODO
 """
 
-
-The preprocessing workflow is controlled by luigi! 
-
-Run preprocessing to get numpy arrays from ntuple:  
-`python -m luigi --module run_luigi RootToNumpy --config-path config/MSSM_HWW.yaml --local-scheduler`
 
 For a more detailed overview about the code and how to use it, take a look into
 the wiki!

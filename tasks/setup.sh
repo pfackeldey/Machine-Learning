@@ -25,7 +25,7 @@ action() {
     if [ "$ON_LX3B" = "1" ] || [ "$ON_CONDOR" = "1" ]; then
         export ANALYSIS_DATA_PATH="/net/scratch_cms3b/fackeldey/ml_data"
         export ANALYSIS_SOFTWARE_PATH="/net/scratch_cms3b/fackeldey/ml_software"
-        export ANALYSIS_REMOTE_CACHE="$( [ "$ON_LX3B" = "1" ] && echo "/user/fackeldey/ml_cache" )"
+        export ANALYSIS_REMOTE_CACHE="$( [ "$ON_LX3B" = "1" ] && echo "/net/scratch_cms3b/fackeldey/ml_cache" )"
 
         # software from /net/scratch_cms
         for pkg in zlib-1.2.8 jsonc-test python-2.7.9 setuptools-34.1.1 pip-9.0.1 pycrypto-2.6.1 \
@@ -41,7 +41,7 @@ action() {
     fi
     if [ "$ON_RZ" = "1" ]; then
         source /home/phys3b/Envs/keras_tf_sharedUsers/bin/activate
-
+        #TODO
         # and other stuff ...
     fi
 
