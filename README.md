@@ -48,13 +48,17 @@ Once the preprocessing step is done, you can start the training. Here it is reco
 
 ## Evaluation
 
-"""
-TODO
-"""
+For a single file:
 
+* `python evaluation/keras_evaluation.py tasks/analysis/MSSM_HWW.yaml --file test.root --tree latino`
 
-For a more detailed overview about the code and how to use it, take a look into
-the wiki!
+For all files (at RWTH Aachen via HTCondor):
+
+* `python evaluation/process.py`
+
+In order to evaluate only data, wjets or MC files use the option `--datasets`.
+More information on script usage with `--help`  
+
 
 ## License
 
