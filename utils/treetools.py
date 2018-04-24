@@ -33,7 +33,7 @@ class TreeExtender(object):
     In the example above, *entry* is a wrapper around the arrays associated to the branches. It
     provides getters to both new and existing, unpacked branches returning the associated arrays.
     Prior to each iteration, the values of new branches are set to a default value. You may change
-    this value be changing the class member *DEFAULT_VALUE* which defaults to ``-1e5``.
+    this value be changing the class member *DEFAULT_VALUE* which defaults to ``-999``.
     """
 
     DEFAULT_VALUE = -999
