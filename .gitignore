@@ -7,6 +7,8 @@
 *.png
 *.pdf
 *.npy
+*.npz
+NumpyConversion/
 example_training/
 MSSM_training/
 arrays/
