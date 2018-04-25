@@ -36,7 +36,8 @@ class ConfigTask(Task):
     def __init__(self, *args, **kwargs):
         super(ConfigTask, self).__init__(*args, **kwargs)
 
-        self.config = law.LocalFileTarget(law.util.rel_path(__file__, "MSSM_HWW.yaml")).load()
+        self.config = law.LocalFileTarget(
+            law.util.rel_path(__file__, "MSSM_HWW.yaml")).load()
 
 
 class ProcessTask(ConfigTask):
@@ -77,7 +78,8 @@ class HTCondorWorkflow(law.HTCondorWorkflow):
     def htcondor_create_job_file_factory(self):
         # tell the factory, which is responsible for creating our job files,
         # that the files are not temporary, i.e., it should not delete them after submission
-        factory = super(HTCondorWorkflow, self).htcondor_create_job_file_factory()
+        factory = super(HTCondorWorkflow,
+                        self).htcondor_create_job_file_factory()
         factory.is_tmp = False
         return factory
 

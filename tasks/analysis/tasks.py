@@ -59,7 +59,8 @@ class CopyFiles(ProcessTask):
             if dst.exists():
                 continue
 
-            src = law.WLCGFileTarget("/".join(dst.path.rsplit("/", 3)[-3:]), fs="eos_phys_higgs_fs")
+            src = law.WLCGFileTarget(
+                "/".join(dst.path.rsplit("/", 3)[-3:]), fs="eos_phys_higgs_fs")
             with self.publish_step("upload file {} ...".format(i)):
                 with dst.localize("w", cache=False) as dst_tmp:
                     src.copy_to_local(dst_tmp, cache=False)
@@ -68,21 +69,22 @@ class CopyFiles(ProcessTask):
 
 
 class CopyFilesWrapper(ConfigTask, law.WrapperTask):
-	"""
-    shifts = [
-        "JESdo", "JESup", "LepElepTdo", "LepMupTdo", "METdo", "METup", "PS", "PUdo", "PUup", "UEdo",
-        "UEup",
-    ]
+    """
+shifts = [
+    "JESdo", "JESup", "LepElepTdo", "LepMupTdo", "METdo", "METup", "PS", "PUdo", "PUup", "UEdo",
+    "UEup",
+]
+
+def requires(self):
+    reqs = [CopyFiles.req(self, process=process) for process in self.config["processes"]]
+    for task in list(reqs):
+        if task.is_mc:
+            reqs += [CopyFiles.req(task, shift=shift) for shift in self.shifts]
+    return reqs
+"""
 
     def requires(self):
-        reqs = [CopyFiles.req(self, process=process) for process in self.config["processes"]]
-        for task in list(reqs):
-            if task.is_mc:
-                reqs += [CopyFiles.req(task, shift=shift) for shift in self.shifts]
-        return reqs
-    """
-	def requires(self):
-		return [CopyFiles.req(self, process=process) for process in self.config["processes"]]
+        return [CopyFiles.req(self, process=process) for process in self.config["processes"]]
 
 
 class CreateTrainingset(ProcessTask, HTCondorWorkflow, law.LocalWorkflow):
@@ -129,7 +131,7 @@ class CreateTrainingset(ProcessTask, HTCondorWorkflow, law.LocalWorkflow):
 
                         # append a new branch
                         formula = ROOT.TTreeFormula("training_weight",
-                            self.process_config["weight_string"], tree_out)
+                                                    self.process_config["weight_string"], tree_out)
                         training_weight = array("f", [-999.0])
                         branch_training_weight = tree_out.Branch(
                             self.config["training_weight_branch"], training_weight,
@@ -173,7 +175,8 @@ class MergeTrainingset(ConfigTask):
             with outp.localize("w") as tmp:
                 cmd = ["hadd", "-f0", tmp.path] + names
                 with self.publish_step("hadding fold {} ...".format(i)):
-                    code = law.util.interruptable_popen(cmd, cwd=tmp_dir.path)[0]
+                    code = law.util.interruptable_popen(
+                        cmd, cwd=tmp_dir.path)[0]
                     if code != 0:
                         raise Exception("hadd failed")
 
