@@ -38,11 +38,13 @@ def keras_evaluation():
         classifiers.append(load_model(c))
         preprocessing.append(pickle.load(open(p, "rb")))
 
-    print "Currently processing {}".format(args.file)
     files = args.files
 
-    for file in files:
-        path = file + "/" + args.tree
+    for _file in files:
+
+        print "Currently processing {}".format(_file)
+
+        path = _file + "/" + args.tree
 
         with TreeExtender(path) as extender:
 
