@@ -256,7 +256,7 @@ processes:
             - wjets_data/latino_MuonEG_Run2016E-03Feb2017-v1.root
         cut_string:     "(trig_EleMu==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
-        class:          Fake
+        class:          misc
 
 
     DoubleMuon_WJets:
@@ -283,7 +283,7 @@ processes:
             - wjets_data/latino_DoubleMuon_Run2016E-03Feb2017-v1__part0.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
-        class:          Fake
+        class:          misc
 
     SingleMuon_WJets:
         files:
@@ -309,7 +309,7 @@ processes:
             - wjets_data/latino_SingleMuon_Run2016F-03Feb2017-v1__part0.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
-        class:          Fake
+        class:          misc
 
     DoubleEG_WJets:
         files:
@@ -326,7 +326,7 @@ processes:
             - wjets_data/latino_DoubleEG_Run2016B-03Feb2017_ver2-v2__part1.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
-        class:          Fake
+        class:          misc
 
     SingleElectron_WJets:
         files:
@@ -351,7 +351,7 @@ processes:
             - wjets_data/latino_SingleElectron_Run2016G-03Feb2017-v1__part0.root
         cut_string:     "(trig_EleMu==0)*(trig_DbleMu==0)*(trig_SnglMu==0)*(trig_DbleEle==0)*(trig_SnglEle==1)"
         weight_string:  "((fakeW2l_ele_cut_WP_Tight80X_mu_cut_Tight80x)*(veto_EMTFBug)*(METFilter_DATA))"
-        class:          Fake
+        class:          misc
 
     SingleTop:
         files:
@@ -413,21 +413,19 @@ classes:
     - WW
     - Top
     - misc
-    - Fake
 
 # estimated:
 class_weights:
-    hww120_200:         0.5
-    hww210_500:         10.0
-    hww550_3000:        10.0
-    vbf_hww120_200:     1.0
+    hww120_200:         1.0
+    hww210_500:         2.0
+    hww550_3000:        5.0
+    vbf_hww120_200:     10.0
     vbf_hww210_500:     10.0
-    vbf_hww550_3000:    20.0
-    DY:                 1.0
+    vbf_hww550_3000:    10.0
+    DY:                 1.1
     WW:                 1.0
-    Top:                0.15
-    misc:               1.0
-    Fake:               1.0
+    Top:                0.2
+    misc:               0.75
 
 global_weight:          1.
 
@@ -481,6 +479,3 @@ classifiers:
 preprocessing:
     - fold0_keras_preprocessing.pickle
     - fold1_keras_preprocessing.pickle
-
-# Prefix of new branches with method's responses
-branch_prefix:          "ml_score_"
