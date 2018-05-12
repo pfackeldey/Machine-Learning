@@ -14,12 +14,12 @@ from sklearn import model_selection
 base = os.path.normpath(os.path.join(os.path.abspath(__file__), "../.."))
 sys.path.append(base)
 
-from utils.model import KerasModels
+from utils.model import KerasModel, Config
 
 from keras.callbacks import EarlyStopping, ModelCheckpoint, TensorBoard, ReduceLROnPlateau
 
 
-def multiclassNeuralNetwork(args_from_script=None):
+def multiclassNeuralNetwork():
     """
     Argument Parser for the training step. Mainly modifying hyperparameter.
     """
@@ -27,33 +27,32 @@ def multiclassNeuralNetwork(args_from_script=None):
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
     parser.add_argument("--fold", default=0, choices=[0, 1],
                         help="Training fold. [Default: %(default)s]")
-    parser.add_argument("--epochs", default=100,
+    parser.add_argument("--epochs", default=200,
                         help="Number of training epochs. [Default: %(default)s]")
-    parser.add_argument("--learning-rate", default=0.0001,
+    parser.add_argument("--learning-rate", default=0.000005,
                         help="Learning rate of NN. [Default: %(default)s]")
     parser.add_argument("--batch-size", default=1000,
                         help="Batch size for training. [Default: %(default)s]")
     parser.add_argument("--early-stopping", default=False, action='store_true',
                         help="Stop training if loss increases again. [Default: %(default)s]")
-    parser.add_argument("config", help="Path to training config")
     args = parser.parse_args()
 
-    config = yaml.load(open(args.config, "r"))
+    config = Config()
 
-    folder = '/home/mf278754/master/NumpyConversion/'
+    folder = base + '/NumpyConversion/'
 
     # load trainings data and weights
     data = np.load(folder + 'data_fold0.npz'.format(args.fold))
     x = data['x']
     y = data['y']
     w = data['w']
-    w = w * config["global_weight"]
+    w = w * config.load["global_weight"]
 
     # Split data in training and testing
     x_train, x_test, y_train, y_test, w_train, w_test = model_selection.train_test_split(
-        x, y, w, test_size=1.0 - config["train_test_split"], random_state=1234)
+        x, y, w, test_size=1.0 - config.load["train_test_split"], random_state=1234)
 
-    folder_result = '/home/mf278754/master/results/'
+    folder_result = base + '/results/'
     if not os.path.exists(folder_result):
         os.makedirs(folder_result)
 
@@ -70,7 +69,7 @@ def multiclassNeuralNetwork(args_from_script=None):
     # callbacks.append(TensorBoard(log_dir='/home/mf278754/master/logs',
     #                             histogram_freq=1, write_graph=True, write_images=True))
     callbacks.append(
-        ModelCheckpoint(filepath="/home/mf278754/master/fold{}_multiclass_model.h5".format(args.fold), save_best_only=True, verbose=1))
+        ModelCheckpoint(filepath=base + "/test_fold{}_multiclass_model.h5".format(args.fold), save_best_only=True, verbose=1))
     if args.early_stopping:
         callbacks.append(EarlyStopping(monitor='val_loss',
                                        min_delta=0,
@@ -78,7 +77,7 @@ def multiclassNeuralNetwork(args_from_script=None):
                                        verbose=0, mode='auto'))
 
     callbacks.append(ReduceLROnPlateau(
-        monitor='val_loss', factor=0.5, patience=5))
+        monitor='val_loss', factor=0.1, patience=5))
 
     # preprocessing
     import pickle
@@ -87,13 +86,31 @@ def multiclassNeuralNetwork(args_from_script=None):
     x_train_scaled = scaler.transform(x_train)
     x_test_scaled = scaler.transform(x_test)
     path_preprocessing = os.path.join(
-        "/home/mf278754/master/", "fold{}_keras_preprocessing.pickle".format(
+        base, "fold{}_keras_preprocessing.pickle".format(
             args.fold))
     pickle.dump(scaler, open(path_preprocessing, 'wb'))
 
-    model = KerasModels(n_features=len(config["features"]), n_classes=len(
-        config["classes"]), learning_rate=args.learning_rate, plot_model=False, modelname="multiclass_model_fold{}.h5".format(args.fold))
+    # create KerasModel instance
+    model = KerasModel()
+    print "\033[1;33mSetting up model...\033[1;m"
+
+    # call setter of basic model parameters
+    model.lr = args.learning_rate
+    model.modelname = str(args.fold)
+    model.plot_model = False
+
+    # print model parameter
+    print "Number of training features is: ", model.nfeatures
+    print "Number of target classes is: ", model.nclasses
+    print "Learning rate is set to: ", model.lr
+    print "Fully trained model name is set to: ", model.modelname
+    print "Model plotting is set to: ", model.plot_model
+
+    # setup model with new model attributes
     keras_model = model.multiclass_MSSM_HWW_model()
+    print "\033[1;42mModel setup was successful!\033[1;m"
+
+    # call keras fit function to start the training
     fit = keras_model.fit(
         x_train_scaled,
         y_train,
@@ -112,5 +129,5 @@ def multiclassNeuralNetwork(args_from_script=None):
     np.save(folder_result + 'val_acc.npy', fit.history["val_acc"])
 
 
-if __name__ == "__main__" and len(sys.argv) > 1:
+if __name__ == "__main__":
     multiclassNeuralNetwork()
