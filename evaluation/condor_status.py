@@ -25,26 +25,18 @@ def getNameFromFile(fname):
 
 jobs = getInfos()
 jobs = sorted(jobs, key=lambda l: l["JobStatus"] + l["Args"])
-#jobs = sorted(jobs, key=lambda l: l["JobStatus"]+l["Args"]+l["RemoteHost"])
-# print jobs
 for job in jobs:
     name = getNameFromFile(job["UserLog"])
-    #name += " " * max([0, (40 - len(name))])
     jStatus = job["JobStatus"]
-    #machine = job["RemoteHost"]
     if jStatus == "1":
         print name, "IDLE"
-        # print name, "idle", machine
     elif jStatus == "2":
         print name, "\033[1;32mRUNNING\033[1;m", job["ClusterId"], " @ ", job["RemoteHost"].replace(".physik.rwth-aachen.de", "").replace("slot", "")
-        # print name, "running", machine
     elif jStatus == "7":
         susTime = (time.time() - int(job["LastSuspensionTime"])) / 60.
-        # print name, "suspended since {:.2f} min".format(susTime), machine
         print name, "\033[1;33mSUSPENDED\033[1;m since {:.2f} min".format(susTime), job["ClusterId"], "@", job["RemoteHost"].replace(".physik.rwth-aachen.de", "").replace("slot", "")
     elif jStatus == "5":
         susTime = (time.time() - int(job["LastSuspensionTime"])) / 60.
-        # print name, "suspended since {:.2f} min".format(susTime), machine
         print name, "\033[1;33mHELD\033[1;m", job["ClusterId"], "@", job["RemoteHost"].replace(".physik.rwth-aachen.de", "").replace("slot", "")
     else:
         print "job status = ", jStatus
