@@ -102,9 +102,9 @@ for filelist, i in zip(filelists, range(len(filelists))):
                 Universe   = vanilla
                 Executable = evaluation/run_evaluation.sh
                 Arguments  = {0}
-                Log        = {2}/{1}.log
-                Output     = {2}/{1}.out
-                Error      = {2}/{1}.error
+                Log        = {1}/{2}.log
+                Output     = {1}/{2}.out
+                Error      = {1}/{2}.error
                 Queue
-                """.format(rfiles, _hash, folder_logs))
+                """.format(rfiles, folder_logs, jobName))
     subprocess.call(["condor_submit", "submitCondor.txt"])
