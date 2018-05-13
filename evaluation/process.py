@@ -16,7 +16,6 @@ class DataSets2016(object):
     """
 
     def __init__(self, base_dir):
-
         self.base_dir = base_dir
         self.datarun = ["B", "C", "D", "E", "F", "G", "H"]
         self.selection = "wwSel"
@@ -89,16 +88,15 @@ filelists = resize_filelists(files, 50)
 
 # create log dir for condor:
 folder_logs = base_dir + \
-    'logs_{}'.format(strftime("%Y_%m_%d_%H_%M_%S", gmtime()))
+    'logs_{}'.format(strftime("%Y_%m_%d", gmtime()))
 if not os.path.exists(folder_logs):
     print "Creating directory for condor logs: ", folder_logs
     os.makedirs(folder_logs)
 
 # create condor config and submit
-for filelist in filelists:
-    # FIXME
-    rfiles = " ".join(file for file in filelist)
-    _hash = hash(rfiles)
+for filelist, i in zip(filelists, range(len(filelists))):
+    rfiles = " ".join(_file for _file in filelist)
+    jobName = datasets.__class__.__name__ + "_part{}".format(i)
     with open("submitCondor.txt", "w") as f:
         f.write("""
                 Universe   = vanilla
