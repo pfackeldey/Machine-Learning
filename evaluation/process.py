@@ -5,6 +5,7 @@ import os
 import glob
 import subprocess
 import random
+from time import gmtime, strftime
 
 
 class DataSets2016(object):
@@ -45,7 +46,7 @@ class DataSets2016(object):
 
 parser = argparse.ArgumentParser()
 parser.add_argument(
-    '--datasets', default=["all"], choices=["all", "data", "wjets", "mc"], action="store_true")
+    '--dataset', default=["all"], choices=["all", "data", "wjets", "mc"], help="Choose the filelists to be evaluated.")
 args = parser.parse_args()
 
 # ugly #FIXME
@@ -53,18 +54,19 @@ base_dir = "/net/data_cms/institut_3b/fackeldey/nobackup/"
 
 datasets = DataSets2016(base_dir)
 
-# create all paths (data, MC and all shifts)
-if args.datasets == "all":
+# create all paths (data, MC and all shifts) #FIXME
+if args.dataset[0] == "all":
     dirs = datasets.mkFullDirs()
 
-elif args.datasets == "data"
+elif args.dataset[0] == "data":
     dirs = [base_dir + path for path in datasets.create_data_directories()]
 
-elif args.datasets == "wjets"
+elif args.dataset[0] == "wjets":
     dirs = [base_dir + path for path in datasets.create_wjets_directories()]
 
-elif args.datasets == "mc"
+elif args.dataset[0] == "mc":
     dirs = [base_dir + path for path in datasets.create_mc_directories()]
+
 
 # create list of ALL files
 files = []
@@ -85,18 +87,26 @@ def resize_filelists(lst, sz): return [lst[i:i + sz]
 # resize filelist to sublist
 filelists = resize_filelists(files, 50)
 
+# create log dir for condor:
+folder_logs = base_dir + \
+    'logs_{}'.format(strftime("%Y_%m_%d_%H_%M_%S", gmtime()))
+if not os.path.exists(folder_logs):
+    print "Creating directory for condor logs: ", folder_logs
+    os.makedirs(folder_logs)
+
 # create condor config and submit
 for filelist in filelists:
-    rfiles = " ".join(file for file in filelists[0])
-    hash = hash(rfiles)
+    # FIXME
+    rfiles = " ".join(file for file in filelist)
+    _hash = hash(rfiles)
     with open("submitCondor.txt", "w") as f:
         f.write("""
                 Universe   = vanilla
-                Executable = run_evaluation.sh
+                Executable = evaluation/run_evaluation.sh
                 Arguments  = {0}
-                Log        = logs/{1}.log
-                Output     = logs/{1}.out
-                Error      = logs/{1}.error
+                Log        = {2}/{1}.log
+                Output     = {2}/{1}.out
+                Error      = {2}/{1}.error
                 Queue
-                """.format(rfiles, hash))
+                """.format(rfiles, _hash, folder_logs))
     subprocess.call(["condor_submit", "submitCondor.txt"])
