@@ -25,7 +25,7 @@ def multiclassNeuralNetwork():
     """
     parser = argparse.ArgumentParser(description="Perform multiclassification NN training with Keras.",
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
-    parser.add_argument("--fold", default=0, choices=[0, 1],
+    parser.add_argument("--fold", type=int, default=0, choices=[0, 1],
                         help="Training fold. [Default: %(default)s]")
     parser.add_argument("--epochs", default=200,
                         help="Number of training epochs. [Default: %(default)s]")
