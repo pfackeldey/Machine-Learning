@@ -46,11 +46,17 @@ Also here the number of workers can be changed with the central scheduler.
 
 Once the preprocessing step is done, you can start the training. Here it is recommended to use a GPU (for RWTH see the wiki of this repo). More details in the wiki...
 
+Local training can be run with:
+
+* `python training/train.py`
+
+For the training submission on the RZ cluster of RWTH, see [here](https://github.com/CMSAachen3B/Machine-Learning/wiki/GPU-Batch-System). An example `.submit` script can be found in the `utils` directory of this repository.
+
 ## Evaluation
 
 For a single file:
 
-* `python evaluation/keras_evaluation.py tasks/analysis/MSSM_HWW.yaml --file test.root --tree latino`
+* `python evaluation/keras_evaluation.py --file test.root --tree latino`
 
 For all files (at RWTH Aachen via HTCondor):
 
@@ -58,6 +64,11 @@ For all files (at RWTH Aachen via HTCondor):
 
 In order to evaluate only data, wjets or MC files use the option `--datasets`.
 More information on script usage with `--help`  
+
+The status of the jobs can be checked with:
+
+1. `python evaluation/condor_status.py`
+2. `condor_q [--long]`
 
 
 ## License
