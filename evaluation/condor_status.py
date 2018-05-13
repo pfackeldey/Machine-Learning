@@ -33,19 +33,19 @@ for job in jobs:
     jStatus = job["JobStatus"]
     #machine = job["RemoteHost"]
     if jStatus == "1":
-        print name, "idle"
+        print name, "IDLE"
         # print name, "idle", machine
     elif jStatus == "2":
-        print name, "running ", job["ClusterId"], " @ ", job["RemoteHost"].replace(".physik.rwth-aachen.de", "").replace("slot", "")
+        print name, "\033[1;32mRUNNING\033[1;m", job["ClusterId"], " @ ", job["RemoteHost"].replace(".physik.rwth-aachen.de", "").replace("slot", "")
         # print name, "running", machine
     elif jStatus == "7":
         susTime = (time.time() - int(job["LastSuspensionTime"])) / 60.
         # print name, "suspended since {:.2f} min".format(susTime), machine
-        print name, "suspended since {:.2f} min".format(susTime), job["ClusterId"], "@", job["RemoteHost"].replace(".physik.rwth-aachen.de", "").replace("slot", "")
+        print name, "\033[1;33mSUSPENDED\033[1;m since {:.2f} min".format(susTime), job["ClusterId"], "@", job["RemoteHost"].replace(".physik.rwth-aachen.de", "").replace("slot", "")
     elif jStatus == "5":
         susTime = (time.time() - int(job["LastSuspensionTime"])) / 60.
         # print name, "suspended since {:.2f} min".format(susTime), machine
-        print name, "held", job["ClusterId"], "@", job["RemoteHost"].replace(".physik.rwth-aachen.de", "").replace("slot", "")
+        print name, "\033[1;33mHELD\033[1;m", job["ClusterId"], "@", job["RemoteHost"].replace(".physik.rwth-aachen.de", "").replace("slot", "")
     else:
         print "job status = ", jStatus
 print getSummary()
