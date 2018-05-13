@@ -18,23 +18,23 @@ base = os.path.normpath(os.path.join(os.path.abspath(__file__), "../.."))
 sys.path.append(base)
 
 from utils.treetools import *
+from utils.model import Config
 
 
 def keras_evaluation():
     parser = argparse.ArgumentParser(description="Application of keras model.",
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
-    parser.add_argument("config", help="Path to config")
-    parser.add_argument("--files", nargs='+', help="Path to ROOT file.")
+    parser.add_argument("--files", nargs='+', help="Path to ROOT files.")
     parser.add_argument("--tree", default="latino", help="Name of the tree.")
 
     args = parser.parse_args()
 
-    config = yaml.load(open(args.config, "r"))
+    config = Config()
 
     # Load keras model and preprocessing
     classifiers = []
     preprocessing = []
-    for c, p in zip(config["classifiers"], config["preprocessing"]):
+    for c, p in zip(config.load["classifiers"], config.load["preprocessing"]):
         classifiers.append(load_model(c))
         preprocessing.append(pickle.load(open(p, "rb")))
 
@@ -49,11 +49,11 @@ def keras_evaluation():
         with TreeExtender(path) as extender:
 
             values = []
-            for feature in config["features"]:
+            for feature in config.load["features"]:
                 values.append(array("f", [-999]))
                 extender.tree.SetBranchAddress(feature, values[-1])
 
-            event_branch = config["event_branch"]
+            event_branch = config.load["event_branch"]
 
             extender.addBranch("ml_max_score", nLeaves=1, unpackBranches=None)
             extender.addBranch("ml_max_index", nLeaves=1, unpackBranches=None)
