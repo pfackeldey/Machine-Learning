@@ -14,4 +14,4 @@ thispath=`pwd`
 cd ~/master/Machine-Learning/
 cd $thispath
 
-python evaluation/keras_evaluation.py tasks/analysis/MSSM_HWW.yaml --files "$@" --tree latino
+python evaluation/keras_evaluation.py --files "$@" --tree latino
