@@ -23,9 +23,9 @@ class DataSets2016(object):
                        "METdo__", "METup__", "PS__", "PUdo__", "PUup__", "UEdo__", "UEup__", ""]
         self.base_path_mc = "Apr2017_summer16/lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__LepTrgFix__dorochester__formulasMC__"
         self.base_path_data = [
-            "Apr2017_Run2016", "_RemAOD/lepSel__EpTCorr__TrigMakerData__cleanTauData__l2loose__hadd__l2tightOR__formulasDATA"]
+            "Apr2017_Run2016", "_RemAOD/lepSel__EpTCorr__TrigMakerData__cleanTauData__l2loose__hadd__l2tightOR__formulasDATA__"]
         self.base_path_wjets = [
-            "Apr2017_Run2016", "_RemAOD/lepSel__EpTCorr__TrigMakerData__cleanTauData__l2loose__multiFakeW__formulasFAKE__hadd"]
+            "Apr2017_Run2016", "_RemAOD/lepSel__EpTCorr__TrigMakerData__cleanTauData__l2loose__multiFakeW__formulasFAKE__hadd__"]
 
     def create_data_directories(self):
         return [self.base_path_data[0] + run[0] + self.base_path_data[1] + self.selection for run in self.datarun]
@@ -52,21 +52,22 @@ args = parser.parse_args()
 base_dir = "/net/data_cms/institut_3b/fackeldey/nobackup/"
 
 datasets = DataSets2016(base_dir)
+print args.dataset
 
-# create all paths (data, MC and all shifts) #FIXME
-if args.dataset[0] == "all":
-    dirs = datasets.mkFullDirs()
-
-elif args.dataset[0] == "data":
+# create all paths (data, MC and all shifts)
+# UGLY FIXME
+if args.dataset == "data":
     dirs = [base_dir + path for path in datasets.create_data_directories()]
 
-elif args.dataset[0] == "wjets":
+elif args.dataset == "wjets":
     dirs = [base_dir + path for path in datasets.create_wjets_directories()]
 
-elif args.dataset[0] == "mc":
+elif args.dataset == "mc":
     dirs = [base_dir + path for path in datasets.create_mc_directories()]
+else:
+    dirs = datasets.mkFullDirs()
 
-
+print dirs
 # create list of ALL files
 files = []
 for dir in dirs:
@@ -97,7 +98,7 @@ if not os.path.exists(folder_logs):
 for filelist, i in zip(filelists, range(len(filelists))):
     rfiles = " ".join(_file for _file in filelist)
     jobName = datasets.__class__.__name__ + "_part{}".format(i)
-    with open("submitCondor.txt", "w") as f:
+    with open(folder_logs + "/submitCondor{}.txt".format(i), "w") as f:
         f.write("""
                 Universe   = vanilla
                 Executable = evaluation/run_evaluation.sh
@@ -107,4 +108,5 @@ for filelist, i in zip(filelists, range(len(filelists))):
                 Error      = {1}/{2}.error
                 Queue
                 """.format(rfiles, folder_logs, jobName))
-    subprocess.call(["condor_submit", "submitCondor.txt"])
+    subprocess.call(["condor_submit", folder_logs +
+                     "/submitCondor{}.txt".format(i)])
