@@ -14,6 +14,7 @@ class DataSets2016(object):
     of HWW latino 2016 analysis. Needs to be adjusted for the
     2017 analysis.
     """
+    # Eleganz neu definiert...
 
     def __init__(self, base_dir):
         self.base_dir = base_dir
@@ -71,13 +72,13 @@ print dirs
 # create list of ALL files
 files = []
 for dir in dirs:
-    for file in glob.glob(dir + "/*.root"):
-        files.append(file)
+    for _file in glob.glob(dir + "/*.root"):
+        files.append(_file)
 
 # shuffle list
 random.shuffle(files)
 
-# lambda function, which resizes a list `lst` into a several sublists with size `sz`
+# function, which resizes a list `lst` into a several sublists with size `sz`
 
 
 def resize_filelists(lst, sz): return [lst[i:i + sz]
