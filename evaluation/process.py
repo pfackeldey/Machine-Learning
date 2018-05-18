@@ -20,7 +20,7 @@ class DataSets2016(object):
         self.base_dir = base_dir
         self.datarun = ["B", "C", "D", "E", "F", "G", "H"]
         self.selection = "wwSel"
-        self.shifts = ["JESdo__", "JESup__", "LepElepTdo__", "LepMupTdo__",
+        self.shifts = ["JESdo__", "JESup__", "LepElepTdo__", "LepElepTup__", "LepMupTdo__", "LepMupTup__",
                        "METdo__", "METup__", "PS__", "PUdo__", "PUup__", "UEdo__", "UEup__", ""]
         self.base_path_mc = "Apr2017_summer16/lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__LepTrgFix__dorochester__formulasMC__"
         self.base_path_data = [
