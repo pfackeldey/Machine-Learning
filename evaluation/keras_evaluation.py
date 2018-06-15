@@ -38,9 +38,7 @@ def keras_evaluation():
         classifiers.append(load_model(c))
         preprocessing.append(pickle.load(open(p, "rb")))
 
-    files = args.files
-
-    for _file in files:
+    for _file in args.files:
 
         print "Currently processing {}".format(_file)
 
@@ -55,27 +53,45 @@ def keras_evaluation():
 
             event_branch = config.load["event_branch"]
 
+            # Add branches with TreeExtender method
             extender.addBranch("ml_max_score", nLeaves=1, unpackBranches=None)
             extender.addBranch("ml_max_index", nLeaves=1, unpackBranches=None)
+            extender.addBranch("ml_sig_score", nLeaves=1, unpackBranches=None)
+            extender.addBranch("mTi_scaled", nLeaves=1,
+                               unpackBranches=["mTi"])
 
             for entry in extender:
+
+                # Initiate ml_sig_score with 0
+                entry.ml_sig_score[0] = 0
 
                 # Get event number and calculate method's response
                 event = int(getattr(extender.tree, event_branch))
 
                 values_stacked = np.hstack(values).reshape(1, len(values))
 
-                # preprocessing
+                # Preprocessing
                 values_preprocessed = preprocessing[event % 2].transform(
                     values_stacked)
+
+                # Get DNN response
                 response = classifiers[event % 2].predict(values_preprocessed)
                 response = np.squeeze(response)
 
                 # Find max score and index
                 for i, r in enumerate(response):
+
+                    # i = 0..5 are the signal classes
+                    if i < 6:
+                        entry.ml_sig_score[0] += r
+
+                    # Get class with highest probability and probability itself
                     if r > entry.ml_max_score[0]:
                         entry.ml_max_score[0] = r
                         entry.ml_max_index[0] = i
+
+                # Scale mTi with DNN probability sum of signal classes
+                entry.mTi_scaled[0] = entry.ml_sig_score[0] * entry.mTi[0]
 
 
 if __name__ == "__main__":
