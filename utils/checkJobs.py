@@ -6,7 +6,7 @@ import glob
 import argparse
 
 
-def checkJobs(args_from_script=None):
+def checkJobs():
 
     parser = argparse.ArgumentParser(description="Check if job was successful.",
                                      fromfile_prefix_chars="@", conflict_handler="resolve")

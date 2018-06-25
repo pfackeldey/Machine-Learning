@@ -6,18 +6,18 @@ import glob
 import argparse
 
 
-def checkZombie(args_from_script=None):
+def checkZombie():
     parser = argparse.ArgumentParser(description="Check if file is zombie.",
                                      fromfile_prefix_chars="@", conflict_handler="resolve")
-    parser.add_argument("--input", help="inputdir path")
+    parser.add_argument("--dir", help="path to ntuple directory")
     args = parser.parse_args()
 
-    rfiles = glob.glob("{}/*.root".format(args.input))
+    rfiles = glob.glob("{}/*.root".format(args.dir))
 
     for filename in rfiles:
-        file_ = ROOT.TFile(filename)
-        if file_.IsZombie():
-            print filename, "is a frickin zombie!"
+        _file = ROOT.TFile(filename)
+        if _file.IsZombie():
+            print filename, "\033[91mis a frickin zombie!\033[0m"
             continue
 
 
