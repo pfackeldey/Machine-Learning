@@ -32,6 +32,7 @@ def keras_evaluation():
     config = Config()
 
     # Load keras model and preprocessing
+
     classifiers = []
     preprocessing = []
     for c, p in zip(config.load["classifiers"], config.load["preprocessing"]):
@@ -56,10 +57,23 @@ def keras_evaluation():
             # Add branches with TreeExtender method
             extender.addBranch("ml_max_score", nLeaves=1, unpackBranches=None)
             extender.addBranch("ml_max_index", nLeaves=1, unpackBranches=None)
+
             extender.addBranch("ml_sig_score", nLeaves=1, unpackBranches=None)
             extender.addBranch("mTi_scaled", nLeaves=1,
                                unpackBranches=["mTi"])
 
+            # mTi_scaled_v1 = mTi * ml_sig_score**2
+            extender.addBranch("mTi_scaled_v1", nLeaves=1,
+                               unpackBranches=["mTi"])
+            # mTi_scaled_v2 = mTi * ml_sig_score**3
+            extender.addBranch("mTi_scaled_v2", nLeaves=1,
+                               unpackBranches=["mTi"])
+            # mTi_scaled_v3 = mTi * ml_sig_score**0.5
+            extender.addBranch("mTi_scaled_v3", nLeaves=1,
+                               unpackBranches=["mTi"])
+            # mTi_scaled_v4 = mTi * 1./(abs(ln(ml_sig_score)))
+            # extender.addBranch("mTi_scaled_v4", nLeaves=1,
+            #                    unpackBranches=["mTi"])
             for entry in extender:
 
                 # Initiate ml_sig_score with 0
@@ -92,6 +106,14 @@ def keras_evaluation():
 
                 # Scale mTi with DNN probability sum of signal classes
                 entry.mTi_scaled[0] = entry.ml_sig_score[0] * entry.mTi[0]
+                entry.mTi_scaled_v1[0] = entry.mTi[0] * \
+                    entry.ml_sig_score[0]**2
+                entry.mTi_scaled_v2[0] = entry.mTi[0] * \
+                    entry.ml_sig_score[0]**3
+                entry.mTi_scaled_v3[0] = entry.mTi[0] * \
+                    np.sqrt(entry.ml_sig_score[0])
+                # entry.mTi_scaled_v4[0] = entry.mTi[0] * \
+                #     1. / (abs(np.log(entry.ml_sig_score[0])))
 
 
 if __name__ == "__main__":
