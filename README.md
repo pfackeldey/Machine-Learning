@@ -70,6 +70,16 @@ The status of the jobs can be checked with:
 1. `python evaluation/condor_status.py`
 2. `condor_q [--long]`
 
+After the jobs finished, check if a job failed with:  
+
+* `python utils/checkJobs.py --log-dir <path/to/condor_logs>`  
+
+If a job failed, check the corresponding `.error` file for the problem. Sometimes (very rarely) it happens that a ROOT file gets damaged. This one can check with:  
+
+* `python utils/checkZombie.py --dir <path/to/ntuples>`  
+
+If that happens, just copy the file again from the HWW group and resubmit the job!
+
 
 ## License
 
