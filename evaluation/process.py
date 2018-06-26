@@ -98,8 +98,8 @@ if not os.path.exists(folder_logs):
 # create condor config and submit
 for filelist, i in zip(filelists, range(len(filelists))):
     rfiles = " ".join(_file for _file in filelist)
-    jobName = datasets.__class__.__name__ + "_part{}".format(i)
-    with open(folder_logs + "/submitCondor_part{}.txt".format(i), "w") as f:
+    jobName = datasets.__class__.__name__ + "_part{0:02d}".format(i)
+    with open(folder_logs + "/submitCondor_part{0:02d}.txt".format(i), "w") as f:
         f.write("""
                 Universe   = vanilla
                 Executable = evaluation/run_evaluation.sh
@@ -110,4 +110,4 @@ for filelist, i in zip(filelists, range(len(filelists))):
                 Queue
                 """.format(rfiles, folder_logs, jobName))
     subprocess.call(["condor_submit", folder_logs +
-                     "/submitCondor_part{}.txt".format(i)])
+                     "/submitCondor_part{0:02d}.txt".format(i)])
