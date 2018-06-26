@@ -13,7 +13,7 @@ def checkJobs():
     parser.add_argument("--log-dir", help="path to condor logs")
     args = parser.parse_args()
 
-    files = glob.glob("{}/*.error".format(args.log_dir))
+    files = sorted(glob.glob("{}/*.error".format(args.log_dir)))
 
     for _file in files:
         if "Traceback" in open(_file).read():
