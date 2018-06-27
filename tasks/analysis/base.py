@@ -79,7 +79,7 @@ class HTCondorWorkflow(law.HTCondorWorkflow):
         # tell the factory, which is responsible for creating our job files,
         # that the files are not temporary, i.e., it should not delete them after submission
         factory = super(HTCondorWorkflow,
-                        self).htcondor_create_job_file_factory()
+                        self.htcondor_create_job_file_factory())
         factory.is_tmp = False
         return factory
 
