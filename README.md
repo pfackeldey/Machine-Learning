@@ -85,7 +85,7 @@ If that happens, just copy the file again from the HWW group and resubmit the jo
 
 MIT License
 
-Copyright (c) 2017 Aachen 3B CMS Group
+Copyright (c) 2017-2018 Peter Fackeldey
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of
 this software and associated documentation files (the "Software"), to deal in
